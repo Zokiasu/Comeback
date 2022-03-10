@@ -7,7 +7,7 @@
                     <img :src="user.avatar ? user.avatar : require(`~/assets/image/artist.png`)" class="w-20 h-20 object-cover rounded-full border border-gray-400" alt="">
                     <div class="flex flex-col space-y-1.5 -mt-1">
                         <div class="flex space-x-2">
-                            <span class="font-semibold text-lg"><NuxtLink :to="`/users/${user.id}`" target="_blank" class="hover:underline">{{user.username}}</NuxtLink> - <span class="text-base font-normal">{{user.id}}</span></span>
+                            <span class="font-semibold text-lg"><NuxtLink :to="`/users/${user.uid}`" target="_blank" class="hover:underline">{{user.username}}</NuxtLink> - <span class="text-base font-normal">{{user.uid}}</span></span>
                         </div>
                         <div>
                             <span :class="user.role === 'ADMIN' ? 'text-red-500' : ''">{{((user.role).charAt(0).toUpperCase() + (user.role).slice(1))}}</span>

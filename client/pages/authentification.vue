@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full my-auto">
+  <div class="w-full px-5">
+    <div class="max-w-md mx-auto translate-y-2/3">
       <div>
         <icons-comeback class="h-33 mx-auto" />
       </div>
@@ -119,10 +119,6 @@
     },
 
     methods: {
-      ...mapMutations([
-          'SET_USER',
-      ]),
-
       ...mapGetters([
           'GET_USER',
       ]),

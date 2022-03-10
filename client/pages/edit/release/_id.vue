@@ -262,7 +262,7 @@
         async mounted() {
             this.dates = new Date(this.release.date)
             this.oldDataToApi = JSON.parse(JSON.stringify(this.release))
-            this.user = await this.GET_DATA_USER()
+            this.user = await this.GET_USER()
         },
 
         watch: {
@@ -296,11 +296,11 @@
 
         methods: {
             ...mapGetters([
-                'GET_DATA_USER',
+                'GET_USER',
             ]),
 
             async editRelease() {
-                if(this.user == null) this.user = this.GET_DATA_USER()
+                if(this.user == null) this.user = this.GET_USER()
                 if(this.updateRelease) {
                     await this.$axios.post(`https://comeback-api.herokuapp.com/requests`, {
                         state:'PENDING',
@@ -308,7 +308,7 @@
                         endpoint:`/releases/${this.$route.params.id}`,
                         body: this.sendToApi,
                         currentData: this.oldDataToApi,
-                        userId: this.user.id,
+                        userId: this.user.uid,
                         source: this.source
                     }).then(response => {
                         if(!this.updateMusic) {
@@ -330,7 +330,7 @@
                             endpoint:`/musics/${element.id}`,
                             body: element,
                             currentData: oldData,
-                            userId: this.user.id,
+                            userId: this.user.uid,
                             source: this.source
                         }).then(response => {
                             this.$router.push({ path: `/release/${this.$route.params.id}`})
