@@ -21,7 +21,7 @@
                         class="w-full h-full lg:w-auto lg:h-auto rounded-b focus:outline-none"
                     >
                         <img 
-                            loading="lazy" 
+                            
                             :src="artist.image" 
                             :alt="artist.name" 
                             class="w-[50%] h-[50%] lg:w-auto lg:h-auto object-cover rounded mx-auto"
@@ -128,14 +128,14 @@
                         <span class="my-auto font-semibold text-lg">Social Media Link</span>
                         <MultipleInput class="mb-1 w-full" v-for="(elem, index) in artist.socials" :key="index" :elem="elem" @updateinput="updateList(artist.socials, $event, index, 'socials')" @deleteinput="deleteList(artist.socials, index, 'socials')"/>
                         <button @click="addSocials()" class="Card w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded">
-                            <img loading="lazy" src="https://img.icons8.com/ios/20/ffffff/plus--v2.png"/>
+                            <img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png"/>
                         </button>
                     </div>
                     <div id="streaming-platform" class="w-full space-y-1">
                         <span class="my-auto font-semibold text-lg">Streaming Platforms Link</span>
                         <MultipleInput class="mb-1 w-full" v-for="(elem, index) in artist.platforms" :key="index" :elem="elem" @updateinput="updateList(artist.platforms, $event, index, 'platforms')" @deleteinput="deleteList(artist.platforms, index, 'platforms')"/>
                         <button @click="addStreamingLink()" class="Card w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded">
-                            <img loading="lazy" src="https://img.icons8.com/ios/20/ffffff/plus--v2.png"/>
+                            <img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png"/>
                         </button>
                     </div>
                 </div>

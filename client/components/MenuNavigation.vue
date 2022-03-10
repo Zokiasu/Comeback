@@ -18,8 +18,8 @@
           <!-- PC Navigation -->
           <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <NuxtLink :to="`/`" class="flex-shrink-0 flex items-center">
-              <img loading="lazy" class="block lg:hidden h-8 w-auto" src="../assets/image/mini-logo.png" alt="Comeback">
-              <img loading="lazy" class="hidden lg:block h-8 w-auto" src="../assets/image/logo.png" alt="Comeback">
+              <img class="block lg:hidden h-8 w-auto" src="../assets/image/mini-logo.png" alt="Comeback">
+              <img class="hidden lg:block h-8 w-auto" src="../assets/image/logo.png" alt="Comeback">
             </NuxtLink>
             <div class="hidden sm:block sm:ml-6">
               <div class="flex space-x-4" @click="userMenu=false">
@@ -50,14 +50,14 @@
               </button>
             </div>
             <div v-else class="text-white">
-              <button @click="authentificationModal=!authentificationModal" class="font-semibold">Login</button>
+              <nuxt-link to="/authentification" class="font-semibold">Login</nuxt-link>
             </div>
             <!-- Profile dropdown -->
             <div v-if="userConnected" class="ml-3 relative">
               <div>
                 <button @click="userMenu = !userMenu" type="button" class="bg-gray-500 bg-opacity-10 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open user menu</span>
-                  <img loading="lazy" class="h-8 w-8 rounded-full" :src="userAvatar" alt="User avatar">
+                  <img class="h-8 w-8 rounded-full" :src="userAvatar" alt="User avatar">
                 </button>
               </div>
               <!--
@@ -70,7 +70,7 @@
                   To: "transform opacity-0 scale-95"
               -->
               <div v-if="userMenu" @click="userMenu=false" class="animate__animated animate__pulse origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black-one text-white focus:outline-none" role="menu">
-                <NuxtLink :to="`/profile/${user.id}/general`" class="block px-4 py-2 text-sm hover:bg-gray-700">
+                <NuxtLink :to="`/profile/${user.uid}/general`" class="block px-4 py-2 text-sm hover:bg-gray-700">
                   Your Profile
                 </NuxtLink>
                 <NuxtLink :to="`/add/artist`" class="block px-4 py-2 text-sm hover:bg-gray-700">
@@ -113,18 +113,6 @@
       </div>
     </nav>
     <Modal
-        v-model="authentificationModal" 
-        title="Authentification"
-        wrapper-class="animate__animated modal-wrapper"
-        :modal-style="{'background':'#1F1D1D', 'border-radius': '0.25rem', 'color':'white'}"
-        :in-class="`animate__fadeInDown`"
-        :out-class="`animate__bounceOut`"
-        bg-class="animate__animated"
-        :bg-in-class="`animate__fadeInUp`"
-        :bg-out-class="`animate__fadeOutDown`">
-        <LazyAuthentification @close="closeAuthentificationModal"/>
-    </Modal>
-    <Modal
         v-model="newsModal"
         title="Add a News"
         wrapper-class="animate__animated modal-wrapper"
@@ -166,20 +154,15 @@
     },
     
     async fetch(){
-      const { data : tmpArtist } = await this.$axios.get('https://comeback-api.herokuapp.com/artists/groups?sortby=name:asc')
+      const { data: tmpArtist } = await this.$axios.get('https://comeback-api.herokuapp.com/artists/groups?sortby=name:asc')
       this.artist = tmpArtist
     },
 
     async created(){
-      let that = this
-      await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user != null) {
-          if(user.uid) {
-            that.userConnected = true
-            await that.setStoreData(user.uid)
-          }
-        }
-      })
+      console.log("User logged statut", this.isLoggedIn());
+      this.userConnected = this.isLoggedIn();
+      this.user = this.GET_USER();
+      console.log("User", this.user);
     },
 
     async mounted() {
@@ -187,44 +170,15 @@
     },
 
     methods:{
-        ...mapMutations([
-            'SET_DATA_USER',
-            'SET_TOKEN_USER',
-        ]),
-
-        ...mapGetters([
-            'GET_DATA_USER',
-        ]),
+        ...mapGetters(["GET_USER", "isLoggedIn"]),
 
         logout(){
             this.$fire.auth.signOut().then(() => {
                 this.$router.push('/')
-                this.userConnected = false
                 this.userRole = 'NONE'
                 this.$toast.error('You are log out!', {duration:3000, position:'top-right'})
-                this.SET_DATA_USER(null)
-                this.SET_TOKEN_USER(null)
             }).catch((error) => {
                 console.log(error)
-            })
-        },
-
-        async setStoreData(userId){
-            const that = this
-
-            this.$fire.auth.currentUser.getIdToken(true).then(function(idToken){
-                that.SET_TOKEN_USER(idToken)
-            }).catch(function(error) {
-                console.log(error)
-            })
-
-            await this.$axios.get(`https://comeback-api.herokuapp.com/users/${userId}`).then((res) => {
-                that.SET_DATA_USER(res.data)
-                that.user = that.GET_DATA_USER()
-                if(that.user != null) {
-                    if(that.user.avatar) that.userAvatar = that.user.avatar
-                    that.userRole = that.user.role
-                }
             })
         },
 

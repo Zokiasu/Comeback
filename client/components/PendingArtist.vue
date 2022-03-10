@@ -2,11 +2,11 @@
     <section class="space-y-1">
         <span>Artist Pending</span>
         <div id="image" class="flex flex-row space-x-5">
-            <img loading="lazy" v-if="pending.currentData && pending.currentData.image" :src="pending.currentData.image" class="w-28 h-28 object-cover" alt="Old image">
+            <img v-if="pending.currentData && pending.currentData.image" :src="pending.currentData.image" class="w-28 h-28 object-cover" alt="Old image">
             <div v-if="pending.currentData && pending.currentData.image && pending.body.image" class="my-auto">
                 <svg class="my-auto" fill="#fff" xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24"><path d="M7.33 24l-2.83-2.829 9.339-9.175-9.339-9.167 2.83-2.829 12.17 11.996z"/></svg>
             </div>
-            <img loading="lazy" v-if="pending.body.image" :src="pending.body.image" class="w-28 h-28 object-cover" alt="New image">
+            <img v-if="pending.body.image" :src="pending.body.image" class="w-28 h-28 object-cover" alt="New image">
         </div>
         <div id="name" class="flex flex-col">
             <span v-if="pending.currentData && pending.currentData.name" :class="pending.body.name && (pending.currentData && pending.body.name) ? 'text-red-500':''">Old Name : {{pending.body.name}}</span>

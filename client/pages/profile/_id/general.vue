@@ -7,7 +7,7 @@
         <section v-if="artistUser.length" id="artist-recently-follow" class="space-y-5">
             <h2 class="text-3xl font-semibold">Artist recently followed</h2>
             <transition-group name="object" class="grid grid-cols-2 gap-5 md:flex md:flex-wrap w-full md:justify-center lg:justify-start md:inner">
-                <LazyArtistCard 
+                <ArtistCard 
                     v-for="(artist) in artistUser.slice(0, 9)"
                     :key="artist.id"
                     :image="artist.image"

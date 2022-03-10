@@ -2,7 +2,7 @@
     <div class="py-5">
         <h3 class="text-center w-full text-2xl lg:text-5xl font-semibold p-10">Artist Followed</h3>
         <transition-group name="object" class="grid grid-cols-2 gap-5 md:flex md:flex-wrap w-full md:justify-center lg:justify-start md:inner">
-            <LazyArtistCard 
+            <ArtistCard 
                 v-for="(artist) in artists.slice(0, maxArtist)"
                 :key="artist.id"
                 :image="artist.image"
