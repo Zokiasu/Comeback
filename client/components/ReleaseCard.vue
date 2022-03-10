@@ -4,7 +4,7 @@
         <div class="bg-gray-500 rounded-md">
           <img 
             :src="image" 
-            loading="lazy"
+           
             alt="Artist Picture" 
             class="rounded-md object-cover aspect-square bg-gray-500 h-36 w-36 xl:h-40 xl:w-40"
           />

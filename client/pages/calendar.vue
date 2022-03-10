@@ -53,7 +53,7 @@
 				</ul>
 			</div>
 			<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-7 max-w-[110rem]">
-				<LazyReleaseCard
+				<ReleaseCard
 					v-for="release in filteredList"
 					:key="release.id"
 					:id="release.id"

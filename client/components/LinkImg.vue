@@ -1,7 +1,7 @@
 <template>
     <a :href="url" target="_blank" v-if="url" class="Card rounded p-2 px-3 bg-black-two bg-opacity-90 hover:bg-opacity-50 text-white flex space-x-1.5">
         <div class="mt-1">
-            <img :src="urls" loading="lazy">
+            <img :src="urls">
         </div>
         <span class="linkName">{{this.extractRootDomain(this.url)}}</span>
     </a>

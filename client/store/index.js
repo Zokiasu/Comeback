@@ -1,57 +1,54 @@
-// your-project/store/index.js
-
 export const state = () => ({
-    authUser: null,
-    isAdmin: null,
-    tokenUser: null,
-    dataUser: null
+  user: null
 })
 
 export const getters = {
-    GET_USER: (state) => {
-        return state.authUser
-    },
-
-    GET_DATA_USER: (state) => {
-        return state.dataUser
-    },
-
-    GET_TOKEN_USER: (state) => {
-        return state.tokenUser
-    }
+  GET_USER: (state) => {
+      return state.user
+  },
+  isLoggedIn(state) {
+      let userLoggedIn = false
+      if (state.user) {
+          userLoggedIn = true
+      }
+      return userLoggedIn
+  }
 }
 
 export const actions = {
-    async onAuthStateChangedAction({ commit, dispatch }, { authUser, claims }) {
-        if (!authUser) {
-            //await dispatch('cleanupAction')
-            return
-        } else {
-            const { uid, email, emailVerified, displayName, photoURL } = authUser
-
-            commit('SET_USER', {
-              uid,
-              email,
-              emailVerified,
-              displayName,
-              photoURL,
-              isAdmin: claims.custom_claim
-            })
-        }
+  async onAuthStateChangedAction(state, { authUser, claims }) {
+    console.log('onAuthStateChangedAction', authUser)
+    if (!authUser) {
+      state.commit('SET_USER', authUser)
+    } else {
+      const { uid, email, refreshToken, displayName, photoURL } = authUser
+      state.commit('SET_USER', {
+          uid,
+          email,
+          refreshToken,
+          displayName,
+          photoURL
+      });
     }
+  },
+
+  async nuxtServerInit({ dispatch, commit }, { res }) {
+    if (res && res.locals && res.locals.user) {
+      const { allClaims: claims, idToken: token, ...authUser } = res.locals.user
+      console.log('nuxtServerInit - authUser', authUser);
+      const { uid, email } = authUser
+
+      await dispatch('onAuthStateChangedAction', {
+        authUser,
+        claims,
+        token
+      });
+    }
+  }
 }
 
 export const mutations = {
-
-    SET_DATA_USER (state, value) {
-        state.dataUser = value
-    },
-
-    SET_TOKEN_USER (state, value) {
-        state.tokenUser = value
-    },
-
-    SET_USER: (state, payload) => {
-        state.authUser = payload;
-    }
+  SET_USER: (state, payload) => {
+    state.user = payload;
+  }
 }

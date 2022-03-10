@@ -19,7 +19,7 @@
       name="list-complete" 
       tag="div" 
       class="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 1xl:grid-cols-7 2xl:grid-cols-10 gap-5 w-full justify-center p-5">
-      <LazyArtistCard 
+      <ArtistCard 
         v-for="artist in artists"
         :key="artist.id"
         :image="artist.image"
