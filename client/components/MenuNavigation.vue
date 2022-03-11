@@ -41,7 +41,7 @@
 
           <!-- PC User Menu -->
           <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <div v-if="userConnected" class="hidden lg:flex">
+            <div v-if="isLoggedIn()" class="hidden lg:flex">
               <button @click="newsModal=true" class="bg-red-700 Card px-3 py-2 rounded-md focus:outline-none text-white flex">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 my-auto mx-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -53,33 +53,21 @@
               <nuxt-link to="/authentification" class="font-semibold">Login</nuxt-link>
             </div>
             <!-- Profile dropdown -->
-            <div v-if="userConnected" class="ml-3 relative">
+            <div v-if="isLoggedIn()" class="ml-3 relative">
               <div>
                 <button @click="userMenu = !userMenu" type="button" class="bg-gray-500 bg-opacity-10 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                   <span class="sr-only">Open user menu</span>
                   <img class="h-8 w-8 rounded-full" :src="userAvatar" alt="User avatar">
                 </button>
               </div>
-              <!--
-                Dropdown menu, show/hide based on menu state.
-                Entering: "transition ease-out duration-100"
-                  From: "transform opacity-0 scale-95"
-                  To: "transform opacity-100 scale-100"
-                Leaving: "transition ease-in duration-75"
-                  From: "transform opacity-100 scale-100"
-                  To: "transform opacity-0 scale-95"
-              -->
               <div v-if="userMenu" @click="userMenu=false" class="animate__animated animate__pulse origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black-one text-white focus:outline-none" role="menu">
-                <NuxtLink :to="`/profile/${user.uid}/general`" class="block px-4 py-2 text-sm hover:bg-gray-700">
+                <NuxtLink :to="`/profile/${GET_USER().uid}/general`" class="block px-4 py-2 text-sm hover:bg-gray-700">
                   Your Profile
                 </NuxtLink>
                 <NuxtLink :to="`/add/artist`" class="block px-4 py-2 text-sm hover:bg-gray-700">
                   Add New Artist
                 </NuxtLink>
-                <!--<NuxtLink :to="`/calendar`" class="block px-4 py-2 text-sm hover:bg-gray-700">
-                  Settings
-                </NuxtLink>-->
-                <NuxtLink v-if="userConnected && userRole != 'NONE'" :to="`/dashboard`" class="block px-4 py-2 text-sm hover:bg-gray-700">
+                <NuxtLink v-if="isLoggedIn() && userRole != 'NONE'" :to="`/dashboard`" class="block px-4 py-2 text-sm hover:bg-gray-700">
                   Dashboard
                 </NuxtLink>
                 <button @click="newsModal=true" class="block px-4 py-2 text-sm hover:bg-gray-700 w-full h-full text-left">
@@ -131,7 +119,7 @@
 </template>
 
 <script>
-  import { mapMutations, mapGetters } from 'vuex'
+  import { mapGetters } from 'vuex'
 
   export default {
     name:'MenuNavigation',
@@ -140,7 +128,6 @@
       return {
         navMenu: false,
         userMenu: false,
-        userConnected: false,
 
         authentificationModal: false,
         newsModal:false,
@@ -160,7 +147,6 @@
 
     async created(){
       console.log("User logged statut", this.isLoggedIn());
-      this.userConnected = this.isLoggedIn();
       this.user = this.GET_USER();
       console.log("User", this.user);
     },
@@ -180,10 +166,6 @@
             }).catch((error) => {
                 console.log(error)
             })
-        },
-
-        closeAuthentificationModal(){
-            this.authentificationModal = false
         },
 
         closeNewsModal(){

@@ -5,7 +5,7 @@
 			v-model="artistSelected"
 			placeholder="Please select an artist"
 			label="name"
-			track-by="id"
+			key="id"
 			:options="artistList"
 			:close-on-select="true"
 			:clear-on-select="true"

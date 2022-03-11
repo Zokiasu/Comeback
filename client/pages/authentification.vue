@@ -134,12 +134,14 @@
       async signIn () {
         this.$fire.auth.signInWithEmailAndPassword(this.email, this.password).then((res) => {
           console.log(res)
+          this.$router.push('/')
         })
       },
 
       async signUp () {
         this.$fire.auth.createUserWithEmailAndPassword(this.email, this.password).then((res) => {
           console.log(res)
+          this.$router.push('/')
         })
       }
     }

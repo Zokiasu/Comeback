@@ -201,7 +201,7 @@
 				</div>
 				<div id="group-unit" class="space-y-1" v-if="artist.groups.length">
 					<h3 class="text-white text-xl">Group's Unit</h3>
-					<div class="flex flex-row">
+					<div class="flex flex-wrap gap-1">
 						<NuxtLink
 							:to="`/artist/${group.id}`"
 							v-for="(group, index) in artist.groups"
@@ -227,7 +227,7 @@
 					<h3 class="text-white text-xl">Lastest Releases</h3>
 					<div
 						id="release-list"
-						class="flex flex-wrap gap-2"
+						class="flex flex-wrap gap-1"
 					>
 						<ReleaseCard 
 							v-for="(release) in artist.releases" 

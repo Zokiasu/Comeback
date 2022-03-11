@@ -44,7 +44,7 @@
                     v-model="objectModify.artist"
                     placeholder="Please select an artists" 
                     label="name" 
-                    track-by="id" 
+                    key="id" 
                     :options="artistList"
                     :close-on-select="true"
                     :clear-on-select="true"
