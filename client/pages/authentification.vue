@@ -94,14 +94,7 @@
 
     head() {
       return {
-        title: "Student Exchange Finder - Authentification.",
-        meta: [
-          {
-            hid: 'description',
-            name: 'description',
-            content: 'Trouver l\'université dont vous avez besoin et devenez un Studeler.',
-          }
-        ]
+        title: "Comeback - Authentification",
       }
     },
 
@@ -112,10 +105,6 @@
         passwordVerification: '',
         signUpOption: false
       }
-    },
-
-    mounted() {
-      console.log('GET_USER', this.GET_USER())
     },
 
     methods: {
@@ -133,15 +122,25 @@
 
       async signIn () {
         this.$fire.auth.signInWithEmailAndPassword(this.email, this.password).then((res) => {
-          console.log(res)
           this.$router.push('/')
         })
       },
 
       async signUp () {
         this.$fire.auth.createUserWithEmailAndPassword(this.email, this.password).then((res) => {
-          console.log(res)
-          this.$router.push('/')
+        const createUser = this.$fire.functions.httpsCallable("createUser");
+        createUser({
+          id: res.user.uid,
+          name: res.user.uid,
+          email: res.user.email,
+        })
+          .then((result) => {
+            this.$toast.success("Thank you, Your account has been created", { duration: 5000, position: "top-right" });
+            this.$router.push("/");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         })
       }
     }

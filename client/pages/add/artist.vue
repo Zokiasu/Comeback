@@ -1,400 +1,567 @@
 <template>
-	<div class="p-10 text-white">
-		<div class="border-b border-white flex justify-between pb-3">
-			<div class="flex space-x-2">
-				<NuxtLink class="my-auto" :to="`/`">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="24"
-						height="24"
-						viewBox="0 0 24 24"
+	<div class="p-5 lg:p-10 flex flex-col sm:mx-auto">
+		<div class="bg-black-one w-full rounded-lg p-5 lg:max-w-full mx-auto">
+			<h2 class="text-white text-3xl font-semibold mb-3">Create New Artist</h2>
+			<div class="flex flex-wrap gap-5">
+				<!-- Picture -->
+				<div class="w-full">
+					<label
+						for="name"
+						class="block uppercase tracking-wide text-white font-semibold mb-2"
 					>
-						<path
-							fill="#fff"
-							d="M16.67 0l2.83 2.829-9.339 9.175 9.339 9.167-2.83 2.829-12.17-11.996z"
-						/>
-					</svg>
-				</NuxtLink>
-				<h2 class="text-2xl font-semibold my-auto">Edition Artist</h2>
-			</div>
-			<button
-				@click="editArtist()"
-				class="bg-red-700 p-5 py-2 rounded-lg Card hover:bg-red-900"
-			>
-				Confirm
-			</button>
-		</div>
-		<section>
-			<div
-				class="flex flex-col lg:flex-row justify-center space-y-10 lg:space-y-0 lg:space-x-5 py-7"
-			>
-				<div class="w-full lg:w-auto">
-					<button
-						@click="launchImageFile"
-						:disabled="isUploadingImage"
-						type="button"
-						class="w-full h-full lg:w-auto lg:h-auto rounded-b focus:outline-none"
-					>
+						Picture*
+					</label>
+					<div class="flex flex-wrap gap-5">
 						<img
-							:src="artist.image"
-							:alt="artist.name"
-							class="w-[50%] h-[50%] lg:w-auto lg:h-auto object-cover rounded mx-auto"
+							:src="image"
+							:alt="name"
+							class="object-cover rounded w-full md:w-auto md:max-w-lg"
 						/>
-					</button>
-					<input
-						ref="imageFile"
-						@change.prevent="uploadImageFile($event.target.files)"
-						type="file"
-						accept="image/png, image/jpeg"
-						class="hidden"
-					/>
+						<button
+							@click="launchImageFile"
+							:disabled="isUploadingImage"
+							type="button"
+							class="
+								w-full
+								md:w-auto
+								h-full
+								bg-red-one
+								rounded
+								text-white
+								py-2
+								px-4
+							"
+						>
+							Upload
+						</button>
+						<input
+							ref="imageFile"
+							@change.prevent="uploadImageFile($event.target.files)"
+							type="file"
+							accept="image/png, image/jpeg"
+							class="hidden"
+						/>
+					</div>
 				</div>
-				<div class="grid grid-cols-1 gap-6 w-full">
-					<div
-						class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-2"
-					>
-						<span class="my-auto w-28 font-semibold text-lg">Name*</span>
-						<t-input
-							autocomplete="false"
+				<!-- Name & Youtube Music Id -->
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
+					<!-- Name -->
+					<div class="w-full">
+						<label
+							for="name"
+							class="
+								block
+								uppercase
+								tracking-wide
+								text-white
+								font-semibold
+								mb-2
+							"
+						>
+							Name*
+						</label>
+						<input
+							id="name"
 							type="text"
-							v-model="artist.name"
-							:value="artist.name"
-							placeholder="Artist Name"
-							name="artists-name"
+							placeholder="Name"
+							v-model="name"
+							class="
+								appearance-none
+								block
+								w-full
+								rounded
+								py-3
+								px-4
+								leading-tight
+								focus:outline-none
+								bg-gray-200
+								text-gray-700
+								border border-gray-200
+								focus:bg-white focus:border-gray-500
+							"
 						/>
 					</div>
-					<div
-						class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-2"
-					>
-						<span class="my-auto w-28 font-semibold text-lg">Type</span>
-						<t-select
-							v-model="artist.type"
-							id="artists-type-selector"
-							:options="[
-								{ value: 'SOLO', text: 'Soloist' },
-								{ value: 'GROUP', text: 'Group' },
-							]"
-						></t-select>
-					</div>
-					<div
-						class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-2"
-					>
-						<span class="my-auto w-28 font-semibold text-lg">Members</span>
-						<multiselect
-							v-model="artist.members"
-							tag-placeholder="Add this as new artists"
-							placeholder="Search or add a artists"
-							label="name"
-							key="id"
-							:options="artistList"
-							:close-on-select="false"
-							:clear-on-select="false"
-							:preserve-search="false"
-							:multiple="true"
-							:taggable="true"
-							@tag="addMember"
+					<!-- Youtube Music Id -->
+					<div class="w-full">
+						<label
+							for="ytb-music-id"
+							class="
+								block
+								uppercase
+								tracking-wide
+								text-white
+								font-semibold
+								mb-2
+							"
 						>
-							<template slot="option" slot-scope="props">
-								<div class="flex space-x-5">
-									<div class="option__desc flex space-x-1">
-										<span class="option__title">{{ props.option.name }}</span>
-										<div class="flex space-x-1">
-											<div class="space-x-1">
-												<span
-													v-for="(group, index) in props.option.groups"
-													:key="index"
-													class="bg-gray-300 p-1 px-2 rounded text-xs text-black-one"
-													>{{ group.name }}</span
-												>
-											</div>
-										</div>
-									</div>
-								</div>
-							</template>
-						</multiselect>
-					</div>
-					<div
-						class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-2"
-					>
-						<span class="my-auto w-28 font-semibold text-lg">Groups</span>
-						<multiselect
-							v-model="artist.groups"
-							tag-placeholder="Add this as new groups"
-							placeholder="Search or add a groups"
-							label="name"
-							key="id"
-							:options="artistList"
-							:close-on-select="false"
-							:clear-on-select="false"
-							:preserve-search="false"
-							:multiple="true"
-							:taggable="true"
-							@tag="addGroup"
-						>
-							<template slot="option" slot-scope="props">
-								<div class="flex space-x-1">
-									<div class="option__desc flex space-x-1">
-										<span class="option__title">{{ props.option.name }}</span>
-										<div class="flex space-x-1">
-											<div class="space-x-1">
-												<span
-													v-for="(group, index) in props.option.groups"
-													:key="index"
-													class="bg-gray-300 p-1 px-2 rounded text-xs text-black-one"
-													>{{ group.name }}</span
-												>
-											</div>
-										</div>
-									</div>
-								</div>
-							</template>
-						</multiselect>
-					</div>
-					<div
-						class="flex flex-col lg:flex-row space-y-1 lg:space-y-0 lg:space-x-2"
-					>
-						<span class="my-auto w-28 font-semibold text-lg">Style</span>
-						<multiselect
-							v-model="artist.styles"
-							tag-placeholder="Add this as new style"
-							placeholder="Search or add a style"
-							label="name"
-							key="name"
-							:options="styleList"
-							:close-on-select="false"
-							:clear-on-select="false"
-							:preserve-search="false"
-							:multiple="true"
-							:taggable="true"
-							@tag="addStyle"
+							Youtube Music Id*
+						</label>
+						<input
+							id="ytb-music-id"
+							type="text"
+							placeholder="Youtube Music ID"
+							v-model="idYoutubeMusic"
+							class="
+								appearance-none
+								block
+								w-full
+								rounded
+								py-3
+								px-4
+								leading-tight
+								focus:outline-none
+								bg-gray-200
+								text-gray-700
+								border border-gray-200
+								focus:bg-white focus:border-gray-500
+							"
 						/>
 					</div>
 				</div>
-			</div>
-
-			<div class="flex flex-col space-y-10">
-				<div class="flex flex-col space-y-1">
-					<span class="my-auto font-semibold text-lg">Youtube Music ID</span>
-					<t-input
-						autocomplete="false"
+				<!-- Type -->
+				<div class="w-full">
+					<label
+						for="type"
+						class="block uppercase tracking-wide text-white font-semibold mb-2"
+					>
+						Type
+					</label>
+					<!--Select Solo or Group -->
+					<select
+						id="type"
+						v-model="type"
+						class="
+							block
+							w-full
+							rounded
+							py-3
+							px-4
+							leading-tight
+							focus:outline-none
+							bg-gray-200
+							text-gray-700
+							border border-gray-200
+							focus:bg-white focus:border-gray-500
+						"
+					>
+						<option value="SOLO">Solo</option>
+						<option value="GROUP">Group</option>
+					</select>
+				</div>
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
+					<!-- Members -->
+					<div class="w-full">
+						<label
+							for="members"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
+							>Members</label
+						>
+						<multiselect
+							id="members"
+							label="name"
+							track-by="name"
+							v-model="members"
+							:options="artistList"
+							placeholder="Search an artist"
+							:multiple="true"
+							:close-on-select="false"
+							:clear-on-select="false"
+							:preserve-search="false"
+						/>
+					</div>
+					<!-- Groups -->
+					<div class="w-full">
+						<label
+							for="groups"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
+						>
+							Groups
+						</label>
+						<multiselect
+							label="name"
+							track-by="name"
+							v-model="groups"
+							:options="artistList"
+							placeholder="Search a group"
+							:multiple="true"
+							:close-on-select="false"
+							:clear-on-select="false"
+							:preserve-search="false"
+						/>
+					</div>
+				</div>
+				<!-- Styles -->
+				<div class="w-full">
+					<label
+						for="styles"
+						class="block uppercase tracking-wide text-white font-semibold mb-2"
+					>
+						Styles
+					</label>
+					<multiselect
+						v-model="styles"
+						:options="styleList"
+						tag-placeholder="Add this as new style" 
+						placeholder="Search or add a style"
+						:multiple="true"
+            :taggable="true"
+						:close-on-select="false"
+						:clear-on-select="false"
+						:preserve-search="false"
+            @tag="addStyle"
+					/>
+				</div>
+				<!-- Description -->
+				<div class="w-full">
+					<label
+						for="description"
+						class="block uppercase tracking-wide text-white font-semibold mb-2"
+					>
+						Description
+					</label>
+					<textarea
+						id="description"
 						type="text"
-						v-model="artist.idyoutubemusic"
-						:value="artist.idyoutubemusic"
-						placeholder="Artist idyoutubemusic"
-						name="artists-idyoutubemusic"
-					/>
-				</div>
-				<div class="flex flex-col space-y-1">
-					<span class="my-auto font-semibold text-lg">Description</span>
-					<t-textarea
-						id="desc"
 						placeholder="Description"
-						v-model="artist.description"
-						:value="artist.description"
-						name="description"
-						class="resize w-full h-44"
+						v-model="description"
+						class="
+							appearance-none
+							block
+							w-full
+							rounded
+							py-3
+							px-4
+							leading-tight
+							focus:outline-none
+							bg-gray-200
+							text-gray-700
+							border border-gray-200
+							focus:bg-white focus:border-gray-500
+						"
 					/>
 				</div>
-				<div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-5">
-					<div id="social-media" class="w-full space-y-1">
-						<span class="my-auto font-semibold text-lg">Social Media Link</span>
+				<!-- Social Media & Streaming Platforms Links -->
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-5 w-full">
+					<!-- Social Media Link -->
+					<div class="w-full">
+						<label
+							for="description"
+							class="
+								block
+								uppercase
+								tracking-wide
+								text-white
+								font-semibold
+								mb-2
+							"
+						>
+							Social Media Link
+						</label>
 						<MultipleInput
 							class="mb-1 w-full"
-							v-for="(elem, index) in artist.socials"
+							v-for="(element, index) in socials"
 							:key="index"
-							:elem="elem"
-							@updateinput="
-								updateList(artist.socials, $event, index, 'socials')
-							"
-							@deleteinput="deleteList(artist.socials, index, 'socials')"
+							:element="element"
+							placeholder="Add a social media link"
+							icon
+							@updateinput="updateList(socials, $event, index)"
+							@deleteinput="deleteList(socials, index)"
 						/>
 						<button
-							@click="addSocials()"
-							class="Card w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded"
+							class="
+								w-full
+								text-left
+								focus:outline-none
+								flex
+								space-x-2
+								bg-white bg-opacity-30
+								p-2
+								justify-center
+								rounded
+							"
+							@click="addSocialLink()"
 						>
-							<img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png" />
+							<icons-plus class="w-5 h-5 text-main-gray" />
 						</button>
 					</div>
-					<div id="streaming-platform" class="w-full space-y-1">
-						<span class="my-auto font-semibold text-lg"
-							>Streaming Platforms Link</span
+					<!-- Streaming Platforms Link -->
+					<div class="w-full">
+						<label
+							for="description"
+							class="
+								block
+								uppercase
+								tracking-wide
+								text-white
+								font-semibold
+								mb-2
+							"
 						>
+							Streaming Platforms Link
+						</label>
 						<MultipleInput
 							class="mb-1 w-full"
-							v-for="(elem, index) in artist.platforms"
+							v-for="(element, index) in platforms"
 							:key="index"
-							:elem="elem"
-							@updateinput="
-								updateList(artist.platforms, $event, index, 'platforms')
-							"
-							@deleteinput="deleteList(artist.platforms, index, 'platforms')"
+							:element="element"
+							placeholder="Add a platform link"
+							icon
+							@updateinput="updateList(platforms, $event, index)"
+							@deleteinput="deleteList(platforms, index)"
 						/>
 						<button
-							@click="addStreamingLink()"
-							class="Card w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded"
+							class="
+								w-full
+								text-left
+								focus:outline-none
+								flex
+								space-x-2
+								bg-white bg-opacity-30
+								p-2
+								justify-center
+								rounded
+							"
+							@click="addPlatformLink()"
 						>
-							<img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png" />
+							<icons-plus class="w-5 h-5 text-main-gray" />
 						</button>
 					</div>
 				</div>
-				<div id="source" class="flex flex-col space-y-1 w-full text-white">
-					<h1 class="text-white text-xl">Source*</h1>
-					<t-textarea
+				<!-- Source -->
+				<div class="w-full">
+					<label
+						for="source"
+						class="block uppercase tracking-wide text-white font-semibold mb-2"
+					>
+						Source*
+					</label>
+					<textarea
 						id="source"
+						type="text"
 						placeholder="Source"
 						v-model="source"
-						name="source"
-						class="resize w-full h-20"
+						class="
+							appearance-none
+							block
+							w-full
+							rounded
+							py-3
+							px-4
+							leading-tight
+							focus:outline-none
+							bg-gray-200
+							text-gray-700
+							border border-gray-200
+							focus:bg-white focus:border-gray-500
+						"
 					/>
 				</div>
-				<button
-					@click="editArtist()"
-					class="Card px-5 py-1 bg-red-700 hover:bg-red-900 text-white rounded"
-				>
-					Confirm
-				</button>
+				<div class="w-full flex justify-end">
+					<button
+						class="bg-red-one px-4 py-2 rounded text-white font-semibold"
+						@click="createArtist()"
+					>
+						Send Artist
+					</button>
+				</div>
 			</div>
-		</section>
+		</div>
 	</div>
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
-
+import { mapGetters } from "vuex";
 export default {
+	name: "CreateArtist",
+
 	data() {
 		return {
-			artist: {
-				name: null,
-				image:
-					"https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
-				type: "SOLO",
-				description: null,
-				styles: [],
-				socials: [],
-				platforms: [],
-				groups: [],
-				newGroups: [],
-				members: [],
-				newMembers: [],
-				idspotify: null,
-				idyoutubemusic: null,
-			},
-			styleList: [],
-			artistList: [],
+			name: "",
+			image: "https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
+			type: "SOLO",
+			description: "",
+			idYoutubeMusic: "",
 			source: "",
+			socials: [],
+			platforms: [],
+			members: [],
+			groups: [],
+			styles: [],
+			// general
 			isUploadingImage: false,
-			user: null,
+			artistList: [],
+			styleList: [],
+			newStyleAdded: false,
 		};
 	},
 
-	async asyncData({ $axios }) {
-		const artistList = await $axios.$get(
-			"https://comeback-api.herokuapp.com/artists/groups?sortby=name:asc"
-		);
-		const styleList = await $axios.$get(
-			"https://comeback-api.herokuapp.com/styles?sortby=name:asc"
-		);
-
+	async asyncData({ $fire }) {
+		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
+		const secondStepArtist = await firstStepArtist({})
+		const firstStepStyle = $fire.functions.httpsCallable("getStyles")
+		const secondStepStyle = await firstStepStyle({})
 		return {
-			artistList,
-			styleList,
+			artistList: secondStepArtist.data.artists,
+			styleList: secondStepStyle.data.styles,
 		};
 	},
 
-	mounted() {
-		this.user = this.GET_USER();
-	},
+	//watch all changes
+	// watch: {
+	// 	name: {
+	// 		handler: function (val) {
+	// 			console.log("name", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	image: {
+	// 		handler: function (val) {
+	// 			console.log("image", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	type: {
+	// 		handler: function (val) {
+	// 			console.log("type", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	description: {
+	// 		handler: function (val) {
+	// 			console.log("description", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	idYoutubeMusic: {
+	// 		handler: function (val) {
+	// 			console.log("idYoutubeMusic", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	source: {
+	// 		handler: function (val) {
+	// 			console.log("source", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	socials: {
+	// 		handler: function (val) {
+	// 			console.log("socials", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	platforms: {
+	// 		handler: function (val) {
+	// 			console.log("platforms", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	members: {
+	// 		handler: function (val) {
+	// 			console.log("members", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	groups: {
+	// 		handler: function (val) {
+	// 			console.log("groups", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// 	styles: {
+	// 		handler: function (val) {
+	// 			console.log("styles", val);
+	// 		},
+	// 		deep: true,
+	// 	},
+	// },
 
 	methods: {
 		...mapGetters(["GET_USER"]),
 
-		async editArtist() {
-			if (this.user == null) this.user = this.GET_USER();
-			await this.$axios
-				.post(`https://comeback-api.herokuapp.com/requests`, {
-					state: "PENDING",
-					method: "POST",
-					endpoint: `/artists`,
-					body: this.artist,
-					currentData: null,
-					userId: this.user.uid,
-					source: this.source,
+		createArtist() {
+			if ( this.name == "" || this.idYoutubeMusic == "" || this.source == "" ) {
+				this.$toast.error( "Please fill all fields before with * before send an artist", { duration: 5000, position: "top-right" } );
+				return;
+			}
+
+			if(this.newStyleAdded) {
+				const updateStyle = this.$fire.functions.httpsCallable("updateListStyle");
+				updateStyle({ styles: this.styleList })
+					.then(() => {
+						this.$toast.success( "Styles updated", { duration: 5000, position: "top-right" } );
+					})
+					.catch(() => {
+						this.$toast.error( "Error updating styles", { duration: 5000, position: "top-right" } );
+					});
+			}
+
+			const createArtist = this.$fire.functions.httpsCallable(
+				"createArtist"
+			);
+			createArtist({
+				name: this.name,
+				image: this.image,
+				type: this.type,
+				verified: false,
+				description: this.description,
+				socials: this.socials,
+				platforms: this.platforms,
+				idSpotify: null,
+				idYoutubeMusic: this.idYoutubeMusic,
+				groups: this.groups,
+				members: this.members,
+				styles: this.styles,
+				releases: null,
+				addedBy: this.GET_USER().uid,
+			})
+				.then((result) => {
+					const updateArtist = this.$fire.functions.httpsCallable("updateArtist");
+					updateArtist({id: result.data.id})
+						.then((res) => {
+							this.$toast.success( "Thank you, Your artist have been sent for verification", { duration: 5000, position: "top-right" } );
+							this.$router.push("/");
+						})
+						.catch(() => {
+							this.$toast.error( "Error updating artist", { duration: 5000, position: "top-right" } );
+						});
 				})
-				.then((response) => {
-					this.$toast.success(
-						"Thank you, Your edits have been sent for verification",
-						{ duration: 5000, position: "top-right" }
-					);
-					this.$router.push({ path: `/` });
+				.catch((error) => {
+					console.log(error);
 				});
 		},
 
-		addStyle(newTag) {
-			const tag = {
-				name: newTag,
-			};
-			if (this.artist.styles == null) {
-				this.artist.styles = [tag];
+		addStyle (newTag) {
+			if(this.styles == null) {
+					this.styles = [newTag]
 			} else {
-				this.artist.styles.push(tag);
+					this.styles.push(newTag)
 			}
-			this.styleList.push(tag);
+			this.styleList.push(newTag)
+			this.newStyleAdded = true
 		},
 
-		addGroup(newTag) {
-			const tag = {
-				name: newTag,
-				image:
-					"https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Fartists.jpg?alt=media&token=23be3721-5157-45a7-8c0e-e1c03c2e1827",
-				type: "SOLO",
-				website: null,
-				description: null,
-				socials: null,
-				platforms: null,
-			};
-			this.artistList.push(tag);
-			this.artist.groups.push(tag);
-			this.artist.newGroups.push(tag);
-		},
-
-		addMember(newTag) {
-			const tag = {
-				name: newTag,
-				image:
-					"https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Fartists.jpg?alt=media&token=23be3721-5157-45a7-8c0e-e1c03c2e1827",
-				type: "SOLO",
-				website: null,
-				description: null,
-				socials: null,
-				platforms: null,
-			};
-			this.artistList.push(tag);
-			this.artist.members.push(tag);
-			this.artist.newMembers.push(tag);
-		},
-
-		updateList(list, newElem, index, key) {
+		updateList(list, newElem, index) {
 			list[index] = newElem;
 		},
 
-		deleteList(list, index, key) {
+		deleteList(list, index) {
 			list.splice(index, 1);
 		},
 
-		addStreamingLink() {
-			if (this.artist.platforms == null) {
-				this.artist.platforms = [""];
+		addPlatformLink() {
+			if (this.platforms == null) {
+				this.platforms = [""];
 			} else {
-				this.artist.platforms.push("");
+				this.platforms.push("");
 			}
 		},
 
-		addSocials() {
-			if (this.artist.socials == null) {
-				this.artist.socials = [""];
+		addSocialLink() {
+			if (this.socials == null) {
+				this.socials = [""];
 			} else {
-				this.artist.socials.push("");
+				this.socials.push("");
 			}
 		},
 
@@ -432,13 +599,10 @@ export default {
 					console.error(error);
 				});
 			uploadTask.then((url) => {
-				this.artist.image = url;
+				this.image = url;
 				this.isUploadingImage = false;
 			});
 		},
 	},
 };
 </script>
-
-<style>
-</style>

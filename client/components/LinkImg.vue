@@ -3,14 +3,23 @@
         <div class="mt-1">
             <img :src="urls">
         </div>
-        <span class="linkName">{{this.extractRootDomain(this.url)}}</span>
+        <span v-if="name" class="linkName">{{this.extractRootDomain(this.url)}}</span>
     </a>
 </template>
 
 <script>
     export default {
 
-        props:['url', 'name'],
+        props: {
+            url: {
+                type: String,
+                required: true
+            },
+            name: {
+                type: Boolean,
+                default: false
+            }
+        },
 
         data(){
             return {

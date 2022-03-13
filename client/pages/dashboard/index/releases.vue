@@ -123,11 +123,8 @@
 
             async test(){
                 const {data:tests} = await this.$axios.get(`https://comeback-api.herokuapp.com/releases`)
-                console.log(tests)
                 tests.forEach(async element =>  {
-                    await this.$axios.delete(`https://comeback-api.herokuapp.com/releases/${element.id}`).then(response => {
-                        console.log(response)
-                    })      
+                    await this.$axios.delete(`https://comeback-api.herokuapp.com/releases/${element.id}`)
                 });
             },
 

@@ -3,7 +3,6 @@
     <section
       v-if="newsList.length"
       id="newAnnounce"
-      class="section"
     >
       <div class="flex w-full justify-start space-x-5 smooth">
         <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Next Comeback</h2>
@@ -70,41 +69,6 @@
 
     async mounted() {
       ScrollReveal().reveal('.section', {interval: 300, distance: '1000%', origin: 'bottom', opacity: null})
-      
-      // const testa = this.$fire.functions.httpsCallable("createRelease")
-      // const {data: res} = await testa({
-      //   name: "3RD DESIRE",
-      //   image: "https://picsum.photos/200",
-      //   type: "EP",
-      //   releaseDate: new Date(),
-      //   platforms: ['https://music.youtube.com/browse/MPREb_AVDV1DYsnOo'],
-      //   idSpotify: null,
-      //   idYoutubeMusic: "MPREb_AVDV1DYsnOo",
-      //   artists: [{
-      //     name: "Wooseok",
-      //     image: "https://picsum.photos/200",
-      //     id: "1"
-      //   }],
-      //   styles: ['K-POP'],
-      //   musics: [
-      //     {
-      //       name: "Ghostin'",
-      //       link: "https://youtu.be/784nm0vrTe0",
-      //     },
-      //     {
-      //       name: "Switch",
-      //       link: "https://youtu.be/784nm0vrTe0",
-      //     }
-      //   ],
-      // })
-      // console.log(res)
-
-      // const testb = this.$fire.functions.httpsCallable("updateRelease")
-      // const {data: resX} = await testb({
-      //   id: res.id,
-      //   name: "3RD DESIRE XXX"
-      // })
-      // console.log('resX', resX)
     },
     
     async asyncData({ $axios }){

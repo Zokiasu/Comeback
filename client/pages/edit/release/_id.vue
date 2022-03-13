@@ -47,7 +47,7 @@
                             tag-placeholder="Add this as new artist" 
                             placeholder="Search or add a artist" 
                             label="name" 
-                            key="id" 
+                            track-by="id" 
                             :options="artistList" 
                             :close-on-select="false"
                             :clear-on-select="false"
@@ -132,7 +132,7 @@
                 </div>
                 <div id="streaming-platform" class="w-full space-y-1">
                     <h3 class="my-auto font-semibold text-lg">Streaming Platforms Link</h3>
-                    <MultipleInput class="mb-1" v-for="(elem, index) in this.release.platforms" :key="index" :elem="elem" :placehol="'Streaming Platforms'" @updateinput="updateList(release.platforms, $event, index, 'platforms')" @deleteinput="deleteList(release.platforms, index)"/>
+                    <MultipleInput class="mb-1" v-for="(element, index) in this.release.platforms" :key="index" :element="element" :placehol="'Streaming Platforms'" @updateinput="updateList(release.platforms, $event, index, 'platforms')" @deleteinput="deleteList(release.platforms, index)"/>
                     <button @click="addStreamingLink()" class="Card w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded">
                         <img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png"/>
                     </button>

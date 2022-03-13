@@ -4,59 +4,13 @@
 			v-if="!newArtist"
 			v-model="artistSelected"
 			placeholder="Please select an artist"
+			track-by="id"
 			label="name"
-			key="id"
 			:options="artistList"
 			:close-on-select="true"
 			:clear-on-select="true"
 			:preserve-search="false"
-		>
-			<template slot="option" slot-scope="props">
-				<div class="option__desc flex flex-col gap-1">
-					<div class="flex flex-row gap-1">
-						<p class="option__title">{{ props.option.name }}</p>
-						<p v-if="props.option.type == 'GROUP'" class="option__subtitle">
-							[{{ props.option.type }}]
-						</p>
-					</div>
-					<div class="flex flex-wrap gap-1">
-						<p
-							v-for="(group, index) in props.option.groups"
-							:key="index"
-							class="bg-gray-300 p-1 px-2 rounded text-xs text-black-one"
-						>
-							{{ group.name }}
-						</p>
-					</div>
-				</div>
-			</template>
-			<template slot="singleLabel" slot-scope="props">
-				<div class="flex flex-col gap-1">
-					<img
-						:src="props.option.image"
-						:alt="props.option.name"
-						class="option__image aspect-video h-32 object-cover rounded"
-					/>
-					<div class="option__desc flex flex-col gap-1">
-						<div class="flex flex-row gap-1 font-semibold text-lg">
-							<p class="option__title">{{ props.option.name }}</p>
-							<p v-if="props.option.type == 'GROUP'" class="option__subtitle">
-								[{{ props.option.type }}]
-							</p>
-						</div>
-						<div class="flex flex-wrap gap-1">
-							<p
-								v-for="(group, index) in props.option.groups"
-								:key="index"
-								class="bg-gray-300 p-1 px-2 rounded text-xs text-black-one"
-							>
-								{{ group.name }}
-							</p>
-						</div>
-					</div>
-				</div>
-			</template>
-		</multiselect>
+		/>
 		<t-input
 			v-else
 			type="text"

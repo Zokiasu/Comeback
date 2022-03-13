@@ -51,7 +51,7 @@ export default {
       { property: "og:image:height", content: "300" },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'favicon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
 
@@ -72,6 +72,8 @@ export default {
   plugins: [
     '~/plugins/inject.js',
     '~/plugins/vtlw.js',
+    '~/plugins/vueMultiselect.js',
+    '~/plugins/vClickOutside.js',
     { src: '~/plugins/v-calendar.js', ssr: false },
     { src: "~/plugins/infiniteloading", ssr: false },
   ],
@@ -93,7 +95,6 @@ export default {
   modules: [
     '@nuxtjs/toast',
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
     [
       '@nuxtjs/firebase',
       {
@@ -133,13 +134,6 @@ export default {
   ],
 
   axios: [],
-
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
-  pwa: {
-    manifest: {
-      lang: 'en'
-    }
-  },
 
   toast: {
     position: 'top-right',
