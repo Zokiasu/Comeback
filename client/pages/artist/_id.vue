@@ -1,25 +1,47 @@
 <template>
 	<div class="text-white">
-		<div class="background-top bg-cover bg-no-repeat relative h-96 overflow-hidden" :style="{ 'background-image': 'url(https://picsum.photos/900/300)' }">
-			<div class="absolute overflow-x-auto bottom-0 w-full space-y-3 p-3 p">
+		<div
+			class="background-top bg-cover bg-no-repeat relative h-96 overflow-hidden"
+			:style="{ 'background-image': 'url(https://picsum.photos/900/300)' }"
+		>
+			<div class="absolute overflow-x-auto bottom-0 w-full space-y-3 p-5">
 				<div class="mb-5">
-					<h1 class="text-6xl">WayV</h1>
+					<h1 class="text-6xl font-semibold">WayV</h1>
 				</div>
 				<div class="flex flex-nowrap overflow-x-scroll gap-3">
-					<a 
-						v-for="(text, index) in ['Facebook', 'Instagram', 'Twitter', 'Youtube']"
+					<a
+						v-for="(text, index) in [
+							'Facebook',
+							'Instagram',
+							'Twitter',
+							'Youtube',
+						]"
 						:key="index"
 						class="whitespace-nowrap"
-					>{{ text }}</a>
+						>{{ text }}</a
+					>
 				</div>
 				<div class="flex flex-nowrap overflow-x-scroll scroll gap-3 testa">
-					<a 
-						v-for="(text, index) in ['Spotify', 'Youtube Music', 'Apple Music', 'Tidal', 'Deezer']" 
+					<a
+						v-for="(text, index) in [
+							'Spotify',
+							'Youtube Music',
+							'Apple Music',
+							'Tidal',
+							'Deezer',
+						]"
 						:key="index"
 						class="whitespace-nowrap"
-					>{{ text }}</a>
+						>{{ text }}</a
+					>
 				</div>
 			</div>
+		</div>
+		<div>
+		<div class="relative h-fit w-fit">
+			<iframe width="700" height="380" src="https://www.youtube.com/embed/0R1rDjIXzF0?autoplay=0&controls=0&showinfo=0&rel=0&start=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+			<div class="w-full h-full top-0 right-0 bottom-0 left-0 absolute bg-red-500/10"></div>
+		</div>
 		</div>
 	</div>
 </template>
@@ -64,7 +86,7 @@ export default {
 		return { artist: secondStepArtistId.data.artist };
 	},
 
-	mounted(){
+	mounted() {
 		console.log("artist", this.artist);
 	},
 
@@ -114,9 +136,9 @@ export default {
 .testa {
 	scrollbar-width: none;
 	-ms-overflow-style: none;
-  overflow: -moz-scrollbars-none;
+	overflow: -moz-scrollbars-none;
 }
 .testa::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 </style>
