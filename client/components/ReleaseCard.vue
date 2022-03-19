@@ -1,19 +1,18 @@
 <template>
-  <NuxtLink :to="`/release/${id}`" class="texts flex flex-col text-white rounded">
-    <div class="relative h-36 w-36 xl:h-40 xl:w-40">
+  <NuxtLink :to="`/release/${id}`" class="flex flex-col space-y-1 text-white rounded">
+    <div class="relative">
         <div class="bg-gray-500 rounded-md">
-          <img 
-            :src="image" 
-           
-            alt="Artist Picture" 
-            class="rounded-md object-cover aspect-square bg-gray-500 h-36 w-36 xl:h-40 xl:w-40"
+          <img
+            :src="image"
+            alt="Artist Picture"
+            class="rounded-md object-cover aspect-square bg-gray-500 drop-shadow-2xl w-full"
           />
         </div>
         <div v-if="displayDate" class="absolute top-1 right-1 px-2 py-0.5 rounded text-white bg-gray-500 bg-opacity-80">
             <p class="text-center text-xs">{{ new Date(date).toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit' }) }}</p>
         </div>
     </div>
-    <div class="w-32 lg:w-40">
+    <div>
       <div class="flex text-xs md:text-sm">
         <span class="truncate"><span class="font-semibold">{{name}}</span></span>
       </div>
@@ -78,20 +77,3 @@
     }
   }
 </script>
-
-<style>
-  .texts {
-    font-family:
-      'Sarala'
-      'Quicksand',
-      'Source Sans Pro',
-      -apple-system,
-      BlinkMacSystemFont,
-      'Segoe UI',
-      Roboto,
-      'Helvetica Neue',
-      Arial,
-      sans-serif;
-    letter-spacing: 1px;
-  }
-</style>

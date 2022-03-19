@@ -1,12 +1,12 @@
 <template>
   <div :id="`artist-card-${id}`" class="text-white">
-    <div class="h-20 md:h-40 w-20 md:w-40 mx-auto">
+    <div class="mx-auto aspect-square">
       <NuxtLink :to="`/artist/${id}`">
         <img 
           :src="image"
           :alt="name"
          
-          class="rounded-full h-20 md:h-40 w-20 md:w-40 object-cover bg-gray-700"
+          class="rounded-full object-cover bg-gray-700 aspect-square"
         />
       </NuxtLink>
     </div>
@@ -38,7 +38,7 @@
       },
       type: {
         type: String,
-        required: true,
+        required: false,
       },
       groups: {
         type: Array,
