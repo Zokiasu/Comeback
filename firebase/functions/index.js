@@ -8,7 +8,7 @@ const db = admin.firestore();
 
 // User \\
 
-exports.createUser = functions.https.onCall((data, context) => {
+exports.createUser = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("createUser", {structuredData: true});
   return db.collection("users").doc(data.id).set({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -29,7 +29,7 @@ exports.createUser = functions.https.onCall((data, context) => {
       });
 });
 
-exports.readUser = functions.https.onCall((data, context) => {
+exports.readUser = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("readUser", {structuredData: true});
   return db.collection("users").doc(data.id).get()
       .then((doc) => {
@@ -40,7 +40,7 @@ exports.readUser = functions.https.onCall((data, context) => {
       });
 });
 
-exports.updateUser = functions.https.onCall((data, context) => {
+exports.updateUser = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("updateUser", {structuredData: true});
   const user = data;
   user["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
@@ -53,7 +53,7 @@ exports.updateUser = functions.https.onCall((data, context) => {
       });
 });
 
-exports.deleteUser = functions.https.onCall((data, context) => {
+exports.deleteUser = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("deleteUser", {structuredData: true});
   return db.collection("users").doc(data.id).delete()
       .then((ref) => {
@@ -67,7 +67,7 @@ exports.deleteUser = functions.https.onCall((data, context) => {
 // ////// Artists \\\\\\
 
 // Create a new artist
-exports.createArtist = functions.https.onCall((data, context) => {
+exports.createArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("createArtist", {structuredData: true});
   return db.collection("artists").add({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -91,7 +91,7 @@ exports.createArtist = functions.https.onCall((data, context) => {
 });
 
 // Get all artists list
-exports.getArtist = functions.https.onCall((data, context) => {
+exports.getArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // Access-Control-Allow-Origin functions
   context.response.set("Access-Control-Allow-Origin", "*");
   // functions.logger.info("getArtist", {structuredData: true});
@@ -108,7 +108,7 @@ exports.getArtist = functions.https.onCall((data, context) => {
 });
 
 // Get artist by id
-exports.getArtistById = functions.https.onCall((data, context) => {
+exports.getArtistById = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getArtistById", {structuredData: true});
   return db.collection("artists").doc(data.id).get()
       .then((doc) => {
@@ -119,7 +119,7 @@ exports.getArtistById = functions.https.onCall((data, context) => {
 });
 
 // Update artist
-exports.updateArtistById = functions.https.onCall((data, context) => {
+exports.updateArtistById = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("updateArtistById", {structuredData: true});
   const artist = data;
   artist["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
@@ -133,7 +133,7 @@ exports.updateArtistById = functions.https.onCall((data, context) => {
 });
 
 // Delete artist
-exports.deleteArtist = functions.https.onCall((data, context) => {
+exports.deleteArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("deleteArtist", {structuredData: true});
   return db.collection("artists").doc(data.id).delete()
       .then((ref) => {
@@ -147,7 +147,7 @@ exports.deleteArtist = functions.https.onCall((data, context) => {
 // ////// Follow to Artist \\\\\\
 
 // Add follower to artist
-exports.addFollowerArtist = functions.https.onCall((data, context) => {
+exports.addFollowerArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("addFollowerArtist", {structuredData: true});
   const user = data.user;
   return db.collection("artists").doc(data.id).collection("followers").doc(user.id).set(user)
@@ -160,7 +160,7 @@ exports.addFollowerArtist = functions.https.onCall((data, context) => {
 });
 
 // Delete follower to artist
-exports.deleteFollowerArtist = functions.https.onCall((data, context) => {
+exports.deleteFollowerArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("deleteFollowerArtist", {structuredData: true});
   const user = data.user;
   return db.collection("artists").doc(data.id).collection("followers").doc(user.id).delete()
@@ -173,7 +173,7 @@ exports.deleteFollowerArtist = functions.https.onCall((data, context) => {
 });
 
 // Verified if user follow artist
-exports.getFollowerArtistExisted = functions.https.onCall((data, context) => {
+exports.getFollowerArtistExisted = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getFollowerArtistExisted", {structuredData: true});
   return db.collection("artists").doc(data.id).collection("followers")
       .where("id", "==", data.user).get()
@@ -186,7 +186,7 @@ exports.getFollowerArtistExisted = functions.https.onCall((data, context) => {
 });
 
 // Get all followers from artist
-exports.getFollowersArtist = functions.https.onCall((data, context) => {
+exports.getFollowersArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getFollowersArtist", {structuredData: true});
   const followers = [];
   const result = db.collection("artists").doc(data.id).collection("followers").get().then((snapshot) => {
@@ -203,7 +203,7 @@ exports.getFollowersArtist = functions.https.onCall((data, context) => {
 // ////// Group to Artist \\\\\\
 
 // Add group to artist
-exports.addGroupsArtist = functions.https.onCall((data, context) => {
+exports.addGroupsArtist = functions.region("europe-west1").https.onCall((data, context) => {
   functions.logger.info("addGroupsArtist", {structuredData: true});
   const group = data.group;
   db.collection("artists").doc(data.id).get().then((doc) => {
@@ -220,7 +220,7 @@ exports.addGroupsArtist = functions.https.onCall((data, context) => {
 });
 
 // Get all group to artist
-exports.getGroupsArtist = functions.https.onCall((data, context) => {
+exports.getGroupsArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getGroupsArtist", {structuredData: true});
   const groups = [];
   const result = db.collection("artists").doc(data.id).collection("groups").get().then((snapshot) => {
@@ -235,7 +235,7 @@ exports.getGroupsArtist = functions.https.onCall((data, context) => {
 });
 
 // Delete group to artist
-exports.deleteGroupsArtist = functions.https.onCall((data, context) => {
+exports.deleteGroupsArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("deleteGroupsArtist", {structuredData: true});
   const group = data.group;
   return db.collection("artists").doc(data.id).collection("groups").doc(group.id).delete()
@@ -251,7 +251,7 @@ exports.deleteGroupsArtist = functions.https.onCall((data, context) => {
 // ////// Member to Artist \\\\\\
 
 // Add members to artist
-exports.addMembersArtist = functions.https.onCall((data, context) => {
+exports.addMembersArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("addMembersArtist", {structuredData: true});
   const member = data.member;
   db.collection("artists").doc(data.id).get().then((doc) => {
@@ -268,7 +268,7 @@ exports.addMembersArtist = functions.https.onCall((data, context) => {
 });
 
 // Get all members from artist
-exports.getMembersArtist = functions.https.onCall((data, context) => {
+exports.getMembersArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getMembersArtist", {structuredData: true});
   const members = [];
   const result = db.collection("artists").doc(data.id).collection("members").get().then((snapshot) => {
@@ -283,7 +283,7 @@ exports.getMembersArtist = functions.https.onCall((data, context) => {
 });
 
 // Delete members to artist
-exports.deleteMembersArtist = functions.https.onCall((data, context) => {
+exports.deleteMembersArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("deleteMembersArtist", {structuredData: true});
   const member = data.member;
   return db.collection("artists").doc(data.id).collection("members").doc(member.id).delete()
@@ -298,7 +298,7 @@ exports.deleteMembersArtist = functions.https.onCall((data, context) => {
 // ////// Pending \\\\\\
 
 // Add pending update artist
-exports.createPendingUpdateArtist = functions.https.onCall((data, context) => {
+exports.createPendingUpdateArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("createPendingUpdateArtist", {structuredData: true});
   return db.collection("updateArtistPending").doc(data.idPending).set(data)
       .then((ref) => {
@@ -310,7 +310,7 @@ exports.createPendingUpdateArtist = functions.https.onCall((data, context) => {
 });
 
 // Delete pending update artist
-exports.deletePendingUpdateArtist = functions.https.onCall((data, context) => {
+exports.deletePendingUpdateArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("deletePendingUpdateArtist", {structuredData: true});
   return db.collection("updateArtistPending").doc(data.idPending).delete()
       .then((ref) => {
@@ -322,7 +322,7 @@ exports.deletePendingUpdateArtist = functions.https.onCall((data, context) => {
 });
 
 // Add group to pending artist
-exports.addPendingGroupsArtist = functions.https.onCall((data, context) => {
+exports.addPendingGroupsArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("addPendingGroupsArtist", {structuredData: true});
   const group = data.group;
   return db.collection("updateArtistPending").doc(data.idPending).collection("groups").doc(group.id).set(group)
@@ -335,7 +335,7 @@ exports.addPendingGroupsArtist = functions.https.onCall((data, context) => {
 });
 
 // Add members to pending artist
-exports.addPendingMembersArtist = functions.https.onCall((data, context) => {
+exports.addPendingMembersArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("addPendingMembersArtist", {structuredData: true});
   const member = data.member;
   return db.collection("updateArtistPending").doc(data.idPending).collection("members").doc(member.id).set(member)
@@ -348,7 +348,7 @@ exports.addPendingMembersArtist = functions.https.onCall((data, context) => {
 });
 
 // get all pending update artist
-exports.getPendingUpdateArtist = functions.https.onCall((data, context) => {
+exports.getPendingUpdateArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getPendingUpdateArtist", {structuredData: true});
   return db.collection("updateArtistPending").get()
       .then((snapshot) => {
@@ -363,7 +363,7 @@ exports.getPendingUpdateArtist = functions.https.onCall((data, context) => {
 });
 
 // Get all members to pending update artist
-exports.getMembersPendingUpdateArtist = functions.https.onCall((data, context) => {
+exports.getMembersPendingUpdateArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getMembersPendingUpdateArtist", {structuredData: true});
   const members = [];
   const result = db.collection("updateArtistPending").doc(data.idPending).collection("members").get().then((snapshot) => {
@@ -378,7 +378,7 @@ exports.getMembersPendingUpdateArtist = functions.https.onCall((data, context) =
 });
 
 // Get all group to pending update artist
-exports.getGroupsPendingUpdateArtist = functions.https.onCall((data, context) => {
+exports.getGroupsPendingUpdateArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getGroupsPendingUpdateArtist", {structuredData: true});
   const groups = [];
   const result = db.collection("updateArtistPending").doc(data.idPending).collection("groups").get().then((snapshot) => {
@@ -393,7 +393,7 @@ exports.getGroupsPendingUpdateArtist = functions.https.onCall((data, context) =>
 });
 
 // get artist pending create
-exports.getPendingCreateArtist = functions.https.onCall((data, context) => {
+exports.getPendingCreateArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getPendingCreateArtist", {structuredData: true});
   return db.collection("artists").where("verified", "==", false).get()
       .then((snapshot) => {
@@ -409,7 +409,7 @@ exports.getPendingCreateArtist = functions.https.onCall((data, context) => {
 
 // ////// Styles \\\\\\
 
-exports.getStyles = functions.https.onCall((data, context) => {
+exports.getStyles = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getStyles", {structuredData: true});
   return db.collection("general").doc("data").get()
       .then((snapshot) => {
@@ -419,7 +419,7 @@ exports.getStyles = functions.https.onCall((data, context) => {
       });
 });
 
-exports.updateListStyle = functions.https.onCall((data, context) => {
+exports.updateListStyle = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("updateListStyle", {structuredData: true});
   return db.collection("general").doc("data").set({
     styles: data.styles,
@@ -435,7 +435,7 @@ exports.updateListStyle = functions.https.onCall((data, context) => {
 // ////// Releases \\\\\\
 
 // Create Release
-exports.createRelease = functions.https.onCall((data, context) => {
+exports.createRelease = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("createRelease", {structuredData: true});
   return db.collection("releases").add({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -460,7 +460,7 @@ exports.createRelease = functions.https.onCall((data, context) => {
 });
 
 // Get all artists list
-exports.getReleaseByArtist = functions.https.onCall((data, context) => {
+exports.getReleaseByArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getReleaseByArtist", {structuredData: true});
   return db.collection("releases").where("artists", "==", data.id).get()
       .then((snapshot) => {
@@ -474,7 +474,7 @@ exports.getReleaseByArtist = functions.https.onCall((data, context) => {
       });
 });
 
-exports.updateRelease = functions.https.onCall((data, context) => {
+exports.updateRelease = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("updateRelease", {structuredData: true});
   const release = data;
   release["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
@@ -489,7 +489,7 @@ exports.updateRelease = functions.https.onCall((data, context) => {
 
 // ////// News \\\\\\
 
-exports.createNews = functions.https.onCall((data, context) => {
+exports.createNews = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("createNews", {structuredData: true});
   return db.collection("news").add({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -509,7 +509,7 @@ exports.createNews = functions.https.onCall((data, context) => {
       });
 });
 
-exports.updateNews = functions.https.onCall((data, context) => {
+exports.updateNews = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("updateNews", {structuredData: true});
   const news = data;
   news["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();

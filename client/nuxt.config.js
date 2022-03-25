@@ -118,7 +118,7 @@ export default {
           },
           firestore: true,
           functions: {
-            location: 'us-central1',
+            location: 'europe-west1',
             // emulatorPort: process.env.NODE_ENV !== 'production' ? 5001: null,
             // emulatorHost: 'http://localhost',
           },
