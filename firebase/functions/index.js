@@ -92,8 +92,6 @@ exports.createArtist = functions.region("europe-west1").https.onCall((data, cont
 
 // Get all artists list
 exports.getArtist = functions.region("europe-west1").https.onCall((data, context) => {
-  // Access-Control-Allow-Origin functions
-  context.response.set("Access-Control-Allow-Origin", "*");
   // functions.logger.info("getArtist", {structuredData: true});
   return db.collection("artists").where("verified", "==", true).get()
       .then((snapshot) => {

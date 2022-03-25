@@ -174,17 +174,18 @@ export default {
 		this.displayOnlineOption = this.isLoggedIn();
 		this.admin = this.isAdmin();
 		this.imageBackground = this.artist.image.toString();
+		this.userInfo = this.GET_USER_DATA();
 	},
 
 	async mounted() {
-		const firstStepFollowArtistId = this.$fire.functions.httpsCallable(
-			"getFollowerArtistExisted"
-		);
-		const secondStepFollowArtistId = await firstStepFollowArtistId({
-			id: this.$route.params.id,
-			user: this.$store.state.user.uid,
-		});
-		this.liked = secondStepFollowArtistId.data.added;
+		if(displayOnlineOption) {
+			const firstStepFollowArtistId = this.$fire.functions.httpsCallable("getFollowerArtistExisted");
+			const secondStepFollowArtistId = await firstStepFollowArtistId({
+				artistId: this.artist.id,
+				userId: this.userInfo.id,
+			});
+			this.liked = secondStepFollowArtistId.data.liked;
+		}
 
 		const firstStepReleaseId =
 			this.$fire.functions.httpsCallable("getReleaseByArtist");
