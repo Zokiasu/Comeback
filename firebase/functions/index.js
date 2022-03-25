@@ -1,6 +1,6 @@
+/* eslint-disable max-len */
 const functions = require("firebase-functions");
 
-const firebase_tools = require('firebase-tools');
 const admin = require("firebase-admin");
 admin.initializeApp();
 admin.firestore().settings({ignoreUndefinedProperties: true});
@@ -9,7 +9,7 @@ const db = admin.firestore();
 // User \\
 
 exports.createUser = functions.https.onCall((data, context) => {
-  //functions.logger.info("createUser", {structuredData: true});
+  // functions.logger.info("createUser", {structuredData: true});
   return db.collection("users").doc(data.id).set({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -30,7 +30,7 @@ exports.createUser = functions.https.onCall((data, context) => {
 });
 
 exports.readUser = functions.https.onCall((data, context) => {
-  //functions.logger.info("readUser", {structuredData: true});
+  // functions.logger.info("readUser", {structuredData: true});
   return db.collection("users").doc(data.id).get()
       .then((doc) => {
         return {success: true, data: doc.data()};
@@ -41,7 +41,7 @@ exports.readUser = functions.https.onCall((data, context) => {
 });
 
 exports.updateUser = functions.https.onCall((data, context) => {
-  //functions.logger.info("updateUser", {structuredData: true});
+  // functions.logger.info("updateUser", {structuredData: true});
   const user = data;
   user["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
   return db.collection("artists").doc(user.id).update(user)
@@ -54,9 +54,9 @@ exports.updateUser = functions.https.onCall((data, context) => {
 });
 
 exports.deleteUser = functions.https.onCall((data, context) => {
-  //functions.logger.info("deleteUser", {structuredData: true});
+  // functions.logger.info("deleteUser", {structuredData: true});
   return db.collection("users").doc(data.id).delete()
-      .then((ref) => { 
+      .then((ref) => {
         return {success: true, res: "User deleted", message: "User deleted"};
       })
       .catch((err) => {
@@ -64,11 +64,11 @@ exports.deleteUser = functions.https.onCall((data, context) => {
       });
 });
 
-// Artists \\
+// ////// Artists \\\\\\
 
 // Create a new artist
 exports.createArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("createArtist", {structuredData: true});
+  // functions.logger.info("createArtist", {structuredData: true});
   return db.collection("artists").add({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -92,7 +92,7 @@ exports.createArtist = functions.https.onCall((data, context) => {
 
 // Get all artists list
 exports.getArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("getArtist", {structuredData: true});
+  // functions.logger.info("getArtist", {structuredData: true});
   return db.collection("artists").where("verified", "==", true).get()
       .then((snapshot) => {
         const artists = [];
@@ -107,7 +107,7 @@ exports.getArtist = functions.https.onCall((data, context) => {
 
 // Get artist by id
 exports.getArtistById = functions.https.onCall((data, context) => {
-  //functions.logger.info("getArtistById", {structuredData: true});
+  // functions.logger.info("getArtistById", {structuredData: true});
   return db.collection("artists").doc(data.id).get()
       .then((doc) => {
         return {success: true, artist: doc.data()};
@@ -118,7 +118,7 @@ exports.getArtistById = functions.https.onCall((data, context) => {
 
 // Update artist
 exports.updateArtistById = functions.https.onCall((data, context) => {
-  //functions.logger.info("updateArtistById", {structuredData: true});
+  // functions.logger.info("updateArtistById", {structuredData: true});
   const artist = data;
   artist["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
   return db.collection("artists").doc(artist.id).update(artist)
@@ -132,9 +132,9 @@ exports.updateArtistById = functions.https.onCall((data, context) => {
 
 // Delete artist
 exports.deleteArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("deleteArtist", {structuredData: true});
+  // functions.logger.info("deleteArtist", {structuredData: true});
   return db.collection("artists").doc(data.id).delete()
-      .then((ref) => { 
+      .then((ref) => {
         return {success: true, res: "Artist deleted", message: "Artist deleted"};
       })
       .catch((err) => {
@@ -142,11 +142,11 @@ exports.deleteArtist = functions.https.onCall((data, context) => {
       });
 });
 
-/// Follow to Artist \\\
+// ////// Follow to Artist \\\\\\
 
 // Add follower to artist
 exports.addFollowerArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("addFollowerArtist", {structuredData: true});
+  // functions.logger.info("addFollowerArtist", {structuredData: true});
   const user = data.user;
   return db.collection("artists").doc(data.id).collection("followers").doc(user.id).set(user)
       .then((ref) => {
@@ -159,10 +159,10 @@ exports.addFollowerArtist = functions.https.onCall((data, context) => {
 
 // Delete follower to artist
 exports.deleteFollowerArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("deleteFollowerArtist", {structuredData: true});
+  // functions.logger.info("deleteFollowerArtist", {structuredData: true});
   const user = data.user;
   return db.collection("artists").doc(data.id).collection("followers").doc(user.id).delete()
-      .then((ref) => { 
+      .then((ref) => {
         return {success: true, res: "follower deleted", message: "follower deleted"};
       })
       .catch((err) => {
@@ -172,9 +172,9 @@ exports.deleteFollowerArtist = functions.https.onCall((data, context) => {
 
 // Verified if user follow artist
 exports.getFollowerArtistExisted = functions.https.onCall((data, context) => {
-  //functions.logger.info("getFollowerArtistExisted", {structuredData: true});
+  // functions.logger.info("getFollowerArtistExisted", {structuredData: true});
   return db.collection("artists").doc(data.id).collection("followers")
-  .where("id", "==", data.user).get()
+      .where("id", "==", data.user).get()
       .then((ref) => {
         return {success: true, added: true, message: "Follower existed"};
       })
@@ -184,24 +184,30 @@ exports.getFollowerArtistExisted = functions.https.onCall((data, context) => {
 });
 
 // Get all followers from artist
-exports.getFollowersArtist = functions.https.onCall(async (data, context) => {
-  //functions.logger.info("getFollowersArtist", {structuredData: true});
-  const result = await db.collection("artists").doc(data.id).collection("followers").get();
+exports.getFollowersArtist = functions.https.onCall((data, context) => {
+  // functions.logger.info("getFollowersArtist", {structuredData: true});
   const followers = [];
-  result.forEach((doc) => {
-    followers.push(doc.data());
+  const result = db.collection("artists").doc(data.id).collection("followers").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      followers.push(doc.data());
+    });
+    return {success: true, followers: followers};
+  }).catch((err) => {
+    return {success: false, followers: []};
   });
-  return {success: true, followers: followers};
+  return result;
 });
 
-/// Group to Artist \\\
+// ////// Group to Artist \\\\\\
 
 // Add group to artist
-exports.addGroupsArtist = functions.https.onCall(async (data, context) => {
+exports.addGroupsArtist = functions.https.onCall((data, context) => {
   functions.logger.info("addGroupsArtist", {structuredData: true});
   const group = data.group;
-  const artistAsMember = await db.collection("artists").doc(data.id).get();
-  db.collection("artists").doc(group.id).collection("members").doc(artistAsMember.data().id).set(artistAsMember.data())
+  db.collection("artists").doc(data.id).get().then((doc) => {
+    const artist = doc.data();
+    db.collection("artists").doc(group.id).collection("members").doc(artist.id).set(artist);
+  });
   return db.collection("artists").doc(data.id).collection("groups").doc(group.id).set(group)
       .then((ref) => {
         return {success: true, added: true, message: "groups added"};
@@ -212,22 +218,26 @@ exports.addGroupsArtist = functions.https.onCall(async (data, context) => {
 });
 
 // Get all group to artist
-exports.getGroupsArtist = functions.https.onCall(async (data, context) => {
-  //functions.logger.info("getGroupsArtist", {structuredData: true});
-  const result = await db.collection("artists").doc(data.id).collection("groups").get();
+exports.getGroupsArtist = functions.https.onCall((data, context) => {
+  // functions.logger.info("getGroupsArtist", {structuredData: true});
   const groups = [];
-  result.forEach((doc) => {
-    groups.push(doc.data());
+  const result = db.collection("artists").doc(data.id).collection("groups").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      groups.push(doc.data());
+    });
+    return {success: true, groups: groups};
+  }).catch((err) => {
+    return {success: false, groups: []};
   });
-  return groups;
+  return result;
 });
 
 // Delete group to artist
 exports.deleteGroupsArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("deleteGroupsArtist", {structuredData: true});
+  // functions.logger.info("deleteGroupsArtist", {structuredData: true});
   const group = data.group;
   return db.collection("artists").doc(data.id).collection("groups").doc(group.id).delete()
-      .then((ref) => { 
+      .then((ref) => {
         return {success: true, res: `groups ${data.name} deleted`, message: "groups deleted"};
       })
       .catch((err) => {
@@ -236,14 +246,16 @@ exports.deleteGroupsArtist = functions.https.onCall((data, context) => {
 });
 
 
-/// Member to Artist \\\
+// ////// Member to Artist \\\\\\
 
 // Add members to artist
-exports.addMembersArtist = functions.https.onCall(async (data, context) => {
-  //functions.logger.info("addMembersArtist", {structuredData: true});
+exports.addMembersArtist = functions.https.onCall((data, context) => {
+  // functions.logger.info("addMembersArtist", {structuredData: true});
   const member = data.member;
-  const artistAsGroup = await db.collection("artists").doc(data.id).get();
-  db.collection("artists").doc(member.id).collection("groups").doc(artistAsGroup.data().id).set(artistAsGroup.data())
+  db.collection("artists").doc(data.id).get().then((doc) => {
+    const artist = doc.data();
+    db.collection("artists").doc(member.id).collection("groups").doc(artist.id).set(artist);
+  });
   return db.collection("artists").doc(data.id).collection("members").doc(member.id).set(member)
       .then((ref) => {
         return {success: true, added: true, message: "members added"};
@@ -254,22 +266,26 @@ exports.addMembersArtist = functions.https.onCall(async (data, context) => {
 });
 
 // Get all members from artist
-exports.getMembersArtist = functions.https.onCall(async (data, context) => {
-  //functions.logger.info("getMembersArtist", {structuredData: true});
-  const result = await db.collection("artists").doc(data.id).collection("members").get();
+exports.getMembersArtist = functions.https.onCall((data, context) => {
+  // functions.logger.info("getMembersArtist", {structuredData: true});
   const members = [];
-  result.forEach((doc) => {
-    members.push(doc.data());
+  const result = db.collection("artists").doc(data.id).collection("members").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      members.push(doc.data());
+    });
+    return {success: true, members: members};
+  }).catch((err) => {
+    return {success: false, members: []};
   });
-  return members;
+  return result;
 });
 
 // Delete members to artist
 exports.deleteMembersArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("deleteMembersArtist", {structuredData: true});
+  // functions.logger.info("deleteMembersArtist", {structuredData: true});
   const member = data.member;
   return db.collection("artists").doc(data.id).collection("members").doc(member.id).delete()
-      .then((ref) => { 
+      .then((ref) => {
         return {success: true, res: "members deleted", message: "members deleted"};
       })
       .catch((err) => {
@@ -277,11 +293,11 @@ exports.deleteMembersArtist = functions.https.onCall((data, context) => {
       });
 });
 
-// Pending \\
+// ////// Pending \\\\\\
 
 // Add pending update artist
 exports.createPendingUpdateArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("createPendingUpdateArtist", {structuredData: true});
+  // functions.logger.info("createPendingUpdateArtist", {structuredData: true});
   return db.collection("updateArtistPending").doc(data.idPending).set(data)
       .then((ref) => {
         return {success: true, artist: ref, message: "updated successfully."};
@@ -293,9 +309,9 @@ exports.createPendingUpdateArtist = functions.https.onCall((data, context) => {
 
 // Delete pending update artist
 exports.deletePendingUpdateArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("deletePendingUpdateArtist", {structuredData: true});
+  // functions.logger.info("deletePendingUpdateArtist", {structuredData: true});
   return db.collection("updateArtistPending").doc(data.idPending).delete()
-      .then((ref) => { 
+      .then((ref) => {
         return {success: true, res: "pending artist deleted", message: "pending artist deleted"};
       })
       .catch((err) => {
@@ -305,7 +321,7 @@ exports.deletePendingUpdateArtist = functions.https.onCall((data, context) => {
 
 // Add group to pending artist
 exports.addPendingGroupsArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("addPendingGroupsArtist", {structuredData: true});
+  // functions.logger.info("addPendingGroupsArtist", {structuredData: true});
   const group = data.group;
   return db.collection("updateArtistPending").doc(data.idPending).collection("groups").doc(group.id).set(group)
       .then((ref) => {
@@ -318,7 +334,7 @@ exports.addPendingGroupsArtist = functions.https.onCall((data, context) => {
 
 // Add members to pending artist
 exports.addPendingMembersArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("addPendingMembersArtist", {structuredData: true});
+  // functions.logger.info("addPendingMembersArtist", {structuredData: true});
   const member = data.member;
   return db.collection("updateArtistPending").doc(data.idPending).collection("members").doc(member.id).set(member)
       .then((ref) => {
@@ -331,7 +347,7 @@ exports.addPendingMembersArtist = functions.https.onCall((data, context) => {
 
 // get all pending update artist
 exports.getPendingUpdateArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("getPendingUpdateArtist", {structuredData: true});
+  // functions.logger.info("getPendingUpdateArtist", {structuredData: true});
   return db.collection("updateArtistPending").get()
       .then((snapshot) => {
         const artists = [];
@@ -345,31 +361,38 @@ exports.getPendingUpdateArtist = functions.https.onCall((data, context) => {
 });
 
 // Get all members to pending update artist
-exports.getMembersPendingUpdateArtist = functions.https.onCall(async (data, context) => {
-  //functions.logger.info("getMembersPendingUpdateArtist", {structuredData: true});
-  const result = await db.collection("updateArtistPending").doc(data.idPending).collection("members").get();
+exports.getMembersPendingUpdateArtist = functions.https.onCall((data, context) => {
+  // functions.logger.info("getMembersPendingUpdateArtist", {structuredData: true});
   const members = [];
-  result.forEach((doc) => {
-    members.push(doc.data());
+  const result = db.collection("updateArtistPending").doc(data.idPending).collection("members").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      members.push(doc.data());
+    });
+    return {success: true, members: members};
+  }).catch((err) => {
+    return {success: false, members: []};
   });
-  return members;
+  return result;
 });
 
 // Get all group to pending update artist
-exports.getGroupsPendingUpdateArtist = functions.https.onCall(async (data, context) => {
-  //functions.logger.info("getGroupsPendingUpdateArtist", {structuredData: true});
-  console.log('groupsPe', data);
-  const result = await db.collection("updateArtistPending").doc(data.idPending).collection("groups").get();
+exports.getGroupsPendingUpdateArtist = functions.https.onCall((data, context) => {
+  // functions.logger.info("getGroupsPendingUpdateArtist", {structuredData: true});
   const groups = [];
-  result.forEach((doc) => {
-    groups.push(doc.data());
+  const result = db.collection("updateArtistPending").doc(data.idPending).collection("groups").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      groups.push(doc.data());
+    });
+    return {success: true, groups: groups};
+  }).catch((err) => {
+    return {success: false, groups: []};
   });
-  return groups;
+  return result;
 });
 
 // get artist pending create
 exports.getPendingCreateArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("getPendingCreateArtist", {structuredData: true});
+  // functions.logger.info("getPendingCreateArtist", {structuredData: true});
   return db.collection("artists").where("verified", "==", false).get()
       .then((snapshot) => {
         const artists = [];
@@ -382,10 +405,10 @@ exports.getPendingCreateArtist = functions.https.onCall((data, context) => {
       });
 });
 
-// Styles \\
+// ////// Styles \\\\\\
 
 exports.getStyles = functions.https.onCall((data, context) => {
-  //functions.logger.info("getStyles", {structuredData: true});
+  // functions.logger.info("getStyles", {structuredData: true});
   return db.collection("general").doc("data").get()
       .then((snapshot) => {
         return {success: true, styles: snapshot.data().styles};
@@ -395,7 +418,7 @@ exports.getStyles = functions.https.onCall((data, context) => {
 });
 
 exports.updateListStyle = functions.https.onCall((data, context) => {
-  //functions.logger.info("updateListStyle", {structuredData: true});
+  // functions.logger.info("updateListStyle", {structuredData: true});
   return db.collection("general").doc("data").set({
     styles: data.styles,
   })
@@ -407,10 +430,11 @@ exports.updateListStyle = functions.https.onCall((data, context) => {
       });
 });
 
-// Releases \\
+// ////// Releases \\\\\\
 
+// Create Release
 exports.createRelease = functions.https.onCall((data, context) => {
-  //functions.logger.info("createRelease", {structuredData: true});
+  // functions.logger.info("createRelease", {structuredData: true});
   return db.collection("releases").add({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -423,7 +447,7 @@ exports.createRelease = functions.https.onCall((data, context) => {
     idYoutubeMusic: data.idYoutubeMusic,
     artists: data.artists,
     styles: data.styles,
-    musics: data.musics
+    musics: data.musics,
   })
       .then((ref) => {
         return {success: true, id: ref.id, message: "Release created"};
@@ -435,7 +459,7 @@ exports.createRelease = functions.https.onCall((data, context) => {
 
 // Get all artists list
 exports.getReleaseByArtist = functions.https.onCall((data, context) => {
-  //functions.logger.info("getReleaseByArtist", {structuredData: true});
+  // functions.logger.info("getReleaseByArtist", {structuredData: true});
   return db.collection("releases").where("artists", "==", data.id).get()
       .then((snapshot) => {
         const releases = [];
@@ -449,7 +473,7 @@ exports.getReleaseByArtist = functions.https.onCall((data, context) => {
 });
 
 exports.updateRelease = functions.https.onCall((data, context) => {
-  //functions.logger.info("updateRelease", {structuredData: true});
+  // functions.logger.info("updateRelease", {structuredData: true});
   const release = data;
   release["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
   return db.collection("releases").doc(data.id).update(release)
@@ -461,10 +485,10 @@ exports.updateRelease = functions.https.onCall((data, context) => {
       });
 });
 
-// News \\
+// ////// News \\\\\\
 
 exports.createNews = functions.https.onCall((data, context) => {
-  //functions.logger.info("createNews", {structuredData: true});
+  // functions.logger.info("createNews", {structuredData: true});
   return db.collection("news").add({
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
@@ -484,7 +508,7 @@ exports.createNews = functions.https.onCall((data, context) => {
 });
 
 exports.updateNews = functions.https.onCall((data, context) => {
-  //functions.logger.info("updateNews", {structuredData: true});
+  // functions.logger.info("updateNews", {structuredData: true});
   const news = data;
   news["updatedAt"] = admin.firestore.FieldValue.serverTimestamp();
   return db.collection("news").doc(data.id).update(news)
