@@ -1,6 +1,6 @@
 <template>
     <div class="text-white">
-        <div class="background-top relative" :style="{ 'background-image': 'url(' + user.avatar + ')' }">
+        <div class="background-top bg-slate-200 relative" :style="{ 'background-image': 'url(' + user.avatar + ')' }">
             <div class="h-full w-full bg-background bg-opacity-30 flex">
                 <div class="flex flex-col lg:space-y-5 justify-start mt-auto lg:my-auto w-full px-2 md:px-5 lg:px-20 py-16">
 

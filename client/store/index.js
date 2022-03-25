@@ -1,17 +1,33 @@
 export const state = () => ({
-  user: null
+  user: null,
+  userData: null
 })
 
 export const getters = {
   GET_USER: (state) => {
-      return state.user
+    return state.user
   },
+  
+  GET_USER_DATA: (state) => {
+    return state.userData
+  },
+
   isLoggedIn(state) {
       let userLoggedIn = false
       if (state.user) {
-          userLoggedIn = true
+        userLoggedIn = true
       }
       return userLoggedIn
+  },
+
+  isAdmin(state) {
+    let isAdmin = false
+    if (state.user) {
+      if (state.userData.role === 'ADMIN') {
+        isAdmin = true
+      }
+    }
+    return isAdmin
   }
 }
 
@@ -29,6 +45,13 @@ export const actions = {
           displayName,
           photoURL
       });
+      const stepOne = this.$fire.functions.httpsCallable("readUser")
+      const stepTwo = await stepOne({
+        id: authUser.uid
+      })
+      const stepThree = stepTwo.data
+      //console.log('stepThree', stepThree.data)
+      state.commit('SET_USER_DATA', stepThree.data)
     }
   },
 
@@ -50,5 +73,9 @@ export const actions = {
 export const mutations = {
   SET_USER: (state, payload) => {
     state.user = payload;
+  },
+
+  SET_USER_DATA: (state, payload) => {
+    state.userData = payload;
   }
 }

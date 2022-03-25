@@ -60,7 +60,6 @@
 			/>
 		</section>
 		<transition-group
-			v-if="artists.length > 0"
 			id="artist-list"
 			name="list-complete"
 			tag="div"
@@ -74,7 +73,7 @@
 				:id="artist.id"
 				:type="artist.type"
 				:groups="artist.groups"
-				class="list-complete-item"
+				class="list-complete-item w-40"
 			/>
 		</transition-group>
 		<div v-if="(artists.length < 1) & !loading" class="px-5">
@@ -119,17 +118,12 @@ export default {
 		},
 	},
 
-	async asyncData({ $fire }) {
-		const firstStepArtist = $fire.functions.httpsCallable("getArtist");
+	async fetch () {
+		const firstStepArtist = this.$fire.functions.httpsCallable("getArtist");
 		const secondStepArtist = await firstStepArtist({});
-		return {
-			artists: secondStepArtist.data.artists,
-		};
-	},
-
-  mounted() {
-    console.log(this.artists)
-  },
+		this.artists = secondStepArtist.data.artists
+		console.log(this.artists)
+	}
 };
 </script>
 

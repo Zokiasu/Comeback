@@ -101,9 +101,7 @@
 					</nav>
 
 					<!-- PC User Menu -->
-					<div
-						class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
-					>
+					<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 						<div v-if="userLogged" class="hidden lg:flex">
 							<button
 								@click="newsModal = true"
@@ -161,7 +159,7 @@
 								</NuxtLink>
 								<NuxtLink
 									v-if="userLogged && userRole != 'NONE'"
-									:to="`/dashboard`"
+									:to="`/dashboard/newArtist`"
 									class="block px-4 py-2 text-sm hover:bg-gray-700"
 								>
 									Dashboard
@@ -280,16 +278,10 @@ export default {
 		},
 	},
 
-	async fetch() {
-		const { data: tmpArtist } = await this.$axios.get(
-			"https://comeback-api.herokuapp.com/artists/groups?sortby=name:asc"
-		);
-		this.artist = tmpArtist;
-	},
-
 	async created() {
 		this.user = this.GET_USER();
 		this.userLogged = this.isLoggedIn();
+		this.userRole = this.GET_USER_DATA().role;
 	},
 
 	async mounted() {
@@ -300,7 +292,7 @@ export default {
 	},
 
 	methods: {
-		...mapGetters(["GET_USER", "isLoggedIn"]),
+		...mapGetters(["GET_USER", "GET_USER_DATA", "isLoggedIn"]),
 
 		logout() {
 			this.$fire.auth

@@ -1,10 +1,14 @@
 <template>
   <div class="flex flex-row">
-    <div class="min-h-screen bg-gray-500 bg-opacity-10 sticky">
-      <ul class="space-y-5 p-5 text-white">
+    <div class="min-h-screen sticky top-0 flex flex-col justify-between bg-gray-500 bg-opacity-10 text-white">
+      <ul class="space-y-5 p-5">
         <li class="w-full px-10 py-2 rounded flex"
-          :class="$route.name != 'dashboard-index-pending' ? 'hover:bg-gray-500 hover:bg-opacity-70' : 'bg-gray-500'">
-          <NuxtLink :to="`/dashboard/pending`" class="mx-auto text-center">Pending</NuxtLink>
+          :class="$route.name != 'dashboard-index-newArtist' ? 'hover:bg-gray-500 hover:bg-opacity-70' : 'bg-gray-500'">
+          <NuxtLink :to="`/dashboard/newArtist`" class="mx-auto text-center truncate">New Artist</NuxtLink>
+        </li>
+        <li class="w-full px-10 py-2 rounded flex"
+          :class="$route.name != 'dashboard-index-updateArtist' ? 'hover:bg-gray-500 hover:bg-opacity-70' : 'bg-gray-500'">
+          <NuxtLink :to="`/dashboard/updateArtist`" class="mx-auto text-center truncate">Update Artist</NuxtLink>
         </li>
         <li class="w-full px-10 py-2 rounded flex" 
           :class="$route.name != 'dashboard-index-artists' ? 'hover:bg-gray-500 hover:bg-opacity-70' : 'bg-gray-500'">
@@ -31,8 +35,11 @@
           <NuxtLink :to="`/dashboard/users`" class="mx-auto text-center">Users</NuxtLink>
         </li>
       </ul>
+      <div class="w-full flex items-center justify-center p-5">
+        <NuxtLink to="/" class="font-semibold">Back to website</NuxtLink>
+      </div>
     </div>
-    <div class="w-full h-full">
+    <div class="w-full min-h-screen overflow-y-auto">
       <NuxtChild />
     </div>
   </div>
@@ -40,6 +47,7 @@
 
 <script>
 export default {
+  layout: 'dashboard',
   head() {
     return {
       title: "Dashboard"

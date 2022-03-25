@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"test-api","dependencies":{"axios":{"version":"0.19.2"},"google-search-scraper":{"version":"0.1.0"},"youtube-music-api":{"version":"1.0.6"}}}

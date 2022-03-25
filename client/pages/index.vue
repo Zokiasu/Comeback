@@ -33,7 +33,7 @@
 					:name="release.name"
 					:type="release.type"
 					:artists="release.artists"
-          class="release md:mr-5 md:mb-5 justify-self-center" 
+          class="w-40"
         />
       </div>
     </section>
@@ -54,7 +54,7 @@
           :id="artist.id"
           :type="artist.type"
           :groups="artist.groups"
-          class="artist md:mr-5 lg:mr-3.5 md:mb-5"
+          class="w-40"
         />
       </div>
     </section>
@@ -96,17 +96,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .list-complete {
-    transition: all 0.5s;
-    display: inline-block;
-  }
-  .list-complete-enter, .list-complete-leave-to {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  .list-complete-leave-active {
-    position: absolute;
-  }
-</style>

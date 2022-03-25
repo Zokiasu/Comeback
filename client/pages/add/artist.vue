@@ -516,7 +516,7 @@ export default {
 				addedBy: this.GET_USER().uid,
 			})
 				.then((result) => {
-					const updateArtist = this.$fire.functions.httpsCallable("updateArtist");
+					const updateArtist = this.$fire.functions.httpsCallable("updateArtistById");
 					updateArtist({id: result.data.id})
 						.then((res) => {
 							this.$toast.success( "Thank you, Your artist have been sent for verification", { duration: 5000, position: "top-right" } );

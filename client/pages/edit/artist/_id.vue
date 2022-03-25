@@ -395,6 +395,8 @@ export default {
 			artistList: [],
 			styleList: [],
 			newStyleAdded: false,
+			groupListModified: false,
+			memberListModified: false,
 		};
 	},
 
@@ -403,15 +405,22 @@ export default {
 		const secondStepArtistId = await firstStepArtistId({
 			id: params.id,
 		});
+		// ArtistList
 		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
 		const secondStepArtist = await firstStepArtist({})
+		// StyleList
 		const firstStepStyle = $fire.functions.httpsCallable("getStyles")
 		const secondStepStyle = await firstStepStyle({})
+		// All members
+		const firstStepMembers = $fire.functions.httpsCallable("getMembersArtist")
+		const secondStepMembers = await firstStepMembers({ id: params.id })
+		// All groups
+		const firstStepGroups = $fire.functions.httpsCallable("getGroupsArtist")
+		const secondStepGroups = await firstStepGroups({ id: params.id })
+
 		return {
 			artistList: secondStepArtist.data.artists,
 			styleList: secondStepStyle.data.styles,
-
-			artist: secondStepArtistId.data.artist,
 
 			name: secondStepArtistId.data.artist.name,
 			image: secondStepArtistId.data.artist.image,
@@ -421,9 +430,10 @@ export default {
 			source: secondStepArtistId.data.artist.source,
 			socials: secondStepArtistId.data.artist.socials,
 			platforms: secondStepArtistId.data.artist.platforms,
-			members: secondStepArtistId.data.artist.members,
-			groups: secondStepArtistId.data.artist.groups,
 			styles: secondStepArtistId.data.artist.styles,
+			
+			members: secondStepMembers.data,
+			groups: secondStepGroups.data,
 		};
 	},
 
@@ -479,13 +489,15 @@ export default {
 		},
 		members: {
 			handler: function (val) {
-				this.dataToUp('members', val);
+				console.log("members", val);
+				this.memberListModified = true;
 			},
 			deep: true,
 		},
 		groups: {
 			handler: function (val) {
-				this.dataToUp('groups', val);
+				console.log("groups", val);
+				this.groupListModified = true;
 			},
 			deep: true,
 		},
@@ -517,18 +529,43 @@ export default {
 					});
 			}
 
+			this.dataToUpdate['idPending'] = this.$route.params.id+"-"+this.GET_USER().uid;
 			this.dataToUpdate['id'] = this.$route.params.id;
 
 			const updateArtist = this.$fire.functions.httpsCallable("createPendingUpdateArtist");
 			updateArtist(this.dataToUpdate)
-				.then((result) => {
-					console.log(result)
+				.then(async (result) => {
+					const addGroupToPending = this.$fire.functions.httpsCallable("addPendingGroupsArtist");
+					await this.groups.map(async (group) => {
+						await addGroupToPending({
+							idPending: this.$route.params.id+"-"+this.GET_USER().uid,
+							group: {
+								id: group.id,
+								image: group.image,
+								name: group.name,
+								type: group.type,
+							}
+						})
+					});
+					const addMemberToPending = this.$fire.functions.httpsCallable("addPendingMembersArtist");
+					await this.members.map(async (member) => {
+						await addMemberToPending({
+							idPending: this.$route.params.id+"-"+this.GET_USER().uid,
+							member: {
+								id: member.id,
+								image: member.image,
+								name: member.name,
+								type: member.type,
+							}
+						})
+					});
 					this.$toast.success("Thank you, Your update have been sent for verification", { duration: 5000, position: "top-right" });
 					//this.$router.push("/");
 				})
 				.catch((error) => {
 					console.log(error);
 				});
+			
 		},
 
 		addStyle (newTag) {

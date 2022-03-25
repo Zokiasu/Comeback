@@ -63,7 +63,7 @@
 					:type="release.type"
 					:artists="release.artists"
 					displayDate
-					class="list-complete-item"
+					class="list-complete-item w-40"
 				/>
 			</transition-group>
 			<div v-if="filteredList.length < 1 & !loading">
