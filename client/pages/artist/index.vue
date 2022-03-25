@@ -119,7 +119,7 @@ export default {
 	},
 
 	async fetch () {
-		const firstStepArtist = this.$fire.funcstions('europe-west1').httpsCallable("getArtist");
+		const firstStepArtist = this.$fire.functions('europe-west1').httpsCallable("getArtist");
 		const secondStepArtist = await firstStepArtist({});
 		this.artists = secondStepArtist.data.artists
 		console.log(this.artists)

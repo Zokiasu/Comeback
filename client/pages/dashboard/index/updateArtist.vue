@@ -52,9 +52,9 @@
 		layout: 'dashboard',
 
 		async asyncData({ $fire }) {
-			const firstStepArtist = $fire.funcstions('europe-west1').httpsCallable("getPendingUpdateArtist")
-			const firstStepGroupArtist = $fire.funcstions('europe-west1').httpsCallable("getGroupsPendingUpdateArtist")
-			const firstStepMembersArtist = $fire.funcstions('europe-west1').httpsCallable("getMembersPendingUpdateArtist")
+			const firstStepArtist = $fire.functions('europe-west1').httpsCallable("getPendingUpdateArtist")
+			const firstStepGroupArtist = $fire.functions('europe-west1').httpsCallable("getGroupsPendingUpdateArtist")
+			const firstStepMembersArtist = $fire.functions('europe-west1').httpsCallable("getMembersPendingUpdateArtist")
 			let artistList = []
 			const secondStepArtist = await firstStepArtist().then(async (res) => {
 				await res.data.artists.map(async (element) => {
@@ -74,8 +74,8 @@
 		methods: {
 			async verify(artist, index) {
 				const idPending = artist.idPending
-				const updateArtist = this.$fire.funcstions('europe-west1').httpsCallable("updateArtistById");
-				const deleteArtist = this.$fire.funcstions('europe-west1').httpsCallable("deletePendingUpdateArtist");
+				const updateArtist = this.$fire.functions('europe-west1').httpsCallable("updateArtistById");
+				const deleteArtist = this.$fire.functions('europe-west1').httpsCallable("deletePendingUpdateArtist");
 				console.log("artist.groups.length", artist.groups.length)
 				console.log("artist.members.length", artist.members.length)
 				await this.updateGroups(artist, index).then(async (res) => {
@@ -94,15 +94,15 @@
 
 			async updateGroups (artist, index) {
 				new Promise((resolve, reject) => {
-					const deleteGroupFromArtist = this.$fire.funcstions('europe-west1').httpsCallable("deleteGroupsArtist")
-					const getActualGroups = this.$fire.funcstions('europe-west1').httpsCallable("getGroupsArtist")
+					const deleteGroupFromArtist = this.$fire.functions('europe-west1').httpsCallable("deleteGroupsArtist")
+					const getActualGroups = this.$fire.functions('europe-west1').httpsCallable("getGroupsArtist")
 					getActualGroups({ id: artist.id }).then(async (res) => {
 						console.log('res', res)
 						if(res.data.length) {
 							await res.data.map(async (element) => {
 								deleteGroupFromArtist({ id: artist.id, group: element }).then(async (res2) => {
 									console.log('res2', res2)
-									const addGroupsArtist = this.$fire.funcstions('europe-west1').httpsCallable("addGroupsArtist")
+									const addGroupsArtist = this.$fire.functions('europe-west1').httpsCallable("addGroupsArtist")
 									await artist.groups?.map((element) => {
 										addGroupsArtist({ id: artist.id, group: element }).then((res3) => {
 											console.log("res3", res3)
@@ -115,7 +115,7 @@
 							console.log("X")
 							resolve("Resolved");
 						} else {
-							const addGroupsArtist = this.$fire.funcstions('europe-west1').httpsCallable("addGroupsArtist")
+							const addGroupsArtist = this.$fire.functions('europe-west1').httpsCallable("addGroupsArtist")
 							await artist.groups?.map((element) => {
 								addGroupsArtist({ id: artist.id, group: element }).then((res3) => {
 									console.log("res3", res3)
@@ -132,15 +132,15 @@
 
 			async updateMembers (artist, index) {
 				new Promise((resolve, reject) => {
-					const deleteMembersFromArtist = this.$fire.funcstions('europe-west1').httpsCallable("deleteMembersArtist")
-					const getActualMembers = this.$fire.funcstions('europe-west1').httpsCallable("getMembersArtist")
+					const deleteMembersFromArtist = this.$fire.functions('europe-west1').httpsCallable("deleteMembersArtist")
+					const getActualMembers = this.$fire.functions('europe-west1').httpsCallable("getMembersArtist")
 					getActualMembers({ id: artist.id }).then(async (res) => {
 						console.log('res', res)
 						if(res.data.length) {
 							await res.data.map(async (element) => {
 								deleteMembersFromArtist({ id: artist.id, member: element }).then(async (res2) => {
 									console.log('res2', res2)
-									const addMembersArtist = this.$fire.funcstions('europe-west1').httpsCallable("addMembersArtist")
+									const addMembersArtist = this.$fire.functions('europe-west1').httpsCallable("addMembersArtist")
 									await artist.members?.map((element) => {
 										addMembersArtist({ id: artist.id, member: element }).then((res3) => {
 											console.log("res3", res3)
@@ -150,7 +150,7 @@
 								})
 							})
 						} else {
-							const addMembersArtist = this.$fire.funcstions('europe-west1').httpsCallable("addMembersArtist")
+							const addMembersArtist = this.$fire.functions('europe-west1').httpsCallable("addMembersArtist")
 							await artist.members?.map((element) => {
 								addMembersArtist({ id: artist.id, member: element }).then((res3) => {
 									console.log("res3", res3)
@@ -164,7 +164,7 @@
 			},
 
 			async delete(artist, index) {
-				const deleteArtist = this.$fire.funcstions('europe-west1').httpsCallable("deletePendingUpdateArtist");
+				const deleteArtist = this.$fire.functions('europe-west1').httpsCallable("deletePendingUpdateArtist");
 				deleteArtist({ idPending: artist.idPending }).then((res) => {
 					this.artistList.splice(index, 1)
 				})
@@ -172,7 +172,7 @@
 
 			reject(artist, index) {
 				console.log("Reject")
-				const deleteArtist = this.$fire.funcstions('europe-west1').httpsCallable("deletePendingUpdateArtist");
+				const deleteArtist = this.$fire.functions('europe-west1').httpsCallable("deletePendingUpdateArtist");
 				deleteArtist({ idPending: artist.idPending })
 				this.artistList.splice(index, 1)
 			}

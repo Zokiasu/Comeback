@@ -128,7 +128,7 @@
 
       async signUp () {
         this.$fire.auth.createUserWithEmailAndPassword(this.email, this.password).then((res) => {
-        const createUser = this.$fire.funcstions('europe-west1').httpsCallable("createUser");
+        const createUser = this.$fire.functions('europe-west1').httpsCallable("createUser");
         createUser({
           id: res.user.uid,
           name: res.user.uid,
