@@ -117,11 +117,7 @@ export default {
             ssr: false,
           },
           firestore: true,
-          functions: {
-            location: 'us-central1',
-            // emulatorPort: process.env.NODE_ENV !== 'production' ? 5001: null,
-            // emulatorHost: 'http://localhost',
-          },
+          functions: true,
           storage: true,
           database: true,
           messaging: true,
