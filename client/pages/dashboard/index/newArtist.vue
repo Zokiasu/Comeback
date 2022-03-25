@@ -22,7 +22,7 @@
   	layout: 'dashboard',
 
 		async asyncData({ $fire }) {
-			const firstStepArtist = $fire.functions('europe-west1').httpsCallable("getPendingCreateArtist")
+			const firstStepArtist = $fire.functions.httpsCallable("getPendingCreateArtist")
 			const secondStepArtist = await firstStepArtist()
 			const artistList = secondStepArtist.data.artists
 
@@ -36,14 +36,14 @@
 		methods: {
 			verify(idArtist, index) {
 				console.log("Verify")
-				const updateArtist = this.$fire.functions('europe-west1').httpsCallable("updateArtistById");
+				const updateArtist = this.$fire.functions.httpsCallable("updateArtistById");
 				updateArtist({ id: idArtist, verified: true })
 				this.artistList.splice(index, 1)
 			},
 
 			reject(idArtist, index) {
 				console.log("Reject")
-				const deleteArtist = this.$fire.functions('europe-west1').httpsCallable("deleteArtist");
+				const deleteArtist = this.$fire.functions.httpsCallable("deleteArtist");
 				deleteArtist({ id: idArtist })
 				this.artistList.splice(index, 1)
 			}

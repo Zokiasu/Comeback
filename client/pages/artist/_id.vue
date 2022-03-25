@@ -163,7 +163,7 @@ export default {
 	},
 
 	async asyncData({ params, $fire, store }) {
-		const firstStepArtistId = $fire.functions('europe-west1').httpsCallable("getArtistById");
+		const firstStepArtistId = $fire.functions.httpsCallable("getArtistById");
 		const secondStepArtistId = await firstStepArtistId({ id: params.id });
 		const artist = secondStepArtistId.data.artist;
 
@@ -177,7 +177,7 @@ export default {
 	},
 
 	async mounted() {
-		const firstStepFollowArtistId = this.$fire.functions('europe-west1').httpsCallable(
+		const firstStepFollowArtistId = this.$fire.functions.httpsCallable(
 			"getFollowerArtistExisted"
 		);
 		const secondStepFollowArtistId = await firstStepFollowArtistId({
@@ -187,21 +187,21 @@ export default {
 		this.liked = secondStepFollowArtistId.data.added;
 
 		const firstStepReleaseId =
-			this.$fire.functions('europe-west1').httpsCallable("getReleaseByArtist");
+			this.$fire.functions.httpsCallable("getReleaseByArtist");
 		const secondStepReleaseId = await firstStepReleaseId({
 			id: this.$route.params.id,
 		});
 		this.releases = secondStepReleaseId.data;
 
 		const firstStepArtistGroupsId =
-			this.$fire.functions('europe-west1').httpsCallable("getGroupsArtist");
+			this.$fire.functions.httpsCallable("getGroupsArtist");
 		const secondStepArtistGroupsId = await firstStepArtistGroupsId({
 			id: this.$route.params.id,
 		});
 		this.groups = secondStepArtistGroupsId.data;
 
 		const firstStepArtistMembersId =
-			this.$fire.functions('europe-west1').httpsCallable("getMembersArtist");
+			this.$fire.functions.httpsCallable("getMembersArtist");
 		const secondStepArtistMembersId = await firstStepArtistMembersId({
 			id: this.$route.params.id,
 		});
@@ -239,7 +239,7 @@ export default {
 
 		async followArtist() {
 			const addFollowerArtist =
-				this.$fire.functions('europe-west1').httpsCallable("addFollowerArtist");
+				this.$fire.functions.httpsCallable("addFollowerArtist");
 			addFollowerArtist({
 				id: this.artist.id,
 				user: {
@@ -253,7 +253,7 @@ export default {
 		},
 
 		async unfollowArtist() {
-			const deleteFollowerArtist = this.$fire.functions('europe-west1').httpsCallable(
+			const deleteFollowerArtist = this.$fire.functions.httpsCallable(
 				"deleteFollowerArtist"
 			);
 			deleteFollowerArtist({

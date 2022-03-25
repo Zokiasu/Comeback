@@ -396,9 +396,9 @@ export default {
 	},
 
 	async asyncData({ $fire }) {
-		const firstStepArtist = $fire.functions('europe-west1').httpsCallable("getArtist")
+		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
 		const secondStepArtist = await firstStepArtist({})
-		const firstStepStyle = $fire.functions('europe-west1').httpsCallable("getStyles")
+		const firstStepStyle = $fire.functions.httpsCallable("getStyles")
 		const secondStepStyle = await firstStepStyle({})
 		return {
 			artistList: secondStepArtist.data.artists,
@@ -486,7 +486,7 @@ export default {
 			}
 
 			if(this.newStyleAdded) {
-				const updateStyle = this.$fire.functions('europe-west1').httpsCallable("updateListStyle");
+				const updateStyle = this.$fire.functions.httpsCallable("updateListStyle");
 				updateStyle({ styles: this.styleList })
 					.then(() => {
 						this.$toast.success( "Styles updated", { duration: 5000, position: "top-right" } );
@@ -496,7 +496,7 @@ export default {
 					});
 			}
 
-			const createArtist = this.$fire.functions('europe-west1').httpsCallable(
+			const createArtist = this.$fire.functions.httpsCallable(
 				"createArtist"
 			);
 			createArtist({
@@ -516,7 +516,7 @@ export default {
 				addedBy: this.GET_USER().uid,
 			})
 				.then((result) => {
-					const updateArtist = this.$fire.functions('europe-west1').httpsCallable("updateArtistById");
+					const updateArtist = this.$fire.functions.httpsCallable("updateArtistById");
 					updateArtist({id: result.data.id})
 						.then((res) => {
 							this.$toast.success( "Thank you, Your artist have been sent for verification", { duration: 5000, position: "top-right" } );

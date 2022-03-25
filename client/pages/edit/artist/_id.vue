@@ -401,21 +401,21 @@ export default {
 	},
 
 	async asyncData({ $fire, params }) {
-		const firstStepArtistId = $fire.functions('europe-west1').httpsCallable("getArtistById");
+		const firstStepArtistId = $fire.functions.httpsCallable("getArtistById");
 		const secondStepArtistId = await firstStepArtistId({
 			id: params.id,
 		});
 		// ArtistList
-		const firstStepArtist = $fire.functions('europe-west1').httpsCallable("getArtist")
+		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
 		const secondStepArtist = await firstStepArtist({})
 		// StyleList
-		const firstStepStyle = $fire.functions('europe-west1').httpsCallable("getStyles")
+		const firstStepStyle = $fire.functions.httpsCallable("getStyles")
 		const secondStepStyle = await firstStepStyle({})
 		// All members
-		const firstStepMembers = $fire.functions('europe-west1').httpsCallable("getMembersArtist")
+		const firstStepMembers = $fire.functions.httpsCallable("getMembersArtist")
 		const secondStepMembers = await firstStepMembers({ id: params.id })
 		// All groups
-		const firstStepGroups = $fire.functions('europe-west1').httpsCallable("getGroupsArtist")
+		const firstStepGroups = $fire.functions.httpsCallable("getGroupsArtist")
 		const secondStepGroups = await firstStepGroups({ id: params.id })
 
 		return {
@@ -519,7 +519,7 @@ export default {
 			}
 
 			if(this.newStyleAdded) {
-				const updateStyle = this.$fire.functions('europe-west1').httpsCallable("updateListStyle");
+				const updateStyle = this.$fire.functions.httpsCallable("updateListStyle");
 				updateStyle({ styles: this.styleList })
 					.then(() => {
 						this.$toast.success( "Styles updated", { duration: 5000, position: "top-right" } );
@@ -532,10 +532,10 @@ export default {
 			this.dataToUpdate['idPending'] = this.$route.params.id+"-"+this.GET_USER().uid;
 			this.dataToUpdate['id'] = this.$route.params.id;
 
-			const updateArtist = this.$fire.functions('europe-west1').httpsCallable("createPendingUpdateArtist");
+			const updateArtist = this.$fire.functions.httpsCallable("createPendingUpdateArtist");
 			updateArtist(this.dataToUpdate)
 				.then(async (result) => {
-					const addGroupToPending = this.$fire.functions('europe-west1').httpsCallable("addPendingGroupsArtist");
+					const addGroupToPending = this.$fire.functions.httpsCallable("addPendingGroupsArtist");
 					await this.groups.map(async (group) => {
 						await addGroupToPending({
 							idPending: this.$route.params.id+"-"+this.GET_USER().uid,
@@ -547,7 +547,7 @@ export default {
 							}
 						})
 					});
-					const addMemberToPending = this.$fire.functions('europe-west1').httpsCallable("addPendingMembersArtist");
+					const addMemberToPending = this.$fire.functions.httpsCallable("addPendingMembersArtist");
 					await this.members.map(async (member) => {
 						await addMemberToPending({
 							idPending: this.$route.params.id+"-"+this.GET_USER().uid,
