@@ -120,7 +120,7 @@ export default {
           functions: {
             location: 'us-central1',
             emulatorPort: process.env.NODE_ENV !== 'production' ? 5001: null,
-            emulatorHost: process.env.NODE_ENV !== 'production' ? 'http://localhost' : null,
+            emulatorHost: 'http://localhost',
           },
           storage: true,
           database: true,
