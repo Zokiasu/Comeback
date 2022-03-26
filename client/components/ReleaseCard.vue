@@ -18,11 +18,9 @@
       </div>
       <div class="flex text-xs md:text-sm">
         <p>{{type}}</p>
-        <div v-if="artists" class="bg-white mt-2 mx-2 h-1 w-1 rounded-full"></div>
-        <p v-if="artists" class="truncate">
-          <span v-for="(artist, index) in artists" :key="index">
-            {{ artist.name }} <span v-if="artists.length > 1 && index != artists.length-1">,</span>
-          </span>
+        <div v-if="artist" class="bg-white mt-2 mx-2 h-1 w-1 rounded-full"></div>
+        <p v-if="artist" class="truncate">
+          {{ artist.name }}
         </p>
       </div>
     </div>
@@ -55,8 +53,8 @@
         type: String,
         required: true
       },
-      artists: {
-        type: Array
+      artist: {
+        type: Object
       },
       displayDate: {
         type: Boolean,

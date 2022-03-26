@@ -174,7 +174,7 @@ exports.deleteFollowerArtist = functions.region("europe-west1").https.onCall((da
 exports.getFollowerArtistExisted = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getFollowerArtistExisted", {structuredData: true});
   return db.collection("artists").doc(data.id).collection("followers")
-      .where("id", "==", data.user).get()
+      .where("id", "==", data.userId).get()
       .then((ref) => {
         return {success: true, added: true, message: "Follower existed"};
       })
@@ -225,9 +225,9 @@ exports.getGroupsArtist = functions.region("europe-west1").https.onCall((data, c
     snapshot.forEach((doc) => {
       groups.push(doc.data());
     });
-    return {success: true, groups: groups};
+    return groups;
   }).catch((err) => {
-    return {success: false, groups: []};
+    return groups;
   });
   return result;
 });
@@ -273,9 +273,9 @@ exports.getMembersArtist = functions.region("europe-west1").https.onCall((data, 
     snapshot.forEach((doc) => {
       members.push(doc.data());
     });
-    return {success: true, members: members};
+    return members;
   }).catch((err) => {
-    return {success: false, members: []};
+    return members;
   });
   return result;
 });
@@ -457,10 +457,25 @@ exports.createRelease = functions.region("europe-west1").https.onCall((data, con
       });
 });
 
-// Get all artists list
+// Get all release from artists
+exports.getReleaseByDate = functions.region("europe-west1").https.onCall((data, context) => {
+  // functions.logger.info("getReleaseByDate", {structuredData: true});
+  return db.collection("releases").where("date", ">=", data.startDate).where("date", "<=", data.endDate).orderBy("date").get()
+      .then((snapshot) => {
+        const releases = [];
+        snapshot.forEach((doc) => {
+          releases.push(doc.data());
+        });
+        return releases;
+      }).catch((err) => {
+        return {success: false, artists: []};
+      });
+});
+
+// Get all release by date
 exports.getReleaseByArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getReleaseByArtist", {structuredData: true});
-  return db.collection("releases").where("artists", "==", data.id).get()
+  return db.collection("releases").where("artists", "==", data.date).get()
       .then((snapshot) => {
         const releases = [];
         snapshot.forEach((doc) => {

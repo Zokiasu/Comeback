@@ -154,7 +154,7 @@
 						<label
 							for="members"
 							class="block uppercase tracking-wide text-white font-semibold mb-2"
-							>Members</label
+							>Members or Subunits</label
 						>
 						<multiselect
 							id="members"
@@ -402,9 +402,7 @@ export default {
 
 	async asyncData({ $fire, params }) {
 		const firstStepArtistId = $fire.functions.httpsCallable("getArtistById");
-		const secondStepArtistId = await firstStepArtistId({
-			id: params.id,
-		});
+		const secondStepArtistId = await firstStepArtistId({ id: params.id });
 		// ArtistList
 		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
 		const secondStepArtist = await firstStepArtist({})
@@ -414,6 +412,7 @@ export default {
 		// All members
 		const firstStepMembers = $fire.functions.httpsCallable("getMembersArtist")
 		const secondStepMembers = await firstStepMembers({ id: params.id })
+		console.log(secondStepMembers.data.members)
 		// All groups
 		const firstStepGroups = $fire.functions.httpsCallable("getGroupsArtist")
 		const secondStepGroups = await firstStepGroups({ id: params.id })
@@ -560,12 +559,11 @@ export default {
 						})
 					});
 					this.$toast.success("Thank you, Your update have been sent for verification", { duration: 5000, position: "top-right" });
-					//this.$router.push("/");
+					this.$router.push("/");
 				})
 				.catch((error) => {
 					console.log(error);
 				});
-			
 		},
 
 		addStyle (newTag) {

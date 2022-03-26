@@ -1,48 +1,19 @@
 <template>
-	<div class="p-5 text-white">
-		<div class="bg-black-four rounded p-5 space-y-3">
-			<div class="flex gap-2">
-				<h3 class="font-semibold text-lg">Name</h3>
-				<p class="bg-gray-500 rounded px-2 py-1 text-xs">Type</p>
-			</div>
-			<div>
-				<ul class="flex gap-2">
-					<li class="bg-gray-500 rounded px-3 py-1">Style 1</li>
-					<li class="bg-gray-500 rounded px-3 py-1">Style 2</li>
-					<li class="bg-gray-500 rounded px-3 py-1">Style 3</li>
-				</ul>
-			</div>
-			<div class="flex gap-5">
-				<!-- img picsum link -->
-				<img src="https://picsum.photos/200" alt="" class="rounded shadow-xl">
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus cupiditate velit eaque illo adipisci ex voluptas? Necessitatibus provident autem vero veritatis eveniet facilis, quisquam recusandae minus excepturi ad saepe sapiente?</p>
-			</div>
-			<div>
-				<h3>Platforms</h3>
-				<ul class="grid grid-cols-2 gap-3">
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-				</ul>
-			</div>
-			<div>
-				<h3>Socials</h3>
-				<ul class="grid grid-cols-2 gap-3">
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-					<li class="bg-gray-500 rounded px-3 py-1">https://music.youtube.com/channel/UCTvkKE5tRuEGw1DdUaFKgbQ</li>
-				</ul>
-			</div>
-			<div v-for="(artist, index) in artistList" :key="artist.id">
-				{{ artist }}
-					<div class="flex justify-end w-full gap-2">
-						<button class="bg-red-500 px-5 py-2 rounded font-semibold hover:bg-red-700 transition-all duration-300 ease-in-out" @click="reject(artist, index)">Reject</button>
-						<button class="bg-green-500 px-5 py-2 rounded font-semibold hover:bg-green-700 transition-all duration-300 ease-in-out" @click="verify(artist, index)">Accept</button>
-					</div>
-			</div>
-		</div>
+	<div class="p-5 text-white space-y-5">
+		<cb-up-artist
+			v-for="(artist, index) in artistList"
+			:key="`artist_${index}`"
+			:idPending="artist.idPending"
+			:name="artist.name"
+			:type="artist.type"
+			:image="artist.image"
+			:description="artist.description"
+			:styles="artist.styles"
+			:platforms="artist.platforms"
+			:socials="artist.socials"
+			@accept="verify(artist, index)"
+			@reject="reject(artist, index)"
+		/>
 	</div>
 </template>
 
@@ -55,13 +26,12 @@
 			const firstStepArtist = $fire.functions.httpsCallable("getPendingUpdateArtist")
 			const firstStepGroupArtist = $fire.functions.httpsCallable("getGroupsPendingUpdateArtist")
 			const firstStepMembersArtist = $fire.functions.httpsCallable("getMembersPendingUpdateArtist")
-			let artistList = []
 			const secondStepArtist = await firstStepArtist().then(async (res) => {
 				await res.data.artists.map(async (element) => {
 					firstStepMembersArtist({ idPending: element.idPending }).then((res) => {
-						element['members'] = res.data
+						element['members'] = res.data.members
 						firstStepGroupArtist({ idPending: element.idPending }).then((res2) => {
-							element['groups'] = res2.data
+							element['groups'] = res2.data.groups
 						})
 					})
 				});
@@ -109,10 +79,8 @@
 										})
 									})
 									delete artist.groups
-									
 								})
 							})
-							console.log("X")
 							resolve("Resolved");
 						} else {
 							const addGroupsArtist = this.$fire.functions.httpsCallable("addGroupsArtist")
@@ -122,7 +90,6 @@
 								})
 							})
 							delete artist.groups
-							console.log("X")
 							resolve("Resolved");
 						}
 						console.log("groups", artist.groups)

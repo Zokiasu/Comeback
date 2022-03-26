@@ -171,42 +171,37 @@ export default {
 	},
 
 	async created() {
-		this.displayOnlineOption = this.isLoggedIn();
-		this.admin = this.isAdmin();
+		if(this.isLoggedIn()) {
+			this.displayOnlineOption = this.isLoggedIn();
+			this.admin = this.isAdmin();
+			this.userInfo = this.GET_USER_DATA();
+		}
 		this.imageBackground = this.artist.image.toString();
-		this.userInfo = this.GET_USER_DATA();
 	},
 
 	async mounted() {
-		if(displayOnlineOption) {
+		if(this.displayOnlineOption && this.userInfo) {
 			const firstStepFollowArtistId = this.$fire.functions.httpsCallable("getFollowerArtistExisted");
 			const secondStepFollowArtistId = await firstStepFollowArtistId({
-				artistId: this.artist.id,
+				id: this.artist.id,
 				userId: this.userInfo.id,
 			});
 			this.liked = secondStepFollowArtistId.data.liked;
 		}
 
-		const firstStepReleaseId =
-			this.$fire.functions.httpsCallable("getReleaseByArtist");
-		const secondStepReleaseId = await firstStepReleaseId({
-			id: this.$route.params.id,
-		});
+		const firstStepReleaseId = this.$fire.functions.httpsCallable("getReleaseByArtist");
+		const secondStepReleaseId = await firstStepReleaseId({ id: this.$route.params.id });
 		this.releases = secondStepReleaseId.data;
 
-		const firstStepArtistGroupsId =
-			this.$fire.functions.httpsCallable("getGroupsArtist");
-		const secondStepArtistGroupsId = await firstStepArtistGroupsId({
-			id: this.$route.params.id,
-		});
+		const firstStepArtistGroupsId = this.$fire.functions.httpsCallable("getGroupsArtist");
+		const secondStepArtistGroupsId = await firstStepArtistGroupsId({ id: this.$route.params.id });
 		this.groups = secondStepArtistGroupsId.data;
+		console.log("groups", secondStepArtistGroupsId.data)
 
-		const firstStepArtistMembersId =
-			this.$fire.functions.httpsCallable("getMembersArtist");
-		const secondStepArtistMembersId = await firstStepArtistMembersId({
-			id: this.$route.params.id,
-		});
+		const firstStepArtistMembersId = this.$fire.functions.httpsCallable("getMembersArtist");
+		const secondStepArtistMembersId = await firstStepArtistMembersId({ id: this.$route.params.id });
 		this.members = secondStepArtistMembersId.data;
+		console.log("members", secondStepArtistMembersId.data)
 	},
 
 	watch: {

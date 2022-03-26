@@ -61,7 +61,7 @@
 					:date="release.date"
 					:name="release.name"
 					:type="release.type"
-					:artists="release.artists"
+					:artist="release.artist"
 					displayDate
 					class="list-complete-item w-40"
 				/>
@@ -111,7 +111,19 @@
 
 		//fetch the list of releases
 		async fetch () {
-			this.loading = true
+			const getReleaseByDate = this.$fire.functions.httpsCallable('getReleaseByDate');
+			getReleaseByDate({ startDate: this.startDate, endDate: this.endDate }).then(res => {
+				this.releases = res.data;
+				const getArtistById = this.$fire.functions.httpsCallable('getArtistById');
+				this.releases.forEach(release => {
+					getArtistById({ id: release.artists }).then(snapshot => {
+						release["artist"] = snapshot.data.artist;
+						this.releaseList.push(release);
+					});
+				});
+				console.log("releases", this.releaseList)
+			});
+			/*this.loading = true
 			let tmpList = []
 			this.$axios.get(`https://comeback-api.herokuapp.com/calendar?date_sup=${this.dateFormat(this.startDate)}&date_inf=${this.dateFormat(this.endDate)}`).then(response => {
 				if(Object.entries(response.data).length) {
@@ -129,7 +141,7 @@
 				}
 				this.releaseList = tmpList
 				this.loading = false
-			})
+			})*/
 		},
 
 		computed: {
