@@ -1,15 +1,15 @@
 <template>
-	<div class="space-y-1">
-		<div>
+	<div class="flex flex-col justify-center space-y-1">
+		<NuxtLink :to="`/artist/${id}`">
 			<img
 				:alt="name"
 				:src="image"
 				class="object-cover aspect-video rounded"
 			/>
-		</div>
-		<div class="text-center">
-			<h2>{{ name }}</h2>
-		</div>
+		</NuxtLink>
+		<NuxtLink :to="`/artist/${id}`" class="text-center">
+			<h2 class="hover-underline-animation">{{ name }}</h2>
+		</NuxtLink>
 	</div>
 </template>
 

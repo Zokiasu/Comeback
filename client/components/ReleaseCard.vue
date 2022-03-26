@@ -1,6 +1,7 @@
 <template>
-  <NuxtLink :to="`/release/${id}`" class="flex flex-col space-y-1 text-white rounded">
-    <div class="relative">
+  <div class="flex flex-col space-y-1 text-white">
+    <NuxtLink :to="`/release/${id}`">
+      <div class="relative">
         <div class="bg-gray-500 rounded-md">
           <img
             :src="image"
@@ -8,14 +9,15 @@
             class="rounded-md object-cover aspect-square bg-gray-500 drop-shadow-2xl w-full"
           />
         </div>
-        <div v-if="displayDate" class="absolute top-1 right-1 px-2 py-0.5 rounded text-white bg-gray-500 bg-opacity-80">
+        <div v-if="displayDate" class="absolute top-2 right-1.5 px-2 py-0.5 rounded text-white bg-gray-500 bg-opacity-80">
             <p class="text-center text-xs">{{ new Date(date).toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit' }) }}</p>
         </div>
-    </div>
-    <div>
-      <div class="flex text-xs md:text-sm">
-        <span class="truncate"><span class="font-semibold">{{name}}</span></span>
       </div>
+    </NuxtLink>
+    <div>
+      <NuxtLink :to="`/artist/${id}`" class="flex text-xs md:text-sm">
+        <p class="truncate font-semibold hover-underline-animation">{{ name }}</p>
+      </NuxtLink>
       <div class="flex text-xs md:text-sm">
         <p>{{type}}</p>
         <div v-if="artist" class="bg-white mt-2 mx-2 h-1 w-1 rounded-full"></div>
@@ -24,7 +26,7 @@
         </p>
       </div>
     </div>
-  </NuxtLink>
+  </div>
 </template>
 
 <script>

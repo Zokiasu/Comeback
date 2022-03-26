@@ -71,6 +71,19 @@
 			<div>
 				<p>{{ artist.description }}</p>
 			</div>
+			<div v-if="soloMembers.length" class="space-y-5">
+				<h2 class="text-xl font-semibold">Members</h2>
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
+					<artist-card
+						v-for="artist in soloMembers"
+						:key="artist.id"
+						:image="artist.image"
+						:name="artist.name"
+						:id="artist.id"
+						class="w-40"
+					/>
+				</transition-group>
+			</div>
 			<div v-if="releases.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Release</h2>
 				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
@@ -83,19 +96,6 @@
 						:name="release.name"
 						:type="release.type"
 						:displayDate="true"
-						class="w-40"
-					/>
-				</transition-group>
-			</div>
-			<div v-if="soloMembers.length" class="space-y-5">
-				<h2 class="text-xl font-semibold">Members</h2>
-				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8 lg:justify-between">
-					<artist-card
-						v-for="artist in soloMembers"
-						:key="artist.id"
-						:image="artist.image"
-						:name="artist.name"
-						:id="artist.id"
 						class="w-40"
 					/>
 				</transition-group>

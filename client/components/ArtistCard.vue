@@ -5,16 +5,12 @@
         <img 
           :src="image"
           :alt="name"
-         
           class="rounded-full object-cover bg-gray-700 aspect-square"
         />
       </NuxtLink>
     </div>
-    <NuxtLink 
-      :to="`/artist/${id}`" 
-      :class="groupSize > 0 ? 'flex flex-col justify-center space-x-1':''">
-      <h2 class="font-semibold text-center hover:underline">{{name}}</h2>
-      <h3 class="text-center" v-if="groupSize > 0 && type != 'GROUP'">[{{groups[0].name}}]</h3>
+    <NuxtLink :to="`/artist/${id}`" class="w-full flex flex-col justify-center items-center">
+      <h2 class="font-semibold text-center hover-underline-animation">{{name}}</h2>
     </NuxtLink>
   </div>
 </template>

@@ -9,20 +9,29 @@
 						<h2 class="text-2xl hover-underline-animation">{{release.artist.name}}</h2>
 					</nuxt-link>
 				</div>
+				<div
+					v-if="release.platforms"
+					class="flex flex-wrap overflow-x-scroll gap-3"
+				>
+					<cb-external-link
+						v-for="link in release.platforms"
+						:key="link"
+						:href="link"
+						class="hover:bg-black/50"
+					/>
+				</div>
 			</div>
 			<div class="flex flex-col gap-10 lg:flex-row xl:gap-20 w-fit">
 				<div class="w-fit h-fit mx-auto">
-					<img :src="release.image" class="bg-gray-300 rounded-md h-1/3 shadow-2xl">
+					<img :src="release.image" class="bg-gray-300 rounded-md h-1/3 shadow-2xl shadow-zinc-700">
 				</div>
-				<div class="lg:h-[34rem] lg:w-[30rem] pr-5 pb-5 overflow-hidden overflow-y-scroll">
+				<div class="lg:h-[34rem] lg:w-[30rem] pr-5 pb-2 overflow-hidden overflow-y-scroll">
 					<ul class="space-y-5">
-						<li v-for="music in release.music" :key="music.id" class="flex items-center justify-between">
-							<div class="flex items-center gap-2">
+						<li v-for="music in release.music" :key="music.id" class="flex items-center justify-between gap-5">
+							<div class="flex items-center gap-5">
+								<img :alt="music.name" :src="release.image" class="bg-gray-300 rounded-md h-14 w-14 shadow-2xl shadow-zinc-700">
 								<div>
-									<img :alt="music.name" :src="release.image" class="bg-gray-300 rounded-md h-14 w-14 shadow-2xl">
-								</div>
-								<div>
-									<h3 class="text-xl font-semibold">{{music.name}}</h3>
+									<h3 class="font-semibold">{{music.name}}</h3>
 									<nuxt-link :to="`/artist/${release.artist.id}`">
 										<p class="flex hover-underline-animation">{{release.artist.name}}</p>
 									</nuxt-link>
