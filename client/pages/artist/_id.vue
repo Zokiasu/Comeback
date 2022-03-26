@@ -73,7 +73,7 @@
 			</div>
 			<div v-if="releases.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Release</h2>
-				<div class="flex flex-wrap gap-8">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
 					<release-card
 						v-for="release in releases"
 						:key="release.id"
@@ -85,11 +85,11 @@
 						:displayDate="true"
 						class="w-40"
 					/>
-				</div>
+				</transition-group>
 			</div>
 			<div v-if="soloMembers.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Members</h2>
-				<div class="flex flex-wrap gap-8 lg:justify-between">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8 lg:justify-between">
 					<artist-card
 						v-for="artist in soloMembers"
 						:key="artist.id"
@@ -98,11 +98,11 @@
 						:id="artist.id"
 						class="w-40"
 					/>
-				</div>
+				</transition-group>
 			</div>
 			<div v-if="groupMembers.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Subunit</h2>
-				<div class="flex flex-wrap gap-8">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
 					<artist-group-card
 						v-for="artist in groupMembers"
 						:key="artist.id"
@@ -111,11 +111,11 @@
 						:id="artist.id"
 						class="w-40"
 					/>
-				</div>
+				</transition-group>
 			</div>
 			<div v-if="groups.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Group's Unit</h2>
-				<div class="flex flex-wrap gap-8">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
 					<artist-group-card
 						v-for="artist in groups"
 						:key="artist.id"
@@ -124,7 +124,7 @@
 						:id="artist.id"
 						class="w-40"
 					/>
-				</div>
+				</transition-group>
 			</div>
 		</div>
 	</div>
@@ -276,5 +276,17 @@ export default {
 }
 .testa::-webkit-scrollbar {
 	display: none;
+}
+.list-complete-item {
+	transition: all 0.5s;
+	display: inline-block;
+}
+.list-complete-enter,
+.list-complete-leave-to {
+	opacity: 0;
+	transform: translateY(30px);
+}
+.list-complete-leave-active {
+	position: absolute;
 }
 </style>

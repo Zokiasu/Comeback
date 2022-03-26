@@ -93,7 +93,22 @@ exports.createArtist = functions.region("europe-west1").https.onCall((data, cont
 // Get all artists list
 exports.getArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getArtist", {structuredData: true});
-  return db.collection("artists").where("verified", "==", true).get()
+  return db.collection("artists").where("verified", "==", true).orderBy("name").get()
+      .then((snapshot) => {
+        const artists = [];
+        snapshot.forEach((doc) => {
+          artists.push(doc.data());
+        });
+        return {success: true, artists: artists};
+      }).catch((err) => {
+        return {success: false, artists: []};
+      });
+});
+
+// Get all artists list
+exports.getArtistListLimited = functions.region("europe-west1").https.onCall((data, context) => {
+  // functions.logger.info("getArtistListLimited", {structuredData: true});
+  return db.collection("artists").orderBy("name").limit(data.limit).get()
       .then((snapshot) => {
         const artists = [];
         snapshot.forEach((doc) => {
@@ -457,7 +472,33 @@ exports.createRelease = functions.region("europe-west1").https.onCall((data, con
       });
 });
 
-// Get all release from artists
+// Get release by id
+exports.readReleaseById = functions.region("europe-west1").https.onCall((data, context) => {
+  // functions.logger.info("readReleaseById", {structuredData: true});
+  return db.collection("releases").doc(data.id).get()
+      .then((doc) => {
+        return {success: true, release: doc.data()};
+      }).catch((err) => {
+        return {success: false, release: null};
+      });
+});
+
+// Get all musics from release
+exports.getMusicToRelease = functions.region("europe-west1").https.onCall((data, context) => {
+  // functions.logger.info("getMusicToRelease", {structuredData: true});
+  const musics = [];
+  const result = db.collection("releases").doc(data.id).collection("musics").get().then((snapshot) => {
+    snapshot.forEach((doc) => {
+      musics.push(doc.data());
+    });
+    return musics;
+  }).catch((err) => {
+    return musics;
+  });
+  return result;
+});
+
+// Get all release by date
 exports.getReleaseByDate = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getReleaseByDate", {structuredData: true});
   return db.collection("releases").where("date", ">=", data.startDate).where("date", "<=", data.endDate).orderBy("date").get()
@@ -472,10 +513,10 @@ exports.getReleaseByDate = functions.region("europe-west1").https.onCall((data, 
       });
 });
 
-// Get all release by date
+// Get all release from artist
 exports.getReleaseByArtist = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getReleaseByArtist", {structuredData: true});
-  return db.collection("releases").where("artists", "==", data.date).get()
+  return db.collection("releases").where("artists", "==", data.id).orderBy("date").get()
       .then((snapshot) => {
         const releases = [];
         snapshot.forEach((doc) => {

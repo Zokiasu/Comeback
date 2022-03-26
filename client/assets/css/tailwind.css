@@ -27,3 +27,27 @@
     box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.4);
     transform: translateY(0) scale(0.975);
 }
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: currentColor;
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}

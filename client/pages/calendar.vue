@@ -113,9 +113,9 @@
 		async fetch () {
 			const getReleaseByDate = this.$fire.functions.httpsCallable('getReleaseByDate');
 			getReleaseByDate({ startDate: this.startDate, endDate: this.endDate }).then(res => {
-				this.releases = res.data;
+				const releases = res.data;
 				const getArtistById = this.$fire.functions.httpsCallable('getArtistById');
-				this.releases.forEach(release => {
+				releases.forEach(release => {
 					getArtistById({ id: release.artists }).then(snapshot => {
 						release["artist"] = snapshot.data.artist;
 						this.releaseList.push(release);
@@ -123,25 +123,6 @@
 				});
 				console.log("releases", this.releaseList)
 			});
-			/*this.loading = true
-			let tmpList = []
-			this.$axios.get(`https://comeback-api.herokuapp.com/calendar?date_sup=${this.dateFormat(this.startDate)}&date_inf=${this.dateFormat(this.endDate)}`).then(response => {
-				if(Object.entries(response.data).length) {
-					for(let [key, value] of Object.entries(response.data)) {
-						if(value.releases) {
-							tmpList = tmpList.concat(value.releases)
-							tmpList = [...new Set(tmpList, value.releases)]
-							tmpList.sort(function(a,b) {
-								if(a.date?.toLowerCase() > b.date?.toLowerCase()) {return -1}
-								if(a.date?.toLowerCase() < b.date?.toLowerCase()) {return 1}
-								return 0;
-							})
-						}
-					}
-				}
-				this.releaseList = tmpList
-				this.loading = false
-			})*/
 		},
 
 		computed: {
@@ -157,35 +138,26 @@
 
 		methods: {
 
+			async fetchData() {
+				const getReleaseByDate = this.$fire.functions.httpsCallable('getReleaseByDate');
+				getReleaseByDate({ startDate: this.startDate, endDate: this.endDate }).then(res => {
+					const releases = res.data;
+					const getArtistById = this.$fire.functions.httpsCallable('getArtistById');
+					releases.forEach(release => {
+						getArtistById({ id: release.artists }).then(snapshot => {
+							release["artist"] = snapshot.data.artist;
+						});
+					});
+					this.releaseList = releases;
+					console.log("releases", this.releaseList)
+				});
+			},
+
 			dateFormat(d){
 				let ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d);
 				let mo = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(d);
 				let da = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(d);
 				return `${mo}/${da}/${ye}`
-			},
-
-			async fetchData() {
-				let tmpList = []
-				this.$axios.get(`https://comeback-api.herokuapp.com/calendar?date_sup=${this.dateFormat(this.startDate)}&date_inf=${this.dateFormat(this.endDate)}`).then(response => {
-					if(Object.entries(response.data).length) {
-						for(let [key, value] of Object.entries(response.data)) {
-							if(value.releases) {
-								tmpList = tmpList.concat(value.releases)
-								tmpList = [...new Set(tmpList, value.releases)]
-								tmpList.sort(function(a,b){
-									if(a.date?.toLowerCase() > b.date?.toLowerCase()) {return -1}
-									if(a.date?.toLowerCase() < b.date?.toLowerCase()) {return 1}
-									return 0;
-								})
-							}
-						}
-						this.loading = false
-					}
-					this.releaseList = tmpList
-				})
-				.catch(error => {
-					console.log(error);
-				});
 			},
 
 			changeMonth(month) {
