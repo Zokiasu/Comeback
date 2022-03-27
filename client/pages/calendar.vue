@@ -110,7 +110,7 @@
 		},
 
 		//fetch the list of releases
-		async fetch () {
+		/*async fetch () {
 			const getReleaseByDate = this.$fire.functions.httpsCallable('getReleaseByDate');
 			getReleaseByDate({ startDate: this.startDate, endDate: this.endDate }).then(res => {
 				const releases = res.data;
@@ -123,6 +123,26 @@
 					});
 				});
 			});
+		},*/
+		
+		async asyncData({ $fire, $fireModule }) {
+			const releaseList = [];
+			const currentYear = new Date().getFullYear();
+			const currentMonth = new Date().getMonth();
+			const startDate = new Date(currentYear, currentMonth, 1);
+			const endDate = new Date(currentYear, currentMonth + 1, 0);
+			$fire.firestore.collection("releases").where("date", ">=", $fireModule.firestore.Timestamp.fromDate(startDate)).where("date", "<=", $fireModule.firestore.Timestamp.fromDate(endDate)).orderBy("date", "desc").get().then(snapshot => {
+				const releases = snapshot.docs.map(doc => doc.data());
+				const getArtistById = $fire.functions.httpsCallable('getArtistById');
+				releases.forEach(release => {
+					$fire.firestore.collection("artists").doc(release.artists).get().then(snapshot => {
+						release["artist"] = snapshot.data();
+						release.date = new Date(release.date._seconds * 1000);
+						releaseList.push(release);
+					});
+				});
+			});
+			return { releaseList: releaseList }
 		},
 
 		computed: {
