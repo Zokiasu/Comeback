@@ -412,7 +412,6 @@ export default {
 		// All members
 		const firstStepMembers = $fire.functions.httpsCallable("getMembersArtist")
 		const secondStepMembers = await firstStepMembers({ id: params.id })
-		console.log(secondStepMembers.data.members)
 		// All groups
 		const firstStepGroups = $fire.functions.httpsCallable("getGroupsArtist")
 		const secondStepGroups = await firstStepGroups({ id: params.id })
@@ -488,14 +487,12 @@ export default {
 		},
 		members: {
 			handler: function (val) {
-				console.log("members", val);
 				this.memberListModified = true;
 			},
 			deep: true,
 		},
 		groups: {
 			handler: function (val) {
-				console.log("groups", val);
 				this.groupListModified = true;
 			},
 			deep: true,

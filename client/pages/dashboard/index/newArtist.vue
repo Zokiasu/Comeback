@@ -29,20 +29,14 @@
 			return { artistList }
 		},
 
-		mounted() {
-			console.log(this.artistList)
-		},
-
 		methods: {
 			verify(idArtist, index) {
-				console.log("Verify")
 				const updateArtist = this.$fire.functions.httpsCallable("updateArtistById");
 				updateArtist({ id: idArtist, verified: true })
 				this.artistList.splice(index, 1)
 			},
 
 			reject(idArtist, index) {
-				console.log("Reject")
 				const deleteArtist = this.$fire.functions.httpsCallable("deleteArtist");
 				deleteArtist({ id: idArtist })
 				this.artistList.splice(index, 1)

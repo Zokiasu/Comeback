@@ -37,7 +37,6 @@ export default {
 		},
 
 		selectIcon() {
-			console.log(this.href);
 			if(this.href.includes("youtube") && this.href.includes("music")) {
 				this.icon = 'icons-youtube-music';
 				this.text = "Youtube Music";

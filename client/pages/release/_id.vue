@@ -57,13 +57,10 @@ export default {
 		const getArtistById = $fire.functions.httpsCallable("getArtistById");
 
 		let release = await readReleaseById({ id: params.id }).then((response) => {
-			console.log("release", response.data.release);
 			const releaseTmp = response.data.release;
 			return getMusicToRelease({id: releaseTmp.id}).then((res) => {
-				console.log("music", res.data);
 				releaseTmp["music"] = res.data;
 				return getArtistById({id: releaseTmp.artists}).then((res) => {
-					console.log("artist", res.data.artist);
 					releaseTmp["artist"] = res.data.artist;
 					return releaseTmp;
 				});

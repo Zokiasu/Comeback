@@ -506,10 +506,8 @@ exports.getReleaseByDate = functions.region("europe-west1").https.onCall((data, 
         const releases = [];
         snapshot.forEach((doc) => {
           const res = doc.data();
-          console.log(res.date);
           releases.push(res);
         });
-        console.log(releases);
         return releases;
       }).catch((err) => {
         return {success: false, artists: []};

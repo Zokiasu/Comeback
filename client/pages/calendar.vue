@@ -122,7 +122,6 @@
 						this.releaseList.push(release);
 					});
 				});
-				console.log("releases", this.releaseList)
 			});
 		},
 
@@ -147,10 +146,10 @@
 					releases.forEach(release => {
 						getArtistById({ id: release.artists }).then(snapshot => {
 							release["artist"] = snapshot.data.artist;
+							release.date = new Date(release.date._seconds * 1000);
 						});
 					});
 					this.releaseList = releases;
-					console.log("releases", this.releaseList)
 				});
 			},
 

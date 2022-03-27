@@ -101,7 +101,6 @@ export default {
 		const firstStepArtist = this.$fire.functions.httpsCallable("getArtistListLimited");
 		firstStepArtist({ limit: this.limitedAt })
 			.then((response) => {
-				console.log(response)
 				this.artists = response.data;
 				this.loading = false;
 				this.limitedAt = this.limitedAt + 20;

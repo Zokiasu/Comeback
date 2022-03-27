@@ -161,14 +161,20 @@ export default {
 			imageBackground: "https://picsum.photos/200",
 		};
 	},
-
+	
+	
 	async asyncData({ params, $fire, store }) {
+		const getArtist = await $fire.firestore.collection("artists").doc(params.id).get();
+		return { artist : getArtist.data() };
+	},
+
+	/*async asyncData({ params, $fire, store }) {
 		const firstStepArtistId = $fire.functions.httpsCallable("getArtistById");
 		const secondStepArtistId = await firstStepArtistId({ id: params.id });
 		const artist = secondStepArtistId.data.artist;
 
 		return { artist };
-	},
+	},*/
 
 	async created() {
 		if(this.isLoggedIn()) {
@@ -196,12 +202,10 @@ export default {
 		const firstStepArtistGroupsId = this.$fire.functions.httpsCallable("getGroupsArtist");
 		const secondStepArtistGroupsId = await firstStepArtistGroupsId({ id: this.$route.params.id });
 		this.groups = secondStepArtistGroupsId.data;
-		console.log("groups", secondStepArtistGroupsId.data)
 
 		const firstStepArtistMembersId = this.$fire.functions.httpsCallable("getMembersArtist");
 		const secondStepArtistMembersId = await firstStepArtistMembersId({ id: this.$route.params.id });
 		this.members = secondStepArtistMembersId.data;
-		console.log("members", secondStepArtistMembersId.data)
 	},
 
 	watch: {
