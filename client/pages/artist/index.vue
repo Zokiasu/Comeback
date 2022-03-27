@@ -56,15 +56,29 @@ export default {
 			artists: [],
 			loading: true,
 			searchActive: false,
-			limitedAt: 20,
+			limitedAt: 50,
+			dsl:0,
 		};
+	},
+
+	mounted(){
+    var vm = this
+    window.addEventListener('scroll', function(e){
+      var scrollPos = window.scrollY
+      var winHeight = window.innerHeight
+      var docHeight = document.documentElement.scrollHeight
+      var perc = 100 * scrollPos / (docHeight - winHeight)
+			if(perc > 50){
+				//vm.limitedAt += 50
+				vm.fetchData()
+			}
+    })
 	},
 
 	watch: {
 		search: {
 			immediate: true,
 			handler(search) {
-				console.log("search", search);
 				if (search != "") {
 					this.searchActive = true;
 				} else {
@@ -87,7 +101,8 @@ export default {
 		const firstStepArtist = this.$fire.functions.httpsCallable("getArtistListLimited");
 		firstStepArtist({ limit: this.limitedAt })
 			.then((response) => {
-				this.artists = response.data.artists;
+				console.log(response)
+				this.artists = response.data;
 				this.loading = false;
 				this.limitedAt = this.limitedAt + 20;
 			})
@@ -101,7 +116,7 @@ export default {
 			const firstStepArtist = this.$fire.functions.httpsCallable("getArtistListLimited");
 			firstStepArtist({ limit: this.limitedAt })
 				.then((response) => {
-					this.artists = response.data.artists;
+					this.artists = response.data;
 					this.loading = false;
 					this.limitedAt = this.limitedAt + 20;
 				})

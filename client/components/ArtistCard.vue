@@ -5,6 +5,7 @@
         <img 
           :src="image"
           :alt="name"
+          loading="lazy"
           class="rounded-full object-cover bg-gray-700 aspect-square"
         />
       </NuxtLink>

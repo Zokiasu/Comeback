@@ -15,15 +15,15 @@
       </div>
     </NuxtLink>
     <div>
-      <NuxtLink :to="`/artist/${id}`" class="flex text-xs md:text-sm">
+      <NuxtLink :to="`/release/${id}`" class="flex text-xs md:text-sm">
         <p class="truncate font-semibold hover-underline-animation">{{ name }}</p>
       </NuxtLink>
       <div class="flex text-xs md:text-sm">
         <p>{{type}}</p>
         <div v-if="artist" class="bg-white mt-2 mx-2 h-1 w-1 rounded-full"></div>
-        <p v-if="artist" class="truncate">
-          {{ artist.name }}
-        </p>
+        <NuxtLink :to="`/artist/${id}`">
+          <p v-if="artist" class="truncate">{{ artist.name }}</p>
+        </NuxtLink>
       </div>
     </div>
   </div>
@@ -44,7 +44,6 @@
         required: true
       },
       date: {
-        type: String,
         required: true
       },
       name: {

@@ -8,6 +8,7 @@ const axios = require('axios');
 let fs = require('fs')
 let artistExist = false;
 let artistList = []
+let artists = []
 let releaseList = []
 process.argv.shift()  // skip node.exe
 process.argv.shift()  // skip name of js file
@@ -17,25 +18,32 @@ const entry = process.argv.join(" ")
 api.initalize().then(async info => {
     artistList = await getArtistFromFirebase()
     releaseList = await getReleasesFromFirebase()
-    //console.log("entry", entry)
-    //checkArtists(entry, artistList, releaseList)
+
     if(entry == "") {
         for (let index = 0; index < artistList.length; index++) {
             if(artistList[index].idYoutubeMusic) { 
                 await getArtist(artistList[index].idYoutubeMusic, artistList, releaseList)
-                var date = new Date();
-                var curDate = null;
-                do { curDate = new Date(); }
-                while(curDate-date < 1000);
-                //console.log(" ")
+                await setTimeout(() => {}, 5000);
+            }
+        }
+    } else if(entry == "FIRSTHALF") {
+        for (let index = 0; index < (artistList.length/2); index++) {
+            if(artistList[index].idYoutubeMusic) { 
+                await getArtist(artistList[index].idYoutubeMusic, artistList, releaseList)
+                await setTimeout(() => {}, 5000);
+            }
+        }
+    } else if(entry == "SECONDHALF") {
+        for (let index = Math.round(artistList.length/2); index < artistList.length; index++) {
+            if(artistList[index].idYoutubeMusic) { 
+                await getArtist(artistList[index].idYoutubeMusic, artistList, releaseList)
+                await setTimeout(() => {}, 5000);
             }
         }
     } else {
         await checkArtists(entry, artistList, releaseList)
     }
 })
-
-
 
 const checkArtists = function(entry, artistList, releaseList) {
     console.log("-- CHECK ARTIST")
@@ -80,26 +88,18 @@ const getArtist = async function(artistId, artistList, releaseList) {
                     artistToSend['id'] = elem.id
                 }
             })
-            //console.log('artistCheckedValue', artistChecked)
-            //console.log(artistToSend)
             
             if(!artistChecked) {
                 console.log("-- ARTIST NOT EXIST")
-                //console.log(artistToSend)
                 await setArtistFromFirebase(artistToSend)
             } else {
                 console.log("-- ARTIST EXIST")
                 if(artist.products?.albums?.content.length > 0) {
                     await addAlbum(artist, artistToSend, artistList, releaseList).then(async() => {
-                        //console.log("-- ALBUMS ADDED")
-                        await addSingle(artist, artistToSend, artistList, releaseList).then(() => {
-                            //console.log("-- SINGLES ADDED")
-                        })
+                        await addSingle(artist, artistToSend, artistList, releaseList)
                     })
                 } else if(artist.products?.singles?.content.length > 0) {
-                    await addSingle(artist, artistToSend, artistList, releaseList).then(() => {
-                        //console.log("-- SINGLES ADDED")
-                    })
+                    await addSingle(artist, artistToSend, artistList, releaseList)
                 }
             }
         }
@@ -109,80 +109,71 @@ const getArtist = async function(artistId, artistList, releaseList) {
 
 
 const addRelease = async function(release, artist, artistList, releaseList) {
-    if(release.browseId) {
-        await api.getAlbum(release.browseId).then(async result3 => {
-            if(result3.title) {
-                let releaseToSend = {
-                    name: result3.title,
-                    image: result3.thumbnails[result3.thumbnails.length-1]?.url,
-                    date: null,
-                    type: release.type.toUpperCase(),
-                    platforms: [],
-                    idYoutubeMusic: release.browseId,
-                    artists: artist.id,
-                }
-                await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${result3.tracks[0].videoId}&key=AIzaSyBb-Tgt-UvA-yhRFnB-rpuzdXXaveymfQs`).then(res => {
-                    releaseToSend.date = res?.data?.items[0]?.snippet?.publishedAt
-                })
-                let urlYT = "https://music.youtube.com/browse/" + releaseToSend.idYoutubeMusic
-                releaseToSend.platforms = [urlYT]
-                ////console.log(releaseToSend)
-                let releaseExist = false;
-                console.log('CHECK RELEASE : ', result3.title)
-                releaseList.forEach(elem => {
-                    if (elem.idYoutubeMusic == releaseToSend.idYoutubeMusic) { 
-                        releaseExist = true
-                        releaseToSend['id'] = elem.id
+    return new Promise(async (resolve, reject) => {
+        if(release.browseId) {
+            await api.getAlbum(release.browseId).then(async result3 => {
+                if(result3.title) {
+                    let releaseToSend = {
+                        name: result3.title,
+                        image: result3.thumbnails[result3.thumbnails.length-1]?.url,
+                        date: null,
+                        type: release.type.toUpperCase(),
+                        platforms: [],
+                        idYoutubeMusic: release.browseId,
+                        artists: artist.id,
                     }
-                })
-                //console.log('releaseExist', releaseExist)
+                    let urlYT = "https://music.youtube.com/browse/" + releaseToSend.idYoutubeMusic
+                    releaseToSend.platforms = [urlYT]
+                    
+                    let releaseExist = false;
+                    releaseList.forEach(elem => {
+                        if (elem.idYoutubeMusic == releaseToSend.idYoutubeMusic) { 
+                            releaseExist = true
+                            releaseToSend['id'] = elem.id
+                        }
+                    })
 
-                if(!releaseExist){
-                    //console.log("-- RELEASE NOT EXIST")
-                    ////console.log(result3.tracks)
-                    await setReleaseFromFirebase(releaseToSend, result3.tracks)
-                } else {
-                    //updateReleaseFromFirebase(releaseToSend, result3.tracks)
+                    if(!releaseExist){
+                        console.log('CHECK RELEASE : ', result3.title)
+                        if(result3?.tracks[0]?.videoId) {
+                            console.log("-- VIDEOID", result3?.tracks[0]?.videoId)
+                            await axios.get(`https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=${result3?.tracks[0]?.videoId}&key=AIzaSyBb-Tgt-UvA-yhRFnB-rpuzdXXaveymfQs`).then(async (res) => {
+                                releaseToSend.date = res?.data?.items[0]?.snippet?.publishedAt ? admin.firestore.Timestamp.fromDate(new Date(res?.data?.items[0]?.snippet?.publishedAt)) : null
+                                console.log("-- RELEASE DATE", releaseToSend.date)
+                                await setReleaseFromFirebase(releaseToSend, result3.tracks).then(() => {
+                                    resolve("Promise resolved");
+                                })
+                            })
+                        } else {
+                            await setReleaseFromFirebase(releaseToSend, result3.tracks).then(() => {
+                                resolve("Promise resolved");
+                            })
+                        }
+                    }
                 }
-            }
-        })
-    }
+            })
+        }
+    });
 }
 
 const addAlbum = async function(result2, artist, artistList, releaseList) {
     console.log("-- ADD ALBUM")
-    await Promise.all(
-        result2?.products?.albums?.content?.map(async function (el) {
-            await addRelease(el, artist, artistList, releaseList).then(() => {
-                //console.log("-- RELEASE ADDED")
-                var date = new Date();
-                var curDate = null;
-                do { curDate = new Date(); }
-                while(curDate-date < 100);
-            })
-        })
-   )
+    result2?.products?.albums?.content?.map(async function (el) {
+        return addRelease(el, artist, artistList, releaseList)
+    })
 }
 
 const addSingle = async function(result2, artist, artistList, releaseList) {
     console.log("-- ADD SINGLE")
-    await Promise.all(
-        result2?.products?.singles?.content?.map(async function(el){
-            await addRelease(el, artist, artistList, releaseList).then(() => {
-                //console.log("-- RELEASE ADDED")
-                var date = new Date();
-                var curDate = null;
-                do { curDate = new Date(); }
-                while(curDate-date < 100);
-            })
-        })
-   )
+    result2?.products?.singles?.content?.map(async function(el){
+        return addRelease(el, artist, artistList, releaseList)
+    })
 }
 
 
 
 const getArtistFromFirebase = function(){
-    return db.collection("artists").get().then(snapshot => {
+    return db.collection("artists").orderBy("name").get().then(snapshot => {
         let artistList = []
         snapshot.forEach(doc => {
             artistList.push(doc.data())
@@ -195,7 +186,9 @@ const getReleasesFromFirebase = function(){
     return db.collection("releases").get().then(snapshot => {
         let releaseList = []
         snapshot.forEach(doc => {
-            releaseList.push(doc.data())
+            const res = doc.data()
+            res['id'] = doc.id
+            releaseList.push(res)
         })
         return releaseList
     })
@@ -219,20 +212,20 @@ const updateArtistFromFirebase = function(artist) {
     })
 }
 
-const setReleaseFromFirebase = function(release, musics) {
-    return db.collection("releases").add(release).then((res) => {
-        db.collection("releases").doc(res.id).update({
+const setReleaseFromFirebase = async function(release, musics) {
+    return db.collection("releases").add(release).then(async (res) => {
+        await db.collection("releases").doc(res.id).update({
             id: res.id
         })
-        musics.forEach(music => {
-            db.collection("releases").doc(res.id).collection("musics").add(music)
+        musics.forEach(async (music) => {
+            await db.collection("releases").doc(res.id).collection("musics").add(music)
         })
     }).catch((error) => {
         console.error("Error writing document: ", error);
     });
 }
 
-const updateReleaseFromFirebase = function(release, musics) {
+const updateReleaseFromFirebase = function(release) {
     return db.collection("releases").doc(release.id).set(release).then(() => {
         //console.log("Release updated to Firebase")
     }).catch((error) => {

@@ -99,7 +99,7 @@ exports.getArtist = functions.region("europe-west1").https.onCall((data, context
         snapshot.forEach((doc) => {
           artists.push(doc.data());
         });
-        return {success: true, artists: artists};
+        return artists;
       }).catch((err) => {
         return {success: false, artists: []};
       });
@@ -114,7 +114,7 @@ exports.getArtistListLimited = functions.region("europe-west1").https.onCall((da
         snapshot.forEach((doc) => {
           artists.push(doc.data());
         });
-        return {success: true, artists: artists};
+        return artists;
       }).catch((err) => {
         return {success: false, artists: []};
       });
@@ -501,12 +501,15 @@ exports.getMusicToRelease = functions.region("europe-west1").https.onCall((data,
 // Get all release by date
 exports.getReleaseByDate = functions.region("europe-west1").https.onCall((data, context) => {
   // functions.logger.info("getReleaseByDate", {structuredData: true});
-  return db.collection("releases").where("date", ">=", data.startDate).where("date", "<=", data.endDate).orderBy("date").get()
+  return db.collection("releases").where("date", ">=", admin.firestore.Timestamp.fromDate(new Date(data.startDate))).where("date", "<=", admin.firestore.Timestamp.fromDate(new Date(data.endDate))).orderBy("date", "desc").get()
       .then((snapshot) => {
         const releases = [];
         snapshot.forEach((doc) => {
-          releases.push(doc.data());
+          const res = doc.data();
+          console.log(res.date);
+          releases.push(res);
         });
+        console.log(releases);
         return releases;
       }).catch((err) => {
         return {success: false, artists: []};
