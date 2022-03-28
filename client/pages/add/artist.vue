@@ -21,16 +21,7 @@
 							@click="launchImageFile"
 							:disabled="isUploadingImage"
 							type="button"
-							class="
-								w-full
-								md:w-auto
-								h-full
-								bg-red-one
-								rounded
-								text-white
-								py-2
-								px-4
-							"
+							class="w-full md:w-auto h-full bg-red-one rounded text-white py-2 px-4"
 						>
 							Upload
 						</button>
@@ -49,14 +40,7 @@
 					<div class="w-full">
 						<label
 							for="name"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Name*
 						</label>
@@ -65,34 +49,14 @@
 							type="text"
 							placeholder="Name"
 							v-model="name"
-							class="
-								appearance-none
-								block
-								w-full
-								rounded
-								py-3
-								px-4
-								leading-tight
-								focus:outline-none
-								bg-gray-200
-								text-gray-700
-								border border-gray-200
-								focus:bg-white focus:border-gray-500
-							"
+							class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 						/>
 					</div>
 					<!-- Youtube Music Id -->
 					<div class="w-full">
 						<label
 							for="ytb-music-id"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Youtube Music Id*
 						</label>
@@ -101,20 +65,7 @@
 							type="text"
 							placeholder="Youtube Music ID"
 							v-model="idYoutubeMusic"
-							class="
-								appearance-none
-								block
-								w-full
-								rounded
-								py-3
-								px-4
-								leading-tight
-								focus:outline-none
-								bg-gray-200
-								text-gray-700
-								border border-gray-200
-								focus:bg-white focus:border-gray-500
-							"
+							class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 						/>
 					</div>
 				</div>
@@ -130,19 +81,7 @@
 					<select
 						id="type"
 						v-model="type"
-						class="
-							block
-							w-full
-							rounded
-							py-3
-							px-4
-							leading-tight
-							focus:outline-none
-							bg-gray-200
-							text-gray-700
-							border border-gray-200
-							focus:bg-white focus:border-gray-500
-						"
+						class="block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 					>
 						<option value="SOLO">Solo</option>
 						<option value="GROUP">Group</option>
@@ -201,14 +140,14 @@
 					<multiselect
 						v-model="styles"
 						:options="styleList"
-						tag-placeholder="Add this as new style" 
+						tag-placeholder="Add this as new style"
 						placeholder="Search or add a style"
 						:multiple="true"
-            :taggable="true"
+						:taggable="true"
 						:close-on-select="false"
 						:clear-on-select="false"
 						:preserve-search="false"
-            @tag="addStyle"
+						@tag="addStyle"
 					/>
 				</div>
 				<!-- Description -->
@@ -224,20 +163,7 @@
 						type="text"
 						placeholder="Description"
 						v-model="description"
-						class="
-							appearance-none
-							block
-							w-full
-							rounded
-							py-3
-							px-4
-							leading-tight
-							focus:outline-none
-							bg-gray-200
-							text-gray-700
-							border border-gray-200
-							focus:bg-white focus:border-gray-500
-						"
+						class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 					/>
 				</div>
 				<!-- Social Media & Streaming Platforms Links -->
@@ -246,14 +172,7 @@
 					<div class="w-full">
 						<label
 							for="description"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Social Media Link
 						</label>
@@ -268,17 +187,7 @@
 							@deleteinput="deleteList(socials, index)"
 						/>
 						<button
-							class="
-								w-full
-								text-left
-								focus:outline-none
-								flex
-								space-x-2
-								bg-white bg-opacity-30
-								p-2
-								justify-center
-								rounded
-							"
+							class="w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded"
 							@click="addSocialLink()"
 						>
 							<icons-plus class="w-5 h-5 text-main-gray" />
@@ -288,14 +197,7 @@
 					<div class="w-full">
 						<label
 							for="description"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Streaming Platforms Link
 						</label>
@@ -310,17 +212,7 @@
 							@deleteinput="deleteList(platforms, index)"
 						/>
 						<button
-							class="
-								w-full
-								text-left
-								focus:outline-none
-								flex
-								space-x-2
-								bg-white bg-opacity-30
-								p-2
-								justify-center
-								rounded
-							"
+							class="w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded"
 							@click="addPlatformLink()"
 						>
 							<icons-plus class="w-5 h-5 text-main-gray" />
@@ -340,20 +232,7 @@
 						type="text"
 						placeholder="Source"
 						v-model="source"
-						class="
-							appearance-none
-							block
-							w-full
-							rounded
-							py-3
-							px-4
-							leading-tight
-							focus:outline-none
-							bg-gray-200
-							text-gray-700
-							border border-gray-200
-							focus:bg-white focus:border-gray-500
-						"
+						class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 					/>
 				</div>
 				<div class="w-full flex justify-end">
@@ -377,7 +256,8 @@ export default {
 	data() {
 		return {
 			name: "",
-			image: "https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
+			image:
+				"https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
 			type: "SOLO",
 			description: "",
 			idYoutubeMusic: "",
@@ -396,109 +276,70 @@ export default {
 	},
 
 	async asyncData({ $fire }) {
-		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
-		const secondStepArtist = await firstStepArtist({})
-		const firstStepStyle = $fire.functions.httpsCallable("getStyles")
-		const secondStepStyle = await firstStepStyle({})
+		const styleList = $fire.firestore
+			.collection("artists")
+			.where("verified", "==", true)
+			.orderBy("name")
+			.get()
+			.then((snapshot) => {
+				return snapshot.data().styles;
+			})
+			.catch((err) => {
+				return { success: false, artists: [] };
+			});
+
+		const artistList = $fire.firestore
+			.collection("general")
+			.doc("data")
+			.get()
+			.then((snapshot) => {
+				const artists = [];
+				snapshot.forEach((doc) => {
+					artists.push(doc.data());
+				});
+				return artists;
+			})
+			.catch((err) => {
+				return { success: false, artists: [] };
+			});
+
 		return {
-			artistList: secondStepArtist.data.artists,
-			styleList: secondStepStyle.data.styles,
+			artistList: artistList,
+			styleList: styleList,
 		};
 	},
-
-	//watch all changes
-	// watch: {
-	// 	name: {
-	// 		handler: function (val) {
-	// 			console.log("name", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	image: {
-	// 		handler: function (val) {
-	// 			console.log("image", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	type: {
-	// 		handler: function (val) {
-	// 			console.log("type", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	description: {
-	// 		handler: function (val) {
-	// 			console.log("description", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	idYoutubeMusic: {
-	// 		handler: function (val) {
-	// 			console.log("idYoutubeMusic", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	source: {
-	// 		handler: function (val) {
-	// 			console.log("source", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	socials: {
-	// 		handler: function (val) {
-	// 			console.log("socials", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	platforms: {
-	// 		handler: function (val) {
-	// 			console.log("platforms", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	members: {
-	// 		handler: function (val) {
-	// 			console.log("members", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	groups: {
-	// 		handler: function (val) {
-	// 			console.log("groups", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// 	styles: {
-	// 		handler: function (val) {
-	// 			console.log("styles", val);
-	// 		},
-	// 		deep: true,
-	// 	},
-	// },
 
 	methods: {
 		...mapGetters(["GET_USER"]),
 
 		createArtist() {
-			if ( this.name == "" || this.idYoutubeMusic == "" || this.source == "" ) {
-				this.$toast.error( "Please fill all fields before with * before send an artist", { duration: 5000, position: "top-right" } );
+			if (this.name == "" || this.idYoutubeMusic == "" || this.source == "") {
+				this.$toast.error(
+					"Please fill all fields before with * before send an artist",
+					{ duration: 5000, position: "top-right" }
+				);
 				return;
 			}
 
-			if(this.newStyleAdded) {
-				const updateStyle = this.$fire.functions.httpsCallable("updateListStyle");
+			if (this.newStyleAdded) {
+				const updateStyle =
+					this.$fire.functions.httpsCallable("updateListStyle");
 				updateStyle({ styles: this.styleList })
 					.then(() => {
-						this.$toast.success( "Styles updated", { duration: 5000, position: "top-right" } );
+						this.$toast.success("Styles updated", {
+							duration: 5000,
+							position: "top-right",
+						});
 					})
 					.catch(() => {
-						this.$toast.error( "Error updating styles", { duration: 5000, position: "top-right" } );
+						this.$toast.error("Error updating styles", {
+							duration: 5000,
+							position: "top-right",
+						});
 					});
 			}
 
-			const createArtist = this.$fire.functions.httpsCallable(
-				"createArtist"
-			);
+			const createArtist = this.$fire.functions.httpsCallable("createArtist");
 			createArtist({
 				name: this.name,
 				image: this.image,
@@ -516,14 +357,21 @@ export default {
 				addedBy: this.GET_USER().uid,
 			})
 				.then((result) => {
-					const updateArtist = this.$fire.functions.httpsCallable("updateArtistById");
-					updateArtist({id: result.data.id})
+					const updateArtist =
+						this.$fire.functions.httpsCallable("updateArtistById");
+					updateArtist({ id: result.data.id })
 						.then((res) => {
-							this.$toast.success( "Thank you, Your artist have been sent for verification", { duration: 5000, position: "top-right" } );
+							this.$toast.success(
+								"Thank you, Your artist have been sent for verification",
+								{ duration: 5000, position: "top-right" }
+							);
 							this.$router.push("/");
 						})
 						.catch(() => {
-							this.$toast.error( "Error updating artist", { duration: 5000, position: "top-right" } );
+							this.$toast.error("Error updating artist", {
+								duration: 5000,
+								position: "top-right",
+							});
 						});
 				})
 				.catch((error) => {
@@ -531,14 +379,14 @@ export default {
 				});
 		},
 
-		addStyle (newTag) {
-			if(this.styles == null) {
-					this.styles = [newTag]
+		addStyle(newTag) {
+			if (this.styles == null) {
+				this.styles = [newTag];
 			} else {
-					this.styles.push(newTag)
+				this.styles.push(newTag);
 			}
-			this.styleList.push(newTag)
-			this.newStyleAdded = true
+			this.styleList.push(newTag);
+			this.newStyleAdded = true;
 		},
 
 		updateList(list, newElem, index) {

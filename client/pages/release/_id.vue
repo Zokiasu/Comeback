@@ -5,8 +5,8 @@
 				<h1 class="text-2xl lg:text-5xl font-semibold">{{release.name}}</h1>
 				<div class="flex gap-2">
 					<p class="text-2xl">{{release.type}} -</p>
-					<nuxt-link :to="`/artist/${release.artist.id}`">
-						<h2 class="text-2xl hover-underline-animation">{{release.artist.name}}</h2>
+					<nuxt-link :to="`/artist/${release.artistsId}`">
+						<h2 class="text-2xl hover-underline-animation">{{release.artistsName}}</h2>
 					</nuxt-link>
 				</div>
 				<div
@@ -32,14 +32,14 @@
 								<img :alt="music.name" :src="release.image" class="bg-gray-300 rounded-md h-14 w-14 shadow-2xl shadow-zinc-700">
 								<div>
 									<h3 class="font-semibold">{{music.name}}</h3>
-									<nuxt-link :to="`/artist/${release.artist.id}`">
-										<p class="flex hover-underline-animation">{{release.artist.name}}</p>
+									<nuxt-link :to="`/artist/${release.artistsId}`">
+										<p class="flex hover-underline-animation">{{release.artistsName}}</p>
 									</nuxt-link>
 								</div>
 							</div>
-							<button>
+							<a :href="`https://youtu.be/${music.videoId}`" target="_blank">
 								<icons-play class="w-8 h-8"/>
-							</button>
+							</a>
 						</li>
 					</ul>
 				</div>
@@ -50,22 +50,17 @@
 
 <script>
 export default {
-
-	async asyncData({ params, $fire, store }) {
-		const readReleaseById = $fire.functions.httpsCallable("readReleaseById");
-		const getMusicToRelease = $fire.functions.httpsCallable("getMusicToRelease");
-		const getArtistById = $fire.functions.httpsCallable("getArtistById");
-
-		let release = await readReleaseById({ id: params.id }).then((response) => {
-			const releaseTmp = response.data.release;
-			return getMusicToRelease({id: releaseTmp.id}).then((res) => {
-				releaseTmp["music"] = res.data;
-				return getArtistById({id: releaseTmp.artists}).then((res) => {
-					releaseTmp["artist"] = res.data.artist;
-					return releaseTmp;
-				});
-			});
-		})
+	async asyncData({ params, $fire }) {
+		let release = await $fire.firestore.collection("releases").doc(params.id).get().then(doc => {
+			const res = doc.data()
+			return $fire.firestore.collection("releases").doc(res.id).collection("musics").get().then(snap => {
+				res["music"] = snap.docs.map(doc => doc.data())
+				return $fire.firestore.collection("artists").doc(res.artistsId).get().then(docs => {
+					res["artist"] = docs.data()
+					return res
+				})
+			})
+		});
 
 		return { release };
 	},

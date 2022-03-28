@@ -61,7 +61,7 @@
 					:date="release.date"
 					:name="release.name"
 					:type="release.type"
-					:artist="release.artist"
+					:artists="{id: release.artistsId, name: release.artistsName}"
 					displayDate
 					class="list-complete-item w-40"
 				/>
@@ -103,46 +103,27 @@
 				month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 			}
 		},
-
-		created(){
-			this.startDate = new Date(this.currentYear, this.currentMonth, 1);
-			this.endDate = new Date(this.currentYear, this.currentMonth + 1, 0);
-		},
-
-		//fetch the list of releases
-		/*async fetch () {
-			const getReleaseByDate = this.$fire.functions.httpsCallable('getReleaseByDate');
-			getReleaseByDate({ startDate: this.startDate, endDate: this.endDate }).then(res => {
-				const releases = res.data;
-				const getArtistById = this.$fire.functions.httpsCallable('getArtistById');
-				releases.forEach(release => {
-					getArtistById({ id: release.artists }).then(snapshot => {
-						release["artist"] = snapshot.data.artist;
-						release.date = new Date(release.date._seconds * 1000);
-						this.releaseList.push(release);
-					});
-				});
-			});
-		},*/
 		
 		async asyncData({ $fire, $fireModule }) {
 			const releaseList = [];
 			const currentYear = new Date().getFullYear();
 			const currentMonth = new Date().getMonth();
-			const startDate = new Date(currentYear, currentMonth, 1);
-			const endDate = new Date(currentYear, currentMonth + 1, 0);
-			$fire.firestore.collection("releases").where("date", ">=", $fireModule.firestore.Timestamp.fromDate(startDate)).where("date", "<=", $fireModule.firestore.Timestamp.fromDate(endDate)).orderBy("date", "desc").get().then(snapshot => {
-				const releases = snapshot.docs.map(doc => doc.data());
-				const getArtistById = $fire.functions.httpsCallable('getArtistById');
-				releases.forEach(release => {
-					$fire.firestore.collection("artists").doc(release.artists).get().then(snapshot => {
-						release["artist"] = snapshot.data();
-						release.date = new Date(release.date._seconds * 1000);
-						releaseList.push(release);
-					});
+			const startDate = $fireModule.firestore.Timestamp.fromDate(new Date(currentYear, currentMonth, 1));
+			const endDate = $fireModule.firestore.Timestamp.fromDate(new Date(currentYear, currentMonth + 1, 0));
+			$fire.firestore.collection("releases").where("date", ">=", startDate).where("date", "<=", endDate).orderBy("date", "desc").get().then(snapshot => {
+				snapshot.forEach(doc => {
+					const release = doc.data();
+					release.id = doc.id;
+					release.date = new Date(doc.data().date.seconds * 1000);
+					releaseList.push(release);
 				});
 			});
 			return { releaseList: releaseList }
+		},
+
+		created(){
+			this.startDate = new Date(this.currentYear, this.currentMonth, 1);
+			this.endDate = new Date(this.currentYear, this.currentMonth + 1, 0);
 		},
 
 		computed: {
@@ -157,20 +138,21 @@
 		},
 
 		methods: {
-
 			async fetchData() {
-				const getReleaseByDate = this.$fire.functions.httpsCallable('getReleaseByDate');
-				getReleaseByDate({ startDate: this.startDate, endDate: this.endDate }).then(res => {
-					const releases = res.data;
-					const getArtistById = this.$fire.functions.httpsCallable('getArtistById');
-					releases.forEach(release => {
-						getArtistById({ id: release.artists }).then(snapshot => {
-							release["artist"] = snapshot.data.artist;
-							release.date = new Date(release.date._seconds * 1000);
+				this.releaseList = [];
+				const tmpList = [];
+				this.releaseList = await this.$fire.firestore.collection("releases")
+					.where("date", ">=", this.$fireModule.firestore.Timestamp.fromDate(this.startDate))
+					.where("date", "<=", this.$fireModule.firestore.Timestamp.fromDate(this.endDate)).orderBy("date", "desc").get()
+					.then(snapshot => {
+						snapshot.forEach(doc => {
+							const release = doc.data();
+							release.id = doc.id;
+							release.date = new Date(doc.data().date.seconds * 1000);
+							tmpList.push(release);
 						});
+						return tmpList;
 					});
-					this.releaseList = releases;
-				});
 			},
 
 			dateFormat(d){
@@ -207,14 +189,15 @@
 
 <style scoped>
 	.list-complete-item {
-		transition: all 0.5s;
+		transition: all 0.7s;
 		display: inline-block;
 	}
-	.list-complete-enter, .list-complete-leave-to {
+	.list-complete-enter {
 		opacity: 0;
-		transform: translateY(30px);
+		transform: translateY(50px);
 	}
 	.list-complete-leave-active {
-		position: absolute;
+		opacity: 0;
+		transform: translateX(-30px);
 	}
 </style>

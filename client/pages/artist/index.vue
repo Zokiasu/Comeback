@@ -68,7 +68,7 @@ export default {
       var winHeight = window.innerHeight
       var docHeight = document.documentElement.scrollHeight
       var perc = 100 * scrollPos / (docHeight - winHeight)
-			if(perc > 50){
+			if(perc > 15){
 				//vm.limitedAt += 50
 				vm.fetchData()
 			}

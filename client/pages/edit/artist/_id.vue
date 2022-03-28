@@ -21,16 +21,7 @@
 							@click="launchImageFile"
 							:disabled="isUploadingImage"
 							type="button"
-							class="
-								w-full
-								md:w-auto
-								h-full
-								bg-red-one
-								rounded
-								text-white
-								py-2
-								px-4
-							"
+							class="w-full md:w-auto h-full bg-red-one rounded text-white py-2 px-4"
 						>
 							Upload
 						</button>
@@ -49,14 +40,7 @@
 					<div class="w-full">
 						<label
 							for="name"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Name*
 						</label>
@@ -65,34 +49,14 @@
 							type="text"
 							placeholder="Name"
 							v-model="name"
-							class="
-								appearance-none
-								block
-								w-full
-								rounded
-								py-3
-								px-4
-								leading-tight
-								focus:outline-none
-								bg-gray-200
-								text-gray-700
-								border border-gray-200
-								focus:bg-white focus:border-gray-500
-							"
+							class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 						/>
 					</div>
 					<!-- Youtube Music Id -->
 					<div class="w-full">
 						<label
 							for="ytb-music-id"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Youtube Music Id*
 						</label>
@@ -101,20 +65,7 @@
 							type="text"
 							placeholder="Youtube Music ID"
 							v-model="idYoutubeMusic"
-							class="
-								appearance-none
-								block
-								w-full
-								rounded
-								py-3
-								px-4
-								leading-tight
-								focus:outline-none
-								bg-gray-200
-								text-gray-700
-								border border-gray-200
-								focus:bg-white focus:border-gray-500
-							"
+							class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 						/>
 					</div>
 				</div>
@@ -130,19 +81,7 @@
 					<select
 						id="type"
 						v-model="type"
-						class="
-							block
-							w-full
-							rounded
-							py-3
-							px-4
-							leading-tight
-							focus:outline-none
-							bg-gray-200
-							text-gray-700
-							border border-gray-200
-							focus:bg-white focus:border-gray-500
-						"
+						class="block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 					>
 						<option value="SOLO">Solo</option>
 						<option value="GROUP">Group</option>
@@ -201,14 +140,14 @@
 					<multiselect
 						v-model="styles"
 						:options="styleList"
-						tag-placeholder="Add this as new style" 
+						tag-placeholder="Add this as new style"
 						placeholder="Search or add a style"
 						:multiple="true"
-            :taggable="true"
+						:taggable="true"
 						:close-on-select="false"
 						:clear-on-select="false"
 						:preserve-search="false"
-            @tag="addStyle"
+						@tag="addStyle"
 					/>
 				</div>
 				<!-- Description -->
@@ -224,20 +163,7 @@
 						type="text"
 						placeholder="Description"
 						v-model="description"
-						class="
-							appearance-none
-							block
-							w-full
-							rounded
-							py-3
-							px-4
-							leading-tight
-							focus:outline-none
-							bg-gray-200
-							text-gray-700
-							border border-gray-200
-							focus:bg-white focus:border-gray-500
-						"
+						class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 					/>
 				</div>
 				<!-- Social Media & Streaming Platforms Links -->
@@ -246,14 +172,7 @@
 					<div class="w-full">
 						<label
 							for="description"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Social Media Link
 						</label>
@@ -268,17 +187,7 @@
 							@deleteinput="deleteList(socials, index)"
 						/>
 						<button
-							class="
-								w-full
-								text-left
-								focus:outline-none
-								flex
-								space-x-2
-								bg-white bg-opacity-30
-								p-2
-								justify-center
-								rounded
-							"
+							class="w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded"
 							@click="addSocialLink()"
 						>
 							<icons-plus class="w-5 h-5 text-main-gray" />
@@ -288,14 +197,7 @@
 					<div class="w-full">
 						<label
 							for="description"
-							class="
-								block
-								uppercase
-								tracking-wide
-								text-white
-								font-semibold
-								mb-2
-							"
+							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
 							Streaming Platforms Link
 						</label>
@@ -310,17 +212,7 @@
 							@deleteinput="deleteList(platforms, index)"
 						/>
 						<button
-							class="
-								w-full
-								text-left
-								focus:outline-none
-								flex
-								space-x-2
-								bg-white bg-opacity-30
-								p-2
-								justify-center
-								rounded
-							"
+							class="w-full text-left focus:outline-none flex space-x-2 bg-white bg-opacity-30 p-2 justify-center rounded"
 							@click="addPlatformLink()"
 						>
 							<icons-plus class="w-5 h-5 text-main-gray" />
@@ -340,20 +232,7 @@
 						type="text"
 						placeholder="Source"
 						v-model="source"
-						class="
-							appearance-none
-							block
-							w-full
-							rounded
-							py-3
-							px-4
-							leading-tight
-							focus:outline-none
-							bg-gray-200
-							text-gray-700
-							border border-gray-200
-							focus:bg-white focus:border-gray-500
-						"
+						class="appearance-none block w-full rounded py-3 px-4 leading-tight focus:outline-none bg-gray-200 text-gray-700 border border-gray-200 focus:bg-white focus:border-gray-500"
 					/>
 				</div>
 				<div class="w-full flex justify-end">
@@ -401,37 +280,58 @@ export default {
 	},
 
 	async asyncData({ $fire, params }) {
-		const firstStepArtistId = $fire.functions.httpsCallable("getArtistById");
-		const secondStepArtistId = await firstStepArtistId({ id: params.id });
-		// ArtistList
-		const firstStepArtist = $fire.functions.httpsCallable("getArtist")
-		const secondStepArtist = await firstStepArtist({})
-		// StyleList
-		const firstStepStyle = $fire.functions.httpsCallable("getStyles")
-		const secondStepStyle = await firstStepStyle({})
-		// All members
-		const firstStepMembers = $fire.functions.httpsCallable("getMembersArtist")
-		const secondStepMembers = await firstStepMembers({ id: params.id })
-		// All groups
-		const firstStepGroups = $fire.functions.httpsCallable("getGroupsArtist")
-		const secondStepGroups = await firstStepGroups({ id: params.id })
+		const artist = await $fire.firestore.collection("artists").doc(params.id).get().then(doc => {
+			return doc.data();
+		});
+
+		const getMembers = await $fire.firestore.collection("artists").doc(params.id).collection("groups").orderBy("name", "asc").get().then(snapshot => {
+			const members = [];
+			snapshot.forEach(doc => {
+				const member = doc.data();
+				member.id = doc.id;
+				members.push(member);
+			});
+			return members;
+		});
+
+		const getGroups = await $fire.firestore.collection("artists").doc(params.id).collection("groups").orderBy("name", "asc").get().then(snapshot => {
+			const groups = [];
+			snapshot.forEach(doc => {
+				const group = doc.data();
+				group.id = doc.id;
+				groups.push(group);
+			});
+			return groups;
+		});
+
+		const styleList = await $fire.firestore.collection("general").doc("data").get().then(doc => {
+			return doc.data().styles;
+		});
+
+		const artistList = await $fire.firestore.collection("artists").where("verified", "==", true).get().then(snapshot => {
+        const artists = [];
+        snapshot.forEach((doc) => {
+          artists.push(doc.data());
+        });
+        return artists;
+		});
 
 		return {
-			artistList: secondStepArtist.data.artists,
-			styleList: secondStepStyle.data.styles,
+			artistList: artistList,
+			styleList: styleList,
 
-			name: secondStepArtistId.data.artist.name,
-			image: secondStepArtistId.data.artist.image,
-			type: secondStepArtistId.data.artist.type,
-			description: secondStepArtistId.data.artist.description,
-			idYoutubeMusic: secondStepArtistId.data.artist.idYoutubeMusic,
-			source: secondStepArtistId.data.artist.source,
-			socials: secondStepArtistId.data.artist.socials,
-			platforms: secondStepArtistId.data.artist.platforms,
-			styles: secondStepArtistId.data.artist.styles,
+			name: artist.name,
+			image: artist.image,
+			type: artist.type,
+			description: artist.description,
+			idYoutubeMusic: artist.idYoutubeMusic,
+			source: artist.source,
+			socials: artist.socials,
+			platforms: artist.platforms,
+			styles: artist.styles,
 			
-			members: secondStepMembers.data,
-			groups: secondStepGroups.data,
+			members: getMembers,
+			groups: getGroups,
 		};
 	},
 

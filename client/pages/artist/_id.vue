@@ -95,6 +95,7 @@
 						:date="release.date"
 						:name="release.name"
 						:type="release.type"
+						:artists="{ id: release.artistsId, name: release.artistsName }"
 						:displayDate="true"
 						class="w-40"
 					/>
@@ -162,19 +163,55 @@ export default {
 		};
 	},
 	
-	
 	async asyncData({ params, $fire, store }) {
-		const getArtist = await $fire.firestore.collection("artists").doc(params.id).get();
-		return { artist : getArtist.data() };
+		const getArtist = await $fire.firestore.collection("artists").doc(params.id).get().then(doc => {
+			return doc.data();
+		});
+
+		const getReleaseByArtist = await $fire.firestore.collection("releases").where("artistsId", "==", params.id).get().then(snapshot => {
+			const releaseL = [];
+			// ajouter dans releaseL et trier par date
+			snapshot.forEach(doc => {
+				const release = doc.data();
+				release.date = new Date(doc.data().date.seconds * 1000);
+				releaseL.push(release);
+			});
+			//trier par date
+			releaseL.sort((a, b) => {
+				return b.date - a.date;
+			});
+			return releaseL;
+		});
+
+		const getMembers = await $fire.firestore.collection("artists").doc(params.id).collection("members").orderBy("name", "asc").get().then(snapshot => {
+			const members = [];
+			snapshot.forEach(doc => {
+				members.push(doc.data());
+			});
+			return members;
+		});
+
+		const getGroups = await $fire.firestore.collection("artists").doc(params.id).collection("groups").orderBy("name", "asc").get().then(snapshot => {
+			const groups = [];
+			snapshot.forEach(doc => {
+				const group = doc.data();
+				group.id = doc.id;
+				groups.push(group);
+			});
+			return groups;
+		});
+		
+		const liked = await $fire.firestore.collection("artists").doc(params.id).collection("followers").where("id", "==", store.state.user.uid).get().then(snapshot => {
+			if (snapshot.size > 0) {
+				return true;
+			}
+			return false;
+		}).catch(err => {
+			console.log(err);
+		});
+
+		return { artist : getArtist, releases: getReleaseByArtist, members: getMembers, groups: getGroups, liked: liked };
 	},
-
-	/*async asyncData({ params, $fire, store }) {
-		const firstStepArtistId = $fire.functions.httpsCallable("getArtistById");
-		const secondStepArtistId = await firstStepArtistId({ id: params.id });
-		const artist = secondStepArtistId.data.artist;
-
-		return { artist };
-	},*/
 
 	async created() {
 		if(this.isLoggedIn()) {
@@ -183,29 +220,6 @@ export default {
 			this.userInfo = this.GET_USER_DATA();
 		}
 		this.imageBackground = this.artist.image.toString();
-	},
-
-	async mounted() {
-		if(this.displayOnlineOption && this.userInfo) {
-			const firstStepFollowArtistId = this.$fire.functions.httpsCallable("getFollowerArtistExisted");
-			const secondStepFollowArtistId = await firstStepFollowArtistId({
-				id: this.artist.id,
-				userId: this.userInfo.id,
-			});
-			this.liked = secondStepFollowArtistId.data.liked;
-		}
-
-		const firstStepReleaseId = this.$fire.functions.httpsCallable("getReleaseByArtist");
-		const secondStepReleaseId = await firstStepReleaseId({ id: this.$route.params.id });
-		this.releases = secondStepReleaseId.data;
-
-		const firstStepArtistGroupsId = this.$fire.functions.httpsCallable("getGroupsArtist");
-		const secondStepArtistGroupsId = await firstStepArtistGroupsId({ id: this.$route.params.id });
-		this.groups = secondStepArtistGroupsId.data;
-
-		const firstStepArtistMembersId = this.$fire.functions.httpsCallable("getMembersArtist");
-		const secondStepArtistMembersId = await firstStepArtistMembersId({ id: this.$route.params.id });
-		this.members = secondStepArtistMembersId.data;
 	},
 
 	watch: {

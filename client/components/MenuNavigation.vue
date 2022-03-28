@@ -135,7 +135,7 @@
 								id="user-menu-button"
 								type="button"
 								class="bg-gray-500 bg-opacity-10 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-								@click="openUserMenu"
+								@click="openUserMenu()"
 							>
 								<span class="sr-only">Open user menu</span>
 								<img
@@ -242,7 +242,7 @@
 			:bg-in-class="`animate__fadeInUp`"
 			:bg-out-class="`animate__fadeOutDown`"
 		>
-			<NewsCreation @close="closeNewsModal" :artistList="artist" />
+			<NewsCreation @close="closeNewsModal" :artistList="artistList" />
 		</Modal>
 	</div>
 </template>
@@ -257,17 +257,32 @@ export default {
 		return {
 			navMenu: false,
 			userMenu: false,
-
-			authentificationModal: false,
 			newsModal: false,
 
 			userLogged: false,
-
-			user: null,
-			userRole: "NONE",
+			userRole: 'NONE',
 			userAvatar: require("@/assets/image/artist.png"),
+		};
+	},
+	
+	async asyncData({ store, $fire }) {
+		const artistList = $fire.firestore
+			.collection("general")
+			.doc("data")
+			.get()
+			.then((snapshot) => {
+				const artists = [];
+				snapshot.forEach((doc) => {
+					artists.push(doc.data());
+				});
+				return artists;
+			})
+			.catch((err) => {
+				return { success: false, artists: [] };
+			});
 
-			artist: null,
+		return {
+			artistList,
 		};
 	},
 
