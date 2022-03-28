@@ -33,7 +33,7 @@
 								<div>
 									<h3 class="font-semibold">{{music.name}}</h3>
 									<nuxt-link :to="`/artist/${release.artistsId}`">
-										<p class="flex hover-underline-animation">{{release.artistsName}}</p>
+										<p class="flex text-left hover-underline-animation">{{release.artistsName}}</p>
 									</nuxt-link>
 								</div>
 							</div>
