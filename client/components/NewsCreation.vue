@@ -98,7 +98,6 @@ export default {
 						image: this.artistSelected.image,
 					},
 				}).then((res) => {
-					console.log("News sent", res);
 					this.$toast.success("News sent", { duration: 3000, position: "top-right" });
 					this.$emit("close");
 				});

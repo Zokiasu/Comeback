@@ -88,13 +88,11 @@
 					newsList.push(news);
         });
 			});
-      console.log("newsList", newsList);
       
       let newArtist = await $fire.firestore.collection("artists").where("createdAt", "<=", startDate).orderBy("createdAt", "desc").limit(9).get()
       .then(snapshot => {
         return snapshot.docs.map(doc => doc.data());
 			});
-      console.log("newArtist", newArtist);
 
       const newRelease = [];
       await $fire.firestore.collection("releases").where("date", "<=", startDate).orderBy("date", "desc").limit(9).get()
@@ -106,7 +104,6 @@
 					newRelease.push(release);
         });
 			});
-      console.log("newRelease", newRelease);
 
       return { 
         newArtist,

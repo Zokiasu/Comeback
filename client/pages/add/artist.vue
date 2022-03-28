@@ -58,7 +58,7 @@
 							for="ytb-music-id"
 							class="block uppercase tracking-wide text-white font-semibold mb-2"
 						>
-							Youtube Music Id*
+							Youtube Music Id
 						</label>
 						<input
 							id="ytb-music-id"
@@ -259,7 +259,7 @@ export default {
 			image: "https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
 			type: "SOLO",
 			description: "",
-			idYoutubeMusic: "",
+			idYoutubeMusic: null,
 			source: "",
 			socials: [],
 			platforms: [],
@@ -315,7 +315,7 @@ export default {
 		...mapGetters(["GET_USER"]),
 
 		createArtist() {
-			if (this.name == "" || this.idYoutubeMusic == "" || this.source == "") {
+			if (this.name == "" || this.source == "") {
 				this.$toast.error(
 					"Please fill all fields before with * before send an artist",
 					{ duration: 5000, position: "top-right" }

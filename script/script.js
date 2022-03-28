@@ -18,51 +18,8 @@ let entry = process.argv.join(" ")
 api.initalize().then(async info => {
     artistList = await getArtistFromFirebase()
     releaseList = await getReleasesFromFirebase()
-    let news = []
-    await axios.get(`https://comeback-api.herokuapp.com/infos`).then(res => {
-        news = [...new Set(res.data)]
-    })
 
-    news.forEach(elem => {
-        console.log("elem", elem)
-        let aCheck = false
-        if(elem.artist) {
-            artistList.forEach(elem2 => {
-                if (elem2.idYoutubeMusic == elem.artist.idyoutubemusic) {
-                    aCheck = true
-                    elem.artist.id = elem2.id
-                }
-            })
-            if(aCheck) {
-                db.collection("news").add({
-                    createdAt: admin.firestore.FieldValue.serverTimestamp(),
-                    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-                    message: elem.message,
-                    date: admin.firestore.Timestamp.fromDate(new Date(elem.date)),
-                    verified: true,
-                    source: elem.source,
-                    user: {
-                        id: 'YvFSBcfV8rfF7z67lugQICscfm12',
-                        name: 'Zokiasu',
-                        picture: 'https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Fartists.jpg?alt=media&token=23be3721-5157-45a7-8c0e-e1c03c2e1827'
-                    },
-                    artist: {
-                        id: elem.artist.id,
-                        name: elem.artist.name,
-                        image: elem.artist.image
-                    },
-                })
-                .then((ref) => {
-                    return {success: true, id: ref.id, message: "updated successfully."};
-                })
-                .catch((err) => {
-                    return {success: false, id: "", message: err};
-                });
-            }
-        }
-    })
-
-    /*if(entry == "") {
+    if(entry == "") {
         for (let index = 0; index < artistList.length; index++) {
             if(artistList[index].idYoutubeMusic) {
                 await getArtist(artistList[index].idYoutubeMusic, artistList, releaseList)
@@ -82,7 +39,7 @@ api.initalize().then(async info => {
         }
     } else {
         checkArtists(entry, artistList, releaseList)
-    }*/
+    }
 })
 
 const checkArtists = function(args, artistList, releaseList) {
@@ -258,7 +215,7 @@ const setArtistFromFirebase = function(artist) {
 
 const updateArtistFromFirebase = function(artist) {
     return db.collection("artists").doc(artist.id).update(artist).then(() => {
-        //console.log("Artist updated to Firebase")
+        console.log("Artist updated to Firebase")
     })
 }
 
