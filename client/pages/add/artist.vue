@@ -256,8 +256,7 @@ export default {
 	data() {
 		return {
 			name: "",
-			image:
-				"https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
+			image: "https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce",
 			type: "SOLO",
 			description: "",
 			idYoutubeMusic: "",
@@ -269,28 +268,15 @@ export default {
 			styles: [],
 			// general
 			isUploadingImage: false,
-			artistList: [],
 			styleList: [],
 			newStyleAdded: false,
 		};
 	},
 
 	async asyncData({ $fire }) {
-		const styleList = $fire.firestore
+		const artistList = await $fire.firestore
 			.collection("artists")
 			.where("verified", "==", true)
-			.orderBy("name")
-			.get()
-			.then((snapshot) => {
-				return snapshot.data().styles;
-			})
-			.catch((err) => {
-				return { success: false, artists: [] };
-			});
-
-		const artistList = $fire.firestore
-			.collection("general")
-			.doc("data")
 			.get()
 			.then((snapshot) => {
 				const artists = [];
@@ -298,6 +284,22 @@ export default {
 					artists.push(doc.data());
 				});
 				return artists;
+			})
+			.catch((err) => {
+				return { success: false, artists: [] };
+			});
+		artistList.sort((a, b) => {
+			if (a.name < b.name) return -1;
+			if (a.name > b.name) return 1;
+			return 0;
+		});
+
+		const styleList = await $fire.firestore
+			.collection("general")
+			.doc("data")
+			.get()
+			.then((snapshot) => {
+				return snapshot.data().styles;
 			})
 			.catch((err) => {
 				return { success: false, artists: [] };

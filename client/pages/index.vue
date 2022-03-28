@@ -9,9 +9,13 @@
       </div>
       <div class="flex flex-wrap gap-5 w-full justify-center inner">
         <NewsCard 
-          v-for="(element) in newsList" 
-          :key="element.id" 
-          :element="element"
+          v-for="news in newsList" 
+          :key="news.id"
+          :verified="news.verified"
+          :message="news.message"
+          :date="news.date"
+          :artist="news.artist"
+          :user="news.user"
         />
       </div>
     </section>
@@ -21,7 +25,7 @@
       class="section"
     >
       <div>
-        <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Release Added</h2>
+        <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Releases</h2>
       </div>
       <div class="grid grid-cols-2 gap-5 md:flex md:flex-wrap w-full md:justify-center lg:justify-start md:inner">
         <ReleaseCard 
@@ -32,7 +36,8 @@
 					:date="release.date"
 					:name="release.name"
 					:type="release.type"
-					:artists="release.artists"
+					:artists="{ id: release.artistsId, name: release.artistsName }"
+          display-date
           class="w-40"
         />
       </div>
@@ -53,7 +58,6 @@
           :name="artist.name"
           :id="artist.id"
           :type="artist.type"
-          :groups="artist.groups"
           class="w-40"
         />
       </div>
@@ -71,22 +75,38 @@
       ScrollReveal().reveal('.section', {interval: 300, distance: '1000%', origin: 'bottom', opacity: null})
     },
     
-    async asyncData({ $axios }){
-      let newArtist = await $axios.$get(`https://comeback-api.herokuapp.com/artists?sortby=createdAt:desc&limit=9`)
-      let newRelease = await $axios.$get(`https://comeback-api.herokuapp.com/releases?sortby=createdAt:desc&limit=9`)
-      let newsList = []
+    async asyncData({ $fire, $fireModule }){
+			const startDate = $fireModule.firestore.Timestamp.fromDate(new Date());
 
-      let dateToGet = new Date()
-      dateToGet.setDate((dateToGet.getDate())-1)
-      let tmpNews = await $axios.$get(`https://comeback-api.herokuapp.com/calendar/infos?date_sup=${dateToGet}`)
+			
+      const newsList = [];
+      await $fire.firestore.collection("news").where("date", ">=", startDate).orderBy("date", "asc").get().then(snapshot => {
+        snapshot.forEach(doc => {
+					const news = doc.data();
+					news.id = doc.id;
+					news.date = new Date(doc.data().date.seconds * 1000);
+					newsList.push(news);
+        });
+			});
+      console.log("newsList", newsList);
+      
+      let newArtist = await $fire.firestore.collection("artists").where("createdAt", "<=", startDate).orderBy("createdAt", "desc").limit(9).get()
+      .then(snapshot => {
+        return snapshot.docs.map(doc => doc.data());
+			});
+      console.log("newArtist", newArtist);
 
-      Object.keys(tmpNews).map(function(key, index) {
-        for(let [key2, value2] of Object.entries(tmpNews[key])) {
-          value2.forEach(element => {
-            newsList.push(element)
-          });
-        }
-      })
+      const newRelease = [];
+      await $fire.firestore.collection("releases").where("date", "<=", startDate).orderBy("date", "desc").limit(9).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+					const release = doc.data();
+					release.id = doc.id;
+					release.date = new Date(doc.data().date.seconds * 1000);
+					newRelease.push(release);
+        });
+			});
+      console.log("newRelease", newRelease);
 
       return { 
         newArtist,

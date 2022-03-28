@@ -23,8 +23,6 @@
                 <NewsCard class="m-auto" :element="element"/>
             </div>
         </section>
-
-        <InfiniteLoading spinner="spiral" @infinite="infiniteScroll"></InfiniteLoading>
         <div v-if="news.length < 1" class="px-5">
             <span style="background-color: #6B728033" class="text-white w-full flex justify-center rounded p-2">No News found.</span>
         </div>
@@ -108,33 +106,30 @@
             },
         },
 
-        async asyncData({ $axios }){
-            const artistList = await $axios.$get('https://comeback-api.herokuapp.com/artists/groups?sortby=name:asc')
+        async asyncData({ $fire }){
+            const artistList = await $fire.firestore
+                .collection("artists")
+                .where("verified", "==", true)
+                .get()
+                .then((snapshot) => {
+                    const artists = [];
+                    snapshot.forEach((doc) => {
+                        artists.push(doc.data());
+                    });
+                    return artists;
+                })
+                .catch((err) => {
+                    return { success: false, artists: [] };
+                });
+            artistList.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+            });
             return {artistList}
         },
 
-        methods:{
-            infiniteScroll($state) {
-                let artTmp = []
-                setTimeout(() => {
-                    artTmp = artTmp.concat(this.news)
-                    this.$axios.get(`https://comeback-api.herokuapp.com/infos?sortby=createdAt:desc&limit=10&offset=${this.maxObjectDisplay}`).then(response => {
-                        if(response.data.length > 0) {
-                            artTmp = artTmp.concat(response.data)
-                            this.news = [...new Set(artTmp)]
-                            this.maxObjectDisplay = this.maxObjectDisplay + 10
-                            $state.loaded();
-                        } else {
-                            this.enough = true
-                            $state.complete();
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-                }, 500);
-            },
-
+        methods:{   //methods                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
             async updateDateList(reset){
                 let artTmp = []
                 if(reset) {

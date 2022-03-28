@@ -1,39 +1,15 @@
 <template>
 	<div class="flex flex-col justify-center space-y-2 py-3 text-white">
 		<multiselect
-			v-if="!newArtist"
-			v-model="artistSelected"
-			placeholder="Please select an artist"
-			track-by="id"
 			label="name"
+			track-by="name"
+			v-model="artistSelected"
 			:options="artistList"
+			placeholder="Please select an artist"
 			:close-on-select="true"
 			:clear-on-select="true"
 			:preserve-search="false"
 		/>
-		<t-input
-			v-else
-			type="text"
-			name="Artist Name"
-			placeholder="Your Artist Name"
-			v-model="newsArtistName"
-		/>
-		<div v-if="!newArtist" class="flex flex-wrap gap-1">
-			<p class="text-sm">You can't find your artist ?</p>
-			<button
-				class="focus:outline-none text-red-500"
-				@click="newArtist = !newArtist"
-			>
-				Please click here to suggest him with your news
-			</button>
-		</div>
-		<button
-			v-else
-			class="focus:outline-none text-red-700 text-sm"
-			@click="newArtist = !newArtist"
-		>
-			Back to artist list
-		</button>
 		<t-datepicker
 			placeholder="Date"
 			initial-view="month"
@@ -55,18 +31,10 @@
 			v-model="newsSource"
 		/>
 		<button
-			v-if="!newArtist"
 			class="texts px-3 py-2 rounded-sm flex justify-center transition duration-500 ease-in-out bg-red-700 hover:bg-red-900 transform hover:-translate-y-1 hover:scale-110 hover:font-bold text-white"
 			@click="sendNews()"
 		>
-			Send the news
-		</button>
-		<button
-			v-else
-			class="texts px-3 py-2 rounded-sm flex justify-center transition duration-500 ease-in-out bg-red-700 hover:bg-red-900 transform hover:-translate-y-1 hover:scale-110 hover:font-bold text-white"
-			@click="sendNewsToValidated()"
-		>
-			Suggest Artist and News
+			{{ loading ? 'Loading...' : 'Send the news'}}
 		</button>
 	</div>
 </template>
@@ -89,31 +57,53 @@ export default {
 		return {
 			artistSelected: null,
 			newArtist: false,
-			newsArtistId: null,
 			newsArtistName: null,
 			newsDate: null,
 			newsMessage: null,
 			newsSource: null,
+			loading: false,
 			user: null,
+			createNews: null
 		};
 	},
 
-	watch: {
-		newsDate: {
-			immediate: true,
-			handler(newsDate) {
-				if (process.client) {
-					if (newsDate)
-						this.newsMessage = `Next comeback on ${this.dateFormat(
-							new Date(newsDate)
-						)}`;
-				}
-			},
-		},
+	mounted() {
+		this.user = this.GET_USER_DATA();
+		this.createNews = this.$fire.functions.httpsCallable("createNews");
 	},
 
 	methods: {
-		...mapGetters(["GET_USER"]),
+		...mapGetters(["GET_USER_DATA"]),
+
+		async sendNews() {
+			this.user = this.GET_USER_DATA();
+			if (!this.newsMessage) {
+				this.$toast.error("Please write a news or close the window", { duration: 3000, position: "top-right" });
+			} else if (!this.artistSelected) {
+				this.$toast.error("Please select a artist or suggest one", { duration: 3000, position: "top-right" });
+			} else {
+				this.createNews({
+					message: this.newsMessage,
+					date: this.newsDate,
+    			verified: false,
+					source: this.newsSource,
+					user: {
+						id: this.user.id,
+						name: this.user.name,
+						picture: this.user.picture,
+					},
+					artist: {
+						id: this.artistSelected.id,
+						name: this.artistSelected.name,
+						image: this.artistSelected.image,
+					},
+				}).then((res) => {
+					console.log("News sent", res);
+					this.$toast.success("News sent", { duration: 3000, position: "top-right" });
+					this.$emit("close");
+				});
+			}
+		},
 
 		dateFormat(d) {
 			let ye = new Intl.DateTimeFormat("en", { year: "2-digit" }).format(d);
@@ -122,78 +112,20 @@ export default {
 			return `${da}/${mo}/${ye}`;
 		},
 
-		async sendNews() {
-			this.user = this.GET_USER();
-			if (!this.newsMessage) {
-				this.$toast.error("Please write a news or close the window", {
-					duration: 3000,
-					position: "top-right",
-				});
-			} else if (!this.artistSelected) {
-				this.$toast.error("Please select a artist or suggest one", {
-					duration: 3000,
-					position: "top-right",
-				});
-			} else {
-				this.newsArtistId = this.artistSelected.id;
-				await this.$axios
-					.post(`https://comeback-api.herokuapp.com/infos`, {
-						message: this.newsMessage,
-						date: this.newsDate,
-						source: this.newsSource,
-						userId: this.user.uid,
-						artistId: this.newsArtistId,
-					})
-					.then((response) => {
-						(this.newsMessage = null),
-							(this.newsArtistId = null),
-							(this.newsDate = null),
-							(this.newsSource = null),
-							(this.newArtist = false);
-						this.closeModal();
-					})
-					.catch(function (error) {
-						console.log(error);
-					});
-			}
-		},
-
-		async sendNewsToValidated() {
-			this.user = this.GET_USER();
-			if (!this.newsMessage) {
-				this.$toast.error("Please write a news or close the window", {
-					duration: 3000,
-					position: "top-right",
-				});
-			} else if (!this.newsArtistName) {
-				this.$toast.error("Please select a artist or suggest one", {
-					duration: 3000,
-					position: "top-right",
-				});
-			} else {
-				await this.$axios
-					.post(`https://comeback-api.herokuapp.com/requests`, {
-						state: "PENDING",
-						method: "POST",
-						endpoint: `/infos`,
-						body: this.news,
-						currentData: [],
-						userId: this.user.uid,
-						source: null,
-					})
-					.then((response) => {
-						(this.newsMessage = null),
-							(this.newsArtistName = null),
-							(this.newsDate = null),
-							(this.newsSource = null),
-							(this.newArtist = false);
-						this.closeModal();
-					});
-			}
-		},
-
 		closeModal() {
 			this.$emit("close");
+		},
+	},
+
+	watch: {
+		newsDate: {
+			immediate: true,
+			handler(newsDate) {
+				if (process.client) {
+					if (newsDate)
+						this.newsMessage = `Next comeback on ${this.dateFormat(new Date(newsDate))}`;
+				}
+			},
 		},
 	},
 };

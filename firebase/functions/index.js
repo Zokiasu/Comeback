@@ -550,11 +550,11 @@ exports.createNews = functions.region("europe-west1").https.onCall((data, contex
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
     updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     message: data.message,
-    date: data.date,
+    date: admin.firestore.Timestamp.fromDate(new Date(data.date)),
     verified: data.verified,
     source: data.source,
     user: data.user,
-    artists: data.artists,
+    artist: data.artist,
   })
       .then((ref) => {
         return {success: true, id: ref.id, message: "News created"};

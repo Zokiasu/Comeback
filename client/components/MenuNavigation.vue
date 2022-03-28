@@ -101,7 +101,9 @@
 					</nav>
 
 					<!-- PC User Menu -->
-					<div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+					<div
+						class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+					>
 						<div v-if="userLogged" class="hidden lg:flex">
 							<button
 								@click="newsModal = true"
@@ -144,7 +146,12 @@
 									alt="User avatar"
 								/>
 							</button>
-							<div v-if="userMenu" v-click-outside="closeUserMenu" @click="closeUserMenu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black-one text-white focus:outline-none">
+							<div
+								v-if="userMenu"
+								v-click-outside="closeUserMenu"
+								@click="closeUserMenu"
+								class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black-one text-white focus:outline-none"
+							>
 								<NuxtLink
 									:to="`/profile/${GET_USER().uid}/general`"
 									class="block px-4 py-2 text-sm hover:bg-gray-700"
@@ -260,15 +267,16 @@ export default {
 			newsModal: false,
 
 			userLogged: false,
-			userRole: 'NONE',
+			userRole: "NONE",
 			userAvatar: require("@/assets/image/artist.png"),
+			artistList: [],
 		};
 	},
-	
-	async asyncData({ store, $fire }) {
-		const artistList = $fire.firestore
-			.collection("general")
-			.doc("data")
+
+	async fetch() {
+		this.artistList = await this.$fire.firestore
+			.collection("artists")
+			.where("verified", "==", true)
 			.get()
 			.then((snapshot) => {
 				const artists = [];
@@ -280,15 +288,16 @@ export default {
 			.catch((err) => {
 				return { success: false, artists: [] };
 			});
-
-		return {
-			artistList,
-		};
+		this.artistList.sort((a, b) => {
+			if (a.name < b.name) return -1;
+			if (a.name > b.name) return 1;
+			return 0;
+		});
 	},
 
 	//watch isLoggedIn function in store
 	watch: {
-		'$store.getters.isLoggedIn': function(newVal, oldVal) {
+		"$store.getters.isLoggedIn": function (newVal, oldVal) {
 			this.userLogged = newVal;
 		},
 	},
