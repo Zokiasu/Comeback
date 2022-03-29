@@ -134,7 +134,6 @@ const addRelease = async function(release, artist, artistList, releaseList) {
                         releaseToSend['id'] = elem.id
                     }
                 })
-
                 if(!releaseExist){
                     if(result3?.tracks[0]?.videoId) {
                         //console.log("-- VIDEOID", result3?.tracks[0]?.videoId)
@@ -142,7 +141,7 @@ const addRelease = async function(release, artist, artistList, releaseList) {
                         .then(async (res) => {
                             releaseToSend.date = res?.data?.items[0]?.snippet?.publishedAt ? admin.firestore.Timestamp.fromDate(new Date(res?.data?.items[0]?.snippet?.publishedAt)) : null
                             if(new Date(res?.data?.items[0]?.snippet?.publishedAt).getFullYear() >= 2021) {
-                                console.log("-- RELEASE - ", result3.title, " - ", (new Date(res?.data?.items[0]?.snippet?.publishedAt).getFullYear()))
+                                console.log("-- RELEASE - ", result3.title, " - ", (new Date(res?.data?.items[0]?.snippet?.publishedAt).getFullYear())                                                                   )
                                 await setReleaseFromFirebase(releaseToSend, result3.tracks)
                             }
                         })
