@@ -98,30 +98,28 @@ export default {
 	},
 
 	async fetch () {
-		const firstStepArtist = this.$fire.functions.httpsCallable("getArtistListLimited");
-		firstStepArtist({ limit: this.limitedAt })
-			.then((response) => {
-				this.artists = response.data;
-				this.loading = false;
-				this.limitedAt = this.limitedAt + 20;
-			})
-			.catch((error) => {
-				console.log(error);
+		this.artists = await this.$fire.firestore.collection("artists").orderBy("name").limit(this.limitedAt).get().then(snapshot => {
+			const artists = [];
+			snapshot.forEach((doc) => {
+				artists.push(doc.data());
 			});
+			this.loading = false;
+			this.limitedAt = this.limitedAt + 20;
+			return artists;
+		});
 	},
 
 	methods: {
 		async fetchData() {
-			const firstStepArtist = this.$fire.functions.httpsCallable("getArtistListLimited");
-			firstStepArtist({ limit: this.limitedAt })
-				.then((response) => {
-					this.artists = response.data;
-					this.loading = false;
-					this.limitedAt = this.limitedAt + 20;
-				})
-				.catch((error) => {
-					console.log(error);
+			this.artists = await this.$fire.firestore.collection("artists").orderBy("name").limit(this.limitedAt).get().then(snapshot => {
+				const artists = [];
+				snapshot.forEach((doc) => {
+					artists.push(doc.data());
 				});
+				this.loading = false;
+				this.limitedAt = this.limitedAt + 20;
+				return artists;
+			});
 		},
 	}
 };
