@@ -27,7 +27,7 @@
       <div>
         <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Releases</h2>
       </div>
-      <div class="grid grid-cols-2 gap-5 md:flex md:flex-wrap w-full md:justify-center lg:justify-start md:inner">
+      <div class="flex flex-wrap gap-5 w-full justify-center inner">
         <ReleaseCard 
           v-for="(release) in newRelease" 
           :key="release.id"
@@ -38,7 +38,7 @@
 					:type="release.type"
 					:artists="{ id: release.artistsId, name: release.artistsName }"
           display-date
-          class="w-40"
+          class="w-32 md:w-40"
         />
       </div>
     </section>
@@ -50,7 +50,7 @@
       <div>
         <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Artist Added</h2>
       </div>
-      <div class="grid grid-cols-2 gap-5 md:flex md:flex-wrap w-full md:justify-center lg:justify-start md:inner">
+      <div class="flex flex-wrap gap-5 w-full justify-center inner">
         <ArtistCard 
           v-for="artist in newArtist"
           :key="artist.id"
@@ -58,7 +58,7 @@
           :name="artist.name"
           :id="artist.id"
           :type="artist.type"
-          class="w-40"
+          class="w-32 md:w-40"
         />
       </div>
     </section>
@@ -89,13 +89,13 @@
         });
 			});
       
-      let newArtist = await $fire.firestore.collection("artists").where("createdAt", "<=", startDate).orderBy("createdAt", "desc").limit(9).get()
+      let newArtist = await $fire.firestore.collection("artists").where("createdAt", "<=", startDate).orderBy("createdAt", "desc").limit(10).get()
       .then(snapshot => {
         return snapshot.docs.map(doc => doc.data());
 			});
 
       const newRelease = [];
-      await $fire.firestore.collection("releases").where("date", "<=", startDate).orderBy("date", "desc").limit(9).get()
+      await $fire.firestore.collection("releases").where("date", "<=", startDate).orderBy("date", "desc").limit(10).get()
       .then(snapshot => {
         snapshot.forEach(doc => {
 					const release = doc.data();

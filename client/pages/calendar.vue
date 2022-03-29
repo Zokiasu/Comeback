@@ -1,6 +1,6 @@
 <template>
-	<div class="flex flex-col p-5 md:px-20 lg:px-40 text-white">
-		<div class="space-y-5">
+	<div class="flex flex-col container mx-auto p-5 text-white">
+		<div class="space-y-5 mx-auto">
 			<div>
 				<div class="flex gap-5">
 					<p class="text-3xl">{{ currentYear }}</p>
@@ -63,7 +63,7 @@
 					:type="release.type"
 					:artists="{id: release.artistsId, name: release.artistsName}"
 					displayDate
-					class="list-complete-item w-40"
+					class="list-complete-item w-32 md:w-40"
 				/>
 			</transition-group>
 			<div v-if="filteredList.length < 1 & !loading">

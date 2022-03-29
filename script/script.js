@@ -33,6 +33,7 @@ api.initalize().then(async info => {
         }
     } else if(entry.includes("SECONDHALF")) {
         for (let index = Math.round(artistList.length/2); index < artistList.length; index++) {
+            console.log(index, artistList[index].name, artistList[index].idYoutubeMusic)
             if(artistList[index].idYoutubeMusic) {
                 await getArtist(artistList[index].idYoutubeMusic, artistList, releaseList)
             }
@@ -201,6 +202,7 @@ const getReleasesFromFirebase = function(){
 }
 
 const setArtistFromFirebase = function(artist) {
+    console.log("setArtistFromFirebase")
     return db.collection("artists").add(artist).then((res) => {
         db.collection("artists").doc(res.id).update({
             id: res.id
@@ -219,6 +221,7 @@ const updateArtistFromFirebase = function(artist) {
 }
 
 const setReleaseFromFirebase = async function(release, musics) {
+    console.log("setReleaseFromFirebase")
     return db.collection("releases").add(release).then(async (res) => {
         await db.collection("releases").doc(res.id).update({
             id: res.id

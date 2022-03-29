@@ -303,9 +303,10 @@ export default {
 	},
 
 	async created() {
-		this.user = this.GET_USER();
 		this.userLogged = this.isLoggedIn();
-		this.userRole = this.GET_USER_DATA().role;
+		if(this.userLogged) {
+			this.userRole = this.GET_USER_DATA().role;
+		}
 	},
 
 	async mounted() {

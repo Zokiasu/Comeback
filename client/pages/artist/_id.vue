@@ -80,7 +80,7 @@
 						:image="artist.image"
 						:name="artist.name"
 						:id="artist.id"
-						class="w-40"
+						class="w-32 md:w-40"
 					/>
 				</transition-group>
 			</div>
@@ -97,7 +97,7 @@
 						:type="release.type"
 						:artists="{ id: release.artistsId, name: release.artistsName }"
 						:displayDate="true"
-						class="w-40"
+						class="w-32 md:w-40"
 					/>
 				</transition-group>
 			</div>
@@ -110,7 +110,7 @@
 						:image="artist.image"
 						:name="artist.name"
 						:id="artist.id"
-						class="w-40"
+						class="w-32 md:w-40"
 					/>
 				</transition-group>
 			</div>
@@ -123,7 +123,7 @@
 						:image="artist.image"
 						:name="artist.name"
 						:id="artist.id"
-						class="w-40"
+						class="w-32 md:w-40"
 					/>
 				</transition-group>
 			</div>
