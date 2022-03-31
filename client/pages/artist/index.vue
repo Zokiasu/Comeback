@@ -57,22 +57,22 @@ export default {
 			loading: true,
 			searchActive: false,
 			limitedAt: 50,
-			dsl:0,
+			dsl: 0,
 		};
 	},
 
-	mounted(){
-    var vm = this
-    window.addEventListener('scroll', function(e){
-      var scrollPos = window.scrollY
-      var winHeight = window.innerHeight
-      var docHeight = document.documentElement.scrollHeight
-      var perc = 100 * scrollPos / (docHeight - winHeight)
-			if(perc > 15){
+	mounted() {
+		var vm = this;
+		window.addEventListener("scroll", function (e) {
+			var scrollPos = window.scrollY;
+			var winHeight = window.innerHeight;
+			var docHeight = document.documentElement.scrollHeight;
+			var perc = (100 * scrollPos) / (docHeight - winHeight);
+			if (perc > 15) {
 				//vm.limitedAt += 50
-				vm.fetchData()
+				vm.fetchData();
 			}
-    })
+		});
 	},
 
 	watch: {
@@ -90,28 +90,20 @@ export default {
 
 	computed: {
 		filteredArtistList() {
-			const list = this.artists.filter(element => {
+			const list = this.artists.filter((element) => {
 				return element.name.toLowerCase().includes(this.search.toLowerCase());
-			})
-			return list;
-		}
-	},
-
-	async fetch () {
-		this.artists = await this.$fire.firestore.collection("artists").orderBy("name").limit(this.limitedAt).get().then(snapshot => {
-			const artists = [];
-			snapshot.forEach((doc) => {
-				artists.push(doc.data());
 			});
-			this.loading = false;
-			this.limitedAt = this.limitedAt + 20;
-			return artists;
-		});
+			return list;
+		},
 	},
 
-	methods: {
-		async fetchData() {
-			this.artists = await this.$fire.firestore.collection("artists").orderBy("name").limit(this.limitedAt).get().then(snapshot => {
+	async fetch() {
+		this.artists = await this.$fire.firestore
+			.collection("artists")
+			.orderBy("name")
+			.limit(this.limitedAt)
+			.get()
+			.then((snapshot) => {
 				const artists = [];
 				snapshot.forEach((doc) => {
 					artists.push(doc.data());
@@ -120,8 +112,26 @@ export default {
 				this.limitedAt = this.limitedAt + 20;
 				return artists;
 			});
+	},
+
+	methods: {
+		async fetchData() {
+			this.artists = await this.$fire.firestore
+				.collection("artists")
+				.orderBy("name")
+				.limit(this.limitedAt)
+				.get()
+				.then((snapshot) => {
+					const artists = [];
+					snapshot.forEach((doc) => {
+						artists.push(doc.data());
+					});
+					this.loading = false;
+					this.limitedAt = this.limitedAt + 20;
+					return artists;
+				});
 		},
-	}
+	},
 };
 </script>
 
