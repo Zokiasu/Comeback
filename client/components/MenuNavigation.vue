@@ -152,12 +152,12 @@
 								@click="closeUserMenu"
 								class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-black-one text-white focus:outline-none"
 							>
-								<NuxtLink
+								<!--<NuxtLink
 									:to="`/profile/${GET_USER().uid}/general`"
 									class="block px-4 py-2 text-sm hover:bg-gray-700"
 								>
 									Your Profile
-								</NuxtLink>
+								</NuxtLink>-->
 								<NuxtLink
 									:to="`/add/artist`"
 									class="block px-4 py-2 text-sm hover:bg-gray-700"
