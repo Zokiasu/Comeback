@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<section id="searchbar" class="flex w-full justify-start p-5">
+	<div class="container mx-auto p-5 md:p-10">
+		<div id="searchbar" class="flex w-full justify-start">
 			<div id="search-icon" class="bg-opacity-20 bg-gray-500 rounded-l p-2">
 				<icons-search v-if="!searchActive" class="w-5 h-5 cursor-pointer" />
 				<icons-cancel v-else class="w-5 h-5 cursor-pointer" />
@@ -12,12 +12,12 @@
 				v-model="search"
 				class="w-full pl-2 focus:outline-none rounded-r rounded-none bg-opacity-20 bg-gray-500 text-white placeholder-white"
 			/>
-		</section>
+		</div>
 		<transition-group
 			id="artist-list"
 			name="list-complete"
 			tag="div"
-			class="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 1xl:grid-cols-7 2xl:grid-cols-10 gap-5 w-full justify-center p-5"
+			class="grid grid-cols-2 gap-5 md:gap-10 py-5 md:py-10 items-center justify-center sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8"
 		>
 			<artist-card
 				v-for="artist in filteredArtistList"
@@ -27,7 +27,7 @@
 				:id="artist.id"
 				:type="artist.type"
 				:groups="artist.groups"
-				class="list-complete-item w-40"
+				class="list-complete-item w-34 mx-auto"
 			/>
 		</transition-group>
 		<div v-if="(filteredArtistList.length < 1) & !loading" class="px-5">

@@ -1,6 +1,6 @@
 <template>
 	<div class="flex flex-col container mx-auto p-5 text-white">
-		<div class="space-y-5 mx-auto">
+		<div class="space-y-5">
 			<div>
 				<div class="flex gap-5">
 					<p class="text-3xl">{{ currentYear }}</p>
@@ -109,7 +109,7 @@
 			const currentYear = new Date().getFullYear();
 			const currentMonth = new Date().getMonth();
 			const startDate = $fireModule.firestore.Timestamp.fromDate(new Date(currentYear, currentMonth, 1));
-			const endDate = $fireModule.firestore.Timestamp.fromDate(new Date(currentYear, currentMonth + 1, 0));
+			const endDate = $fireModule.firestore.Timestamp.fromDate(new Date(currentYear, currentMonth + 1, 1));
 			$fire.firestore.collection("releases").where("date", ">=", startDate).where("date", "<=", endDate).orderBy("date", "desc").get().then(snapshot => {
 				snapshot.forEach(doc => {
 					const release = doc.data();
@@ -123,7 +123,7 @@
 
 		created(){
 			this.startDate = new Date(this.currentYear, this.currentMonth, 1);
-			this.endDate = new Date(this.currentYear, this.currentMonth + 1, 0);
+			this.endDate = new Date(this.currentYear, this.currentMonth + 1, 1);
 		},
 
 		computed: {
@@ -173,13 +173,13 @@
 					this.currentMonth = month
 				}
 				this.startDate = new Date(this.currentYear, this.currentMonth, 1);
-				this.endDate = new Date(this.currentYear, this.currentMonth + 1, 0);
+				this.endDate = new Date(this.currentYear, this.currentMonth + 1, 1);
 				this.fetchData()
 			},
 
 			changeYear(year) {
 				this.startDate = new Date(year, this.currentMonth, 1);
-				this.endDate = new Date(year, this.currentMonth + 1, 0);
+				this.endDate = new Date(year, this.currentMonth + 1, 1);
 				this.currentYear = year
 				this.fetchData()
 			},

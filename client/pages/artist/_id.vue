@@ -73,7 +73,7 @@
 			</div>
 			<div v-if="soloMembers.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Members</h2>
-				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-10">
 					<artist-card
 						v-for="artist in soloMembers"
 						:key="artist.id"
@@ -86,7 +86,7 @@
 			</div>
 			<div v-if="releases.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Release</h2>
-				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-10">
 					<release-card
 						v-for="release in releases"
 						:key="release.id"
@@ -103,7 +103,7 @@
 			</div>
 			<div v-if="groupMembers.length" class="space-y-5">
 				<h2 class="text-xl font-semibold">Subunit</h2>
-				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-8">
+				<transition-group name="list-complete" tag="div" class="flex flex-wrap gap-10">
 					<artist-group-card
 						v-for="artist in groupMembers"
 						:key="artist.id"

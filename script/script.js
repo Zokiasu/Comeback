@@ -1,4 +1,4 @@
-const YoutubeMusicApi = require('./youtube-music-api-master')
+const YoutubeMusicApi = require('youtube-music-api')
 
 const admin = require("firebase-admin");
 const db = require("./db");
@@ -63,7 +63,18 @@ const checkArtists = function(args, artistList, releaseList) {
 
 const getArtist = async function(artistId, artistList, releaseList) {
     await api.getArtist(artistId).then(async artist => {
-        if(artist.name) {
+        console.log("artist", artist?.products?.singles?.content)
+        
+        await artist?.products?.singles?.content?.map((release) => {
+            setTimeout(async () => {
+                if(release?.browseId) {
+                    await api.search(release.browseId,).then(async album => {
+                        console.log("album", album.title)
+                    })
+                }
+            }, 10000);
+        })
+        /*if(artist.name) {
             let artistToSend = {
                 name: artist.name,
                 image: artist.thumbnails[artist?.thumbnails?.length-1]?.url,
@@ -104,7 +115,7 @@ const getArtist = async function(artistId, artistList, releaseList) {
                     await addSingle(artist, artistToSend, artistList, releaseList)
                 }
             }
-        }
+        }*/
     })
 }
 
@@ -114,7 +125,7 @@ const addRelease = async function(release, artist, artistList, releaseList) {
     //console.log("-- ADD RELEASE")
     if(release.browseId) {
         await api.getAlbum(release.browseId).then(async result3 => {
-            if(result3.title) {
+            /*if(result3.title) {
                 let releaseToSend = {
                     name: result3.title,
                     image: result3.thumbnails[result3.thumbnails.length-1]?.url,
@@ -148,7 +159,7 @@ const addRelease = async function(release, artist, artistList, releaseList) {
                         })
                     }
                 }
-            }
+            }*/
         })
     }
 }

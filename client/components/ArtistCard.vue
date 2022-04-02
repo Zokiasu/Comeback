@@ -1,15 +1,13 @@
 <template>
   <div :id="`artist-card-${id}`" class="text-white">
-    <div class="mx-auto aspect-square">
-      <NuxtLink :to="`/artist/${id}`">
-        <img 
-          :src="image"
-          :alt="name"
-          loading="lazy"
-          class="rounded-full object-cover bg-gray-700 aspect-square"
-        />
-      </NuxtLink>
-    </div>
+    <NuxtLink :to="`/artist/${id}`">
+      <img 
+        :src="image"
+        :alt="name"
+        loading="lazy"
+        class="rounded-full object-cover bg-gray-700 aspect-square"
+      />
+    </NuxtLink>
     <NuxtLink :to="`/artist/${id}`" class="w-full flex flex-col justify-center items-center">
       <h2 class="font-semibold text-center hover-underline-animation">{{name}}</h2>
     </NuxtLink>
@@ -21,32 +19,18 @@
     name: "artistCard",
 
     props: {
-      image: {
+      id: {
         type: String,
-        required: true,
+        required: true
       },
       name: {
         type: String,
-        required: true,
+        required: true
       },
-      id: {
+      image: {
         type: String,
-        required: true,
-      },
-      type: {
-        type: String,
-        required: false,
-      },
-      groups: {
-        type: Array,
-        required: false,
-      },
+        required: true
+      }
     },
-
-    computed: {
-      groupSize() {
-        return this.groups?.length ? this.groups.length : 0
-      },
-    }
   }
 </script>
