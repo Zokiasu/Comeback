@@ -5,7 +5,7 @@
         :src="image"
         :alt="name"
         loading="lazy"
-        class="rounded-full object-cover bg-gray-700 aspect-square"
+        class="rounded-full object-cover bg-gray-700 aspect-square max-w-[10rem] max-h-[10rem]"
       />
     </NuxtLink>
     <NuxtLink :to="`/artist/${id}`" class="w-full flex flex-col justify-center items-center">

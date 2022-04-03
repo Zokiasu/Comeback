@@ -6,21 +6,22 @@
           <img
             :src="image"
             alt="Artist Picture"
-            class="rounded-md object-cover aspect-square bg-gray-500 drop-shadow-2xl w-full"
+            class="rounded-md object-cover aspect-square bg-gray-500 drop-shadow-2xl w-full max-w-[10rem] max-h-[10rem]"
           />
         </div>
         <div v-if="displayDate" class="absolute top-2 right-1.5 px-2 py-0.5 rounded text-white bg-gray-500 bg-opacity-80">
             <p class="text-center text-xs">{{ new Date(date).toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit', year:'2-digit' }) }}</p>
         </div>
+        <div class="absolute bottom-1 left-1 px-2 py-0.5 rounded text-white bg-gray-500/70">
+            <p class="text-center text-xs">{{ type }}</p>
+        </div>
       </div>
     </NuxtLink>
     <div>
       <p class="truncate font-semibold">{{ name }}</p>
-      <div class="flex text-xs md:text-sm">
-        <p>{{type}}</p>
-        <div v-if="artists" class="bg-white mt-2 mx-2 h-1 w-1 rounded-full"></div>
-        <NuxtLink :to="`/artist/${artists.id}`">
-          <p v-if="artists" class="truncate  hover-underline-animation">{{ artists.name }}</p>
+      <div class="text-xs md:text-sm">
+        <NuxtLink :to="`/artist/${artists.id}`" class="mt-1">
+          <p v-if="artists" class="truncate hover-underline-animation">{{ artists.name }}</p>
         </NuxtLink>
       </div>
     </div>

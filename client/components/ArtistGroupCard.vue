@@ -4,7 +4,7 @@
 			<img
 				:alt="name"
 				:src="image"
-				class="object-cover aspect-video rounded"
+				class="object-cover aspect-video rounded max-w-[10rem] max-h-[10rem]"
 			/>
 		</NuxtLink>
 		<NuxtLink :to="`/artist/${id}`" class="text-center">

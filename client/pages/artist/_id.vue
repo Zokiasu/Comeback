@@ -200,15 +200,18 @@ export default {
 			});
 			return groups;
 		});
-		
-		const liked = await $fire.firestore.collection("artists").doc(params.id).collection("followers").where("id", "==", store.state.user.uid).get().then(snapshot => {
-			if (snapshot.size > 0) {
-				return true;
-			}
-			return false;
-		}).catch(err => {
-			console.log(err);
-		});
+
+		const liked	= false
+		if (store.state.isLoggedIn) {
+			liked = await $fire.firestore.collection("artists").doc(params.id).collection("followers").where("id", "==", store.state.user.uid).get().then(snapshot => {
+				if (snapshot.size > 0) {
+					return true;
+				}
+				return false;
+			}).catch(err => {
+				console.log(err);
+			});
+		}
 
 		return { artist : getArtist, releases: getReleaseByArtist, members: getMembers, groups: getGroups, liked: liked };
 	},
