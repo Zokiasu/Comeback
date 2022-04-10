@@ -1,13 +1,12 @@
 <template>
-  <div class="px-10 py-5 pb-16 overflow-hidden space-y-10">
+  <div class="p-5 lg:p-10 overflow-hidden space-y-5">
     <section
       v-if="newsList.length"
       id="newAnnounce"
+      class="space-y-3"
     >
-      <div class="flex w-full justify-start space-x-5 smooth">
-        <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Next Comeback</h2>
-      </div>
-      <div class="flex flex-wrap gap-5 w-full justify-center inner">
+      <h2 class="text-xl sm:text-2xl lg:text-4xl text-white flex">Next Comeback</h2>
+      <div class="flex flex-wrap gap-5 w-full justify-center">
         <NewsCard 
           v-for="news in newsList" 
           :key="news.id"
@@ -21,13 +20,11 @@
     </section>
     <section
       v-if="newRelease.length" 
-      id="newRelease" 
-      class="section"
+      id="newRelease"
+      class="space-y-3 section"
     >
-      <div>
-        <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Releases</h2>
-      </div>
-      <div class="flex flex-wrap gap-5 w-full justify-evenly inner">
+      <h2 class="text-xl sm:text-2xl lg:text-4xl text-white flex">Last Releases</h2>
+      <div class="flex flex-wrap gap-2 md:gap-5 justify-center md:justify-evenly">
         <ReleaseCard 
           v-for="(release) in newRelease" 
           :key="release.id"
@@ -38,19 +35,16 @@
 					:type="release.type"
 					:artists="{ id: release.artistsId, name: release.artistsName }"
           display-date
-          class="w-32 md:w-40"
         />
       </div>
     </section>
     <section
       v-if="newArtist.length" 
-      id="newArtist" 
-      class="section"
+      id="newArtist"
+      class="space-y-3 section"
     >
-      <div>
-        <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Artist Added</h2>
-      </div>
-      <div class="flex flex-wrap gap-5 w-full justify-evenly inner">
+      <h2 class="text-xl sm:text-2xl lg:text-4xl text-white flex">Last Artist Added</h2>
+      <div class="flex flex-wrap gap-2 md:gap-5 justify-evenly md:justify-evenly">
         <ArtistCard 
           v-for="artist in newArtist"
           :key="artist.id"
@@ -58,7 +52,6 @@
           :name="artist.name"
           :id="artist.id"
           :type="artist.type"
-          class="w-32 md:w-40"
         />
       </div>
     </section>

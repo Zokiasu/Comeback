@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col space-y-1 text-white">
+  <div class="space-y-1 text-white max-w-[10rem]">
     <NuxtLink :to="`/release/${id}`">
       <div class="relative">
         <div class="bg-gray-500 rounded-md">
