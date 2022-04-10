@@ -32,6 +32,9 @@
   display: inline-block;
   position: relative;
   color: currentColor;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hover-underline-animation:after {
