@@ -1,7 +1,7 @@
 <template>
 	<div class="text-white">
 		<div
-			class="background-top bg-cover bg-no-repeat relative h-[15rem] lg:h-[25rem] overflow-hidden"
+			class="background-top bg-cover bg-no-repeat relative h-60 lg:h-96 xl:h-[35rem] overflow-hidden"
 		>
 			<img
 				:src="imageBackground"
@@ -11,40 +11,31 @@
 			<div
 				class="absolute top-0 bottom-0 left-0 right-0 flex p-5 lg:p-10 xl:p-14 xl:px-32 bg-black/50"
 			>
-				<div class="flex gap-10 lg:my-auto">
-					<div class="hidden lg:block">
-						<img
-							alt="image de l'artiste"
-							:src="artist.image"
-							class="aspect-square h-72 object-cover rounded shadow-2xl"
+				<div class="overflow-x-auto flex flex-col gap-8 mt-auto">
+					<div>
+						<h1 class="text-6xl lg:text-8xl font-semibold">
+							{{ artist.name }}
+						</h1>
+					</div>
+					<div
+						v-if="artist.platforms.length"
+						class="flex flex-wrap overflow-x-scroll gap-3 testa"
+					>
+						<cb-external-link
+							v-for="link in artist.platforms"
+							:key="link"
+							:href="link"
 						/>
 					</div>
-					<div class="overflow-x-auto flex flex-col gap-8 mt-auto lg:mb-2">
-						<div>
-							<h1 class="text-6xl lg:text-8xl font-semibold">
-								{{ artist.name }}
-							</h1>
-						</div>
-						<div
-							v-if="artist.platforms"
-							class="flex flex-wrap overflow-x-scroll gap-3 testa"
-						>
-							<cb-external-link
-								v-for="link in artist.platforms"
-								:key="link"
-								:href="link"
-							/>
-						</div>
-						<div
-							v-if="artist.socials"
-							class="flex flex-wrap overflow-x-scroll gap-3 testa"
-						>
-							<cb-external-link
-								v-for="link in artist.socials"
-								:key="link"
-								:href="link"
-							/>
-						</div>
+					<div
+						v-if="artist.socials.length"
+						class="flex flex-wrap overflow-x-scroll gap-3 testa"
+					>
+						<cb-external-link
+							v-for="link in artist.socials"
+							:key="link"
+							:href="link"
+						/>
 					</div>
 				</div>
 			</div>
