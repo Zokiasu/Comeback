@@ -5,7 +5,7 @@
 		class="flex items-center px-3 py-2 hover:bg-background hover:drop-shadow-2xl transition-all ease-in-out duration-300"
 	>
 		<component :is="icon" class="w-5 h-5"></component>
-		<p>{{ text }}</p>
+		<p class="hidden md:block">{{ text }}</p>
 	</a>
 </template>
 

@@ -11,15 +11,15 @@
 			<div
 				class="absolute top-0 bottom-0 left-0 right-0 flex p-5 lg:p-10 xl:p-14 xl:px-32 bg-black/50"
 			>
-				<div class="overflow-x-auto flex flex-col gap-8 mt-auto">
+				<div class="overflow-x-auto flex flex-col gap-2 lg:gap-8 mt-auto">
 					<div>
-						<h1 class="text-6xl lg:text-8xl font-semibold">
+						<h1 class="text-5xl lg:text-8xl font-semibold">
 							{{ artist.name }}
 						</h1>
 					</div>
 					<div
 						v-if="artist.platforms.length"
-						class="flex flex-wrap overflow-x-scroll gap-3 testa"
+						class="flex flex-wrap text-sm overflow-x-scroll gap-1 lg:gap-3 testa"
 					>
 						<cb-external-link
 							v-for="link in artist.platforms"
@@ -29,7 +29,7 @@
 					</div>
 					<div
 						v-if="artist.socials.length"
-						class="flex flex-wrap overflow-x-scroll gap-3 testa"
+						class="flex flex-wrap text-sm overflow-x-scroll gap-1 lg:gap-3 testa"
 					>
 						<cb-external-link
 							v-for="link in artist.socials"
