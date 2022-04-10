@@ -1,24 +1,61 @@
 <template>
 		<div class="bg-black-four rounded p-5 space-y-3">
-			<div>
+			<div v-if="originalArtist" class="bg-gray-500/30 p-5 rounded space-y-3">
+				<div class="flex gap-5">
+					<img v-if="originalArtist.image" :src="originalArtist.image" class="h-80 w-80 rounded object-cover" />
+					<div class="space-y-2">
+						<p v-if="originalArtist.name" class="text-xl font-semibold">{{ originalArtist.name }}</p>
+						<div v-if="originalArtist.type">
+							<p class="bg-gray-500 rounded px-2 py-1 text-xs">{{ originalArtist.type }}</p>
+						</div>
+						<div v-if="originalArtist.platforms.length">
+							<h3>Platforms</h3>
+							<ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
+								<li v-for="(platform, index) in originalArtist.platforms" :key="`originalArtist_platform_${index}`" class="bg-gray-500 rounded px-3 py-1">
+									<p>{{ platform }}</p>
+								</li>
+							</ul>
+						</div>
+						<div v-if="originalArtist.socials.length">
+							<h3>Socials</h3>
+							<ul class="grid grid-cols-1 md:grid-cols-2 gap-3">
+								<li v-for="(social, index) in originalArtist.socials" :key="`originalArtist_social_${index}`" class="bg-gray-500 rounded px-3 py-1">
+									<p>{{ social }}</p>
+								</li>
+							</ul>
+						</div>
+						<div v-if="originalArtist.styles.length">
+							<h3>Styles</h3>
+							<ul class="flex gap-2">
+								<li v-for="(style, index) in originalArtist.styles" :key="`originalArtist_style_${index}`" class="bg-gray-500 rounded px-3 py-1">
+									<p>{{ style }}</p>
+								</li>
+							</ul>
+						</div>
+						<p v-if="originalArtist.description">{{ originalArtist.description }}</p>
+					</div>
+				</div>
+			</div>
+			<div v-if="idPending">
 				<h3 class="font-semibold text-lg">{{ idPending }}</h3>
 			</div>
-			<div>
+			<div v-if="name">
 				<h3 class="font-semibold text-lg">{{ name }}</h3>
 			</div>
-			<div>
+			<div v-if="type">
 				<p class="bg-gray-500 rounded px-2 py-1 text-xs">{{ type }}</p>
 			</div>
-			<div>
+			<div v-if="styles">
+				<h3>Styles</h3>
 				<ul class="flex gap-2">
 					<li v-for="(style, index) in styles" :key="`style_${index}`" class="bg-gray-500 rounded px-3 py-1">
 						<p>{{ style }}</p>
 					</li>
 				</ul>
 			</div>
-			<div class="flex gap-5">
-				<img :src="image" :alt="image" class="rounded shadow-xl">
-				<p>{{ description }}</p>
+			<div v-if="image || description" class="flex gap-5">
+				<img v-if="image" :src="image" :alt="image" class="rounded shadow-xl">
+				<p v-if="description">{{ description }}</p>
 			</div>
 			<div v-if="platforms.length">
 				<h3>Platforms</h3>
@@ -64,25 +101,29 @@ export default {
 	name: 'CbUpArtist',
 
 	props: {
+		id: {
+			type: String,
+			required: true
+		},
 		idPending: {
 			type: String,
 			required: true
 		},
 		name: {
 			type: String,
-			default: '',
+			default: null
 		},
 		type: {
 			type: String,
-			default: '',
+			default: null
 		},
 		image: {
 			type: String,
-			default: '',
+			default: null
 		},
 		description: {
 			type: String,
-			default: '',
+			default: null
 		},
 		styles: {
 			type: Array,
@@ -96,25 +137,29 @@ export default {
 			type: Array,
 			default: () => [],
 		},
+		members: {
+			type: Array,
+			default: () => [],
+		},
+		groups: {
+			type: Array,
+			default: () => [],
+		},
 	},
 
 	data() {
 		return {
-			groups: [],
-			members: [],
+			originalArtist: null
 		}
 	},
 
 	async fetch() {
-		const firstStepGroupArtist = this.$fire.functions.httpsCallable("getGroupsPendingUpdateArtist")
-		const firstStepMembersArtist = this.$fire.functions.httpsCallable("getMembersPendingUpdateArtist")
-		const [groups, members] = await Promise.all([
-			firstStepGroupArtist({ idPending: this.idPending }),
-			firstStepMembersArtist({ idPending: this.idPending }),
-		])
-		this.groups = groups.data.groups
-		this.members = members.data.members
+		this.originalArtist = await this.$fire.firestore.collection("artists").doc(this.id).get().then(doc => {
+			return doc.data();
+		});
+		console.log("originalArtist", this.originalArtist);
 	},
+
 
 	methods: {
 		accept(){
