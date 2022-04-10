@@ -1,5 +1,5 @@
 <template>
-	<div class="container mx-auto p-5 md:p-10">
+	<div class="mx-auto p-5 md:p-10">
 		<div id="searchbar" class="flex w-full justify-start">
 			<div id="search-icon" class="bg-opacity-20 bg-gray-500 rounded-l p-2">
 				<icons-search v-if="!searchActive" class="w-5 h-5 cursor-pointer" />
@@ -19,7 +19,7 @@
 			tag="div"
 			class="grid grid-cols-2 gap-5 md:gap-10 py-5 md:py-10 items-center justify-center sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8"
 		>
-			<artist-card
+			<lazy-artist-card
 				v-for="artist in filteredArtistList"
 				:key="artist.id"
 				:image="artist.image"
@@ -90,10 +90,9 @@ export default {
 
 	computed: {
 		filteredArtistList() {
-			const list = this.artists.filter((element) => {
+			return this.artists.filter((element) => {
 				return element.name.toLowerCase().includes(this.search.toLowerCase());
 			});
-			return list;
 		},
 	},
 
@@ -101,7 +100,7 @@ export default {
 		this.artists = await this.$fire.firestore
 			.collection("artists")
 			.orderBy("name")
-			.limit(this.limitedAt)
+			/*.limit(this.limitedAt)*/
 			.get()
 			.then((snapshot) => {
 				const artists = [];
@@ -119,7 +118,7 @@ export default {
 			this.artists = await this.$fire.firestore
 				.collection("artists")
 				.orderBy("name")
-				.limit(this.limitedAt)
+				/*.limit(this.limitedAt)*/
 				.get()
 				.then((snapshot) => {
 					const artists = [];
@@ -136,16 +135,16 @@ export default {
 </script>
 
 <style scoped>
-.list-complete-item {
-	transition: all 0.5s;
-	display: inline-block;
-}
-.list-complete-enter,
-.list-complete-leave-to {
-	opacity: 0;
-	transform: translateY(30px);
-}
-.list-complete-leave-active {
-	position: absolute;
-}
+	.list-complete-item {
+		transition: all 0.7s;
+		display: inline-block;
+	}
+	.list-complete-enter {
+		opacity: 0;
+		transform: translateY(50px);
+	}
+	.list-complete-leave-active {
+		opacity: 0;
+		transform: translateX(-30px);
+	}
 </style>
