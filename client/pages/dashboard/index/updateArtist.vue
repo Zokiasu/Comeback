@@ -3,6 +3,7 @@
 		<cb-up-artist
 			v-for="(artist, index) in artistList"
 			:key="`artist_${index}`"
+			:id="artist.id"
 			:idPending="artist.idPending"
 			:name="artist.name"
 			:type="artist.type"
@@ -11,6 +12,8 @@
 			:styles="artist.styles"
 			:platforms="artist.platforms"
 			:socials="artist.socials"
+			:members="artist.members"
+			:groups="artist.groups"
 			@accept="verify(artist, index)"
 			@reject="reject(artist, index)"
 		/>
@@ -26,6 +29,7 @@
 			const firstStepArtist = $fire.functions.httpsCallable("getPendingUpdateArtist")
 			const firstStepGroupArtist = $fire.functions.httpsCallable("getGroupsPendingUpdateArtist")
 			const firstStepMembersArtist = $fire.functions.httpsCallable("getMembersPendingUpdateArtist")
+
 			const secondStepArtist = await firstStepArtist().then(async (res) => {
 				await res.data.artists.map(async (element) => {
 					firstStepMembersArtist({ idPending: element.idPending }).then((res) => {
@@ -35,6 +39,7 @@
 						})
 					})
 				});
+				console.log(res.data.artists)
 				return res.data.artists
 			})
 			return { artistList: secondStepArtist }
