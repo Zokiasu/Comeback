@@ -27,7 +27,7 @@
       <div>
         <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Releases</h2>
       </div>
-      <div class="flex flex-wrap gap-5 w-full justify-center inner">
+      <div class="flex flex-wrap gap-5 w-full justify-evenly inner">
         <ReleaseCard 
           v-for="(release) in newRelease" 
           :key="release.id"
@@ -50,7 +50,7 @@
       <div>
         <h2 class="text-xl sm:text-2xl lg:text-4xl text-white py-5 flex">Last Artist Added</h2>
       </div>
-      <div class="flex flex-wrap gap-5 w-full justify-center inner">
+      <div class="flex flex-wrap gap-5 w-full justify-evenly inner">
         <ArtistCard 
           v-for="artist in newArtist"
           :key="artist.id"
