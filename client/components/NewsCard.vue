@@ -15,9 +15,6 @@
                     </div>
                 </div>
             </div>
-            <div v-if="verified">
-                <img class="w-5 my-auto" src="~/assets/image/approval.png" alt="Verified mark">
-            </div>
         </div>
         <div class="hidden md:flex justify-center">
             <img class="w-16 h-16 md:w-36 md:h-36 rounded-full object-cover shadowCard" :src="artist.image" alt="">
