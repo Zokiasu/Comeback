@@ -284,7 +284,7 @@ export default {
 			return doc.data();
 		});
 
-		const getMembers = await $fire.firestore.collection("artists").doc(params.id).collection("groups").orderBy("name", "asc").get().then(snapshot => {
+		const getMembers = await $fire.firestore.collection("artists").doc(params.id).collection("members").get().then(snapshot => {
 			const members = [];
 			snapshot.forEach(doc => {
 				const member = doc.data();
@@ -294,7 +294,7 @@ export default {
 			return members;
 		});
 
-		const getGroups = await $fire.firestore.collection("artists").doc(params.id).collection("groups").orderBy("name", "asc").get().then(snapshot => {
+		const getGroups = await $fire.firestore.collection("artists").doc(params.id).collection("groups").get().then(snapshot => {
 			const groups = [];
 			snapshot.forEach(doc => {
 				const group = doc.data();
