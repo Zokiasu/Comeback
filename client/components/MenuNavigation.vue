@@ -49,7 +49,7 @@
 					<nav
 						class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
 					>
-						<NuxtLink :to="`/`" class="flex-shrink-0 flex items-center">
+						<NuxtLink :to="`/`" class="relative lg:space-x-1 flex-shrink-0 flex items-end lg:items-center">
 							<img
 								class="block lg:hidden h-8 w-auto"
 								src="../assets/image/mini-logo.png"
@@ -60,6 +60,7 @@
 								src="../assets/image/logo.png"
 								alt="Comeback"
 							/>
+							<p class="text-red-700 text-xs z-50">v2</p>
 						</NuxtLink>
 						<div class="hidden sm:block sm:ml-6">
 							<div class="flex space-x-4" @click="userMenu = false">
