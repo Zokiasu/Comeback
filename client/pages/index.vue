@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 lg:p-10 overflow-hidden space-y-5">
+  <div class="p-5 lg:p-10 overflow-hidden space-y-5 lg:space-y-10">
     <section
       v-if="newsList.length"
       id="newAnnounce"
