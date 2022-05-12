@@ -8,7 +8,7 @@
       <h2 class="text-xl sm:text-2xl lg:text-4xl text-white flex">Next Comeback</h2>
       <div class="flex flex-wrap gap-5 w-full justify-center">
         <NewsCard 
-          v-for="news in newsList" 
+          v-for="news in newsList"
           :key="news.id"
           :verified="news.verified"
           :message="news.message"
