@@ -1,7 +1,13 @@
 # Comeback
 
-### Site actuellement en développement
+Ce projet de suivi et de liste des sorties récentes d'artistes vous permet de ne pas manquer une seule sortie d'album de vos artistes préférés. Il utilise les informations partagées par les communautés de fans pour vous prévenir à l'avance des sorties annoncées sur les multiples réseaux des artistes. Avec l'ajout facile de nouveaux artistes et d'informations appropriées, notre système vous informera automatiquement des sorties d'albums, même lorsque vous suivez plus d'une centaine d'artistes. Ne ratez plus aucune sortie grâce à notre projet de suivi des artistes sur Nuxt.js.
 
-Comeback est outil communautaire qui à pour but d'aider les communautés de fan de musiques à suivre les nouvelles sorties musicale qui les intéressent et se partager les informations à travers un outil dédié à cet effet, ainsi que d'être alerté lors de la sortie d'une nouvelle musique d'un artiste suivis.  
-  
-L'outil se base sur le partage communautaire et permet à celle-ci de retrouver les divers espace où retrouver leurs artistes tel que leurs réseaux ou encore les plateformes utilisé par celui-ci ainsi que retrouver les plateformes de streaming proposant les musiques suivis.
+## Stack
+(v2) Vue.JS, Nuxt.JS, TailwindCSS, Firebase
+(v1) Vue.JS, Nuxt.JS, TailwindCSS, Firebase, NodeJS, Heroku
+
+## Authors
+#### Front (v1 & v2)
+- [@zokiasu](https://github.com/zokiasu)
+#### Api & Back (v1)
+- [@jilink](https://github.com/jilink)
