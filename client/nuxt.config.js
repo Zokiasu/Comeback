@@ -75,7 +75,7 @@ export default {
     '~/plugins/vueMultiselect.js',
     '~/plugins/vClickOutside.js',
     { src: '~/plugins/v-calendar.js', ssr: false },
-    { src: "~/plugins/infiniteloading", ssr: false },
+    { src: "~/plugins/infiniteloading", ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -119,7 +119,7 @@ export default {
           firestore: true,
           functions: {
             location: 'europe-west1',
-            // emulatorPort: process.env.NODE_ENV !== 'production' ? 5001: null,
+            // emulatorPort: process.env.NODE_ENV !== 'production' ? 5001 : null,
             // emulatorHost: 'http://localhost',
           },
           storage: true,
@@ -130,7 +130,7 @@ export default {
           remoteConfig: true
         }
       }
-    ]
+    ]  
   ],
 
   axios: [],
