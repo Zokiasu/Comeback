@@ -4,10 +4,11 @@
       <img
         :src="image"
         :alt="name"
+        loading="lazy"
         class="
-          fade-in
           rounded-full
           object-cover
+          bg-gray-700
           aspect-square
           max-h-[10rem]
           min-h-[10rem]
@@ -45,14 +46,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.fade-in {
-  opacity: 0;
-  transition: opacity 0.3s ease-in;
-}
-
-.fade-in.loaded {
-  opacity: 1;
-}
-</style>

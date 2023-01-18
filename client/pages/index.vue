@@ -1,7 +1,7 @@
 <template>
   <div class="p-5 lg:p-10 overflow-hidden space-y-5 lg:space-y-10">
-    <!-- <comeback-section :newsList="newsList" /> -->
-    <!-- <last-releases-section :newRelease="newRelease" /> -->
+    <comeback-section :newsList="newsList" />
+    <last-releases-section :newRelease="newRelease" />
     <last-artist-section :newArtist="newArtist" />
   </div>
 </template>
