@@ -123,8 +123,8 @@ export default {
           firestore: true,
           functions: {
             location: 'europe-west1',
-            emulatorPort: null,
-            emulatorHost: 'http://localhost',
+            // emulatorPort: null,
+            // emulatorHost: 'http://localhost',
           },
           storage: true,
           database: true,

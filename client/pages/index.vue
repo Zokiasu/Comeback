@@ -40,8 +40,7 @@ export default {
     }
   },
 
-  created() {},
-
+  // eslint-disable-next-line require-await
   async mounted() {
     this.fetch()
   },
