@@ -409,7 +409,7 @@ export default {
         .format()
         .toString()
         .slice(19, 25)
-      if (zone == 'Z') {
+      if (zone === 'Z') {
         return '+00:00'
       } else {
         return zone
@@ -419,16 +419,14 @@ export default {
 
   watch: {
     dates: function (val) {
-      if (val.toString() != new Date(this.release.date).toString()) {
+      if (val.toString() !== new Date(this.release.date).toString()) {
         this.newObjectToApi('date', val)
       }
     },
   },
 
   created() {
-    const zone_name = moment.tz.guess()
     this.actualTimezone = moment.tz.guess()
-    const timezone = moment.tz(zone_name).zoneAbbr()
   },
 
   async mounted() {
@@ -441,7 +439,7 @@ export default {
     ...mapGetters(['GET_USER']),
 
     async editRelease() {
-      if (this.user == null) this.user = this.GET_USER()
+      if (this.user === null) this.user = this.GET_USER()
       if (this.updateRelease) {
         await this.$axios
           .post(`https://comeback-api.herokuapp.com/requests`, {
@@ -453,12 +451,13 @@ export default {
             userId: this.user.uid,
             source: this.source,
           })
-          .then((response) => {
+          .then(() => {
             if (!this.updateMusic) {
               this.$router.push({ path: `/release/${this.$route.params.id}` })
             }
           })
           .catch(function (error) {
+            // eslint-disable-next-line no-console
             console.log(error)
           })
       }
@@ -478,10 +477,11 @@ export default {
               userId: this.user.uid,
               source: this.source,
             })
-            .then((response) => {
+            .then(() => {
               this.$router.push({ path: `/release/${this.$route.params.id}` })
             })
             .catch(function (error) {
+              // eslint-disable-next-line no-console
               console.log(error)
             })
         })
@@ -508,7 +508,7 @@ export default {
       const tag = {
         name: newTag,
       }
-      if (this.release.styles == null) {
+      if (this.release.styles === null) {
         this.release.styles = [tag]
       } else {
         this.release.styles.push(tag)
@@ -527,7 +527,7 @@ export default {
     },
 
     addStreamingLink() {
-      if (this.release.platforms == null) {
+      if (this.release.platforms === null) {
         this.release.platforms = ['']
       } else {
         this.release.platforms.push('')
@@ -551,8 +551,8 @@ export default {
     newObjectToApiMusic(value, index) {
       if (value[index].id) {
         let elementExist = false
-        this.sendToApiMusics.forEach(async (element) => {
-          if (element.id == value[index].id) {
+        this.sendToApiMusics.forEach((element) => {
+          if (element.id === value[index].id) {
             element = value[index]
             elementExist = true
           }
@@ -599,6 +599,7 @@ export default {
           })
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error(error)
         })
       uploadTask.then((url) => {

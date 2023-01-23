@@ -2,7 +2,7 @@
   <a
     :href="checkUrl()"
     target="_blank"
-    class="flex items-center px-3 py-2 transition-all duration-300 ease-in-out hover:bg-background hover:drop-shadow-2xl"
+    class="flex items-center space-x-2 px-3 py-2 transition-all duration-300 ease-in-out hover:bg-background hover:drop-shadow-2xl"
   >
     <component :is="icon" class="h-5 w-5"></component>
     <p class="hidden md:block">{{ text }}</p>
@@ -92,8 +92,8 @@ export default {
         domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1]
         // check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
         if (
-          splitArr[arrLen - 2].length == 2 &&
-          splitArr[arrLen - 1].length == 2
+          splitArr[arrLen - 2].length === 2 &&
+          splitArr[arrLen - 1].length === 2
         ) {
           // this is using a ccTLD
           domain = splitArr[arrLen - 3] + '.' + domain
@@ -101,10 +101,10 @@ export default {
       }
       // remove '.com'
       const n = domain.indexOf('.')
-      domain = domain.substring(0, n != -1 ? n : domain.length)
+      domain = domain.substring(0, n !== -1 ? n : domain.length)
       // Uppercase first letter
       let x = domain.charAt(0).toUpperCase() + domain.slice(1)
-      if (x == 'Qq') {
+      if (x === 'Qq') {
         x = domain.toUpperCase()
       }
       if (

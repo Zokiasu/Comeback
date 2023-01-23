@@ -72,11 +72,11 @@
           class="flex flex-wrap gap-10"
         >
           <artist-card
-            v-for="artist in soloMembers"
-            :id="artist.id"
-            :key="artist.id"
-            :image="artist.image"
-            :name="artist.name"
+            v-for="soloMember in soloMembers"
+            :id="soloMember.id"
+            :key="soloMember.id"
+            :image="soloMember.image"
+            :name="soloMember.name"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -109,12 +109,12 @@
           tag="div"
           class="flex flex-wrap gap-10"
         >
-          <artist-group-card
-            v-for="artist in groupMembers"
-            :id="artist.id"
-            :key="artist.id"
-            :image="artist.image"
-            :name="artist.name"
+          <artist-card
+            v-for="groupMember in groupMembers"
+            :id="groupMember.id"
+            :key="groupMember.id"
+            :image="groupMember.image"
+            :name="groupMember.name"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -126,12 +126,12 @@
           tag="div"
           class="flex flex-wrap gap-8"
         >
-          <artist-group-card
-            v-for="artist in groups"
-            :id="artist.id"
-            :key="artist.id"
-            :image="artist.image"
-            :name="artist.name"
+          <artist-card
+            v-for="group in groups"
+            :id="group.id"
+            :key="group.id"
+            :image="group.image"
+            :name="group.name"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -202,7 +202,7 @@ export default {
         return groups
       })
 
-    const liked = false
+    let liked = false
     if (store.state.isLoggedIn) {
       liked = await $fire.firestore
         .collection('artists')
@@ -217,6 +217,7 @@ export default {
           return false
         })
         .catch((err) => {
+          // eslint-disable-next-line no-console
           console.log(err)
         })
     }
@@ -244,6 +245,7 @@ export default {
       imageBackground: 'https://picsum.photos/200',
     }
   },
+
   head() {
     return {
       title: this.artist?.name,
@@ -275,7 +277,7 @@ export default {
     },
   },
 
-  async created() {
+  created() {
     if (this.isLoggedIn()) {
       this.displayOnlineOption = this.isLoggedIn()
       this.admin = this.isAdmin()
@@ -295,7 +297,7 @@ export default {
       }
     },
 
-    async followArtist() {
+    followArtist() {
       const addFollowerArtist =
         this.$fire.functions.httpsCallable('addFollowerArtist')
       addFollowerArtist({
@@ -310,7 +312,7 @@ export default {
       })
     },
 
-    async unfollowArtist() {
+    unfollowArtist() {
       const deleteFollowerArtist = this.$fire.functions.httpsCallable(
         'deleteFollowerArtist'
       )

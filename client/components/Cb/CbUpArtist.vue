@@ -213,6 +213,7 @@ export default {
       .then((doc) => {
         return doc.data()
       })
+    // eslint-disable-next-line no-console
     console.log('originalArtist', this.originalArtist)
   },
 

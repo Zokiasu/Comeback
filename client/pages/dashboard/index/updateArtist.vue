@@ -37,16 +37,19 @@ export default {
     )
 
     const secondStepArtist = await firstStepArtist().then(async (res) => {
-      await res.data.artists.map(async (element) => {
-        firstStepMembersArtist({ idPending: element.idPending }).then((res) => {
-          element.members = res.data.members
-          firstStepGroupArtist({ idPending: element.idPending }).then(
-            (res2) => {
-              element.groups = res2.data.groups
-            }
-          )
-        })
+      await res.data.artists.map((element) => {
+        return firstStepMembersArtist({ idPending: element.idPending }).then(
+          (res) => {
+            element.members = res.data.members
+            firstStepGroupArtist({ idPending: element.idPending }).then(
+              (res2) => {
+                element.groups = res2.data.groups
+              }
+            )
+          }
+        )
       })
+      // eslint-disable-next-line no-console
       console.log(res.data.artists)
       return res.data.artists
     })
@@ -61,12 +64,12 @@ export default {
       const deleteArtist = this.$fire.functions.httpsCallable(
         'deletePendingUpdateArtist'
       )
-      await this.updateGroups(artist, index).then(async (res) => {
-        await this.updateMembers(artist, index).then(async (res) => {
+      await this.updateGroups(artist, index).then(async () => {
+        await this.updateMembers(artist, index).then(() => {
           delete artist.idPending
           delete artist.source
-          updateArtist(artist).then((res) => {
-            deleteArtist({ idPending }).then((res) => {
+          updateArtist(artist).then(() => {
+            deleteArtist({ idPending }).then(() => {
               this.artistList.splice(index, 1)
             })
           })
@@ -74,25 +77,26 @@ export default {
       })
     },
 
-    async updateGroups(artist, index) {
-      new Promise((resolve, reject) => {
+    async updateGroups(artist) {
+      await new Promise((resolve) => {
         const deleteGroupFromArtist =
           this.$fire.functions.httpsCallable('deleteGroupsArtist')
         const getActualGroups =
           this.$fire.functions.httpsCallable('getGroupsArtist')
         getActualGroups({ id: artist.id }).then(async (res) => {
           if (res.data.length) {
-            await res.data.map(async (element) => {
-              deleteGroupFromArtist({ id: artist.id, group: element }).then(
-                async (res2) => {
-                  const addGroupsArtist =
-                    this.$fire.functions.httpsCallable('addGroupsArtist')
-                  await artist.groups?.map(async (element) => {
-                    await addGroupsArtist({ id: artist.id, group: element })
-                  })
-                  delete artist.groups
-                }
-              )
+            await res.data.map((element) => {
+              return deleteGroupFromArtist({
+                id: artist.id,
+                group: element,
+              }).then(async () => {
+                const addGroupsArtist =
+                  this.$fire.functions.httpsCallable('addGroupsArtist')
+                await artist.groups?.map(async (element) => {
+                  await addGroupsArtist({ id: artist.id, group: element })
+                })
+                delete artist.groups
+              })
             })
             resolve('Resolved')
           } else {
@@ -108,8 +112,8 @@ export default {
       })
     },
 
-    async updateMembers(artist, index) {
-      new Promise((resolve, reject) => {
+    async updateMembers(artist) {
+      await new Promise(() => {
         const deleteMembersFromArtist = this.$fire.functions.httpsCallable(
           'deleteMembersArtist'
         )
@@ -117,17 +121,18 @@ export default {
           this.$fire.functions.httpsCallable('getMembersArtist')
         getActualMembers({ id: artist.id }).then(async (res) => {
           if (res.data.length) {
-            await res.data.map(async (element) => {
-              deleteMembersFromArtist({ id: artist.id, member: element }).then(
-                async (res2) => {
-                  const addMembersArtist =
-                    this.$fire.functions.httpsCallable('addMembersArtist')
-                  await artist.members?.map(async (element) => {
-                    await addMembersArtist({ id: artist.id, member: element })
-                  })
-                  delete artist.members
-                }
-              )
+            await res.data.map((element) => {
+              return deleteMembersFromArtist({
+                id: artist.id,
+                member: element,
+              }).then(async () => {
+                const addMembersArtist =
+                  this.$fire.functions.httpsCallable('addMembersArtist')
+                await artist.members?.map(async (element) => {
+                  await addMembersArtist({ id: artist.id, member: element })
+                })
+                delete artist.members
+              })
             })
           } else {
             const addMembersArtist =
@@ -141,11 +146,11 @@ export default {
       })
     },
 
-    async delete(artist, index) {
+    delete(artist, index) {
       const deleteArtist = this.$fire.functions.httpsCallable(
         'deletePendingUpdateArtist'
       )
-      deleteArtist({ idPending: artist.idPending }).then((res) => {
+      deleteArtist({ idPending: artist.idPending }).then(() => {
         this.artistList.splice(index, 1)
       })
     },

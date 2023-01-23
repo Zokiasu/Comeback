@@ -85,7 +85,7 @@
         tag="div"
         class="flex max-w-[110rem] flex-wrap gap-7"
       >
-        <ReleaseCard
+        <release-card
           v-for="release in filteredList"
           :id="release.id"
           :key="release.id"
@@ -109,7 +109,7 @@
 
 <script>
 export default {
-  async asyncData({ $fire, $fireModule }) {
+  asyncData({ $fire, $fireModule }) {
     const releaseList = []
     const currentYear = new Date().getFullYear()
     const currentMonth = new Date().getMonth()

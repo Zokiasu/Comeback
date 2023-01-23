@@ -2,8 +2,8 @@
   <div class="mx-auto p-5 md:p-10">
     <div id="searchbar" class="flex w-full justify-start">
       <div id="search-icon" class="rounded-l bg-gray-500 bg-opacity-20 p-2">
-        <icons-search v-if="!searchActive" class="h-5 w-5 cursor-pointer" />
-        <icons-cancel v-else class="h-5 w-5 cursor-pointer" />
+        <icons-search v-if="!searchActive" class="h-5 w-5" />
+        <icons-cancel v-else class="h-5 w-5" />
       </div>
       <input
         id="search-input"
@@ -30,6 +30,11 @@
         class="list-complete-item w-34 mx-auto"
       />
     </transition-group>
+    <div v-if="loading" class="flex w-full justify-center">
+      <div
+        class="loader h-10 w-10 rounded-full border-4 border-t-4 border-gray-200 ease-linear"
+      ></div>
+    </div>
     <div v-if="(filteredArtistList.length < 1) & !loading" class="px-5">
       <p
         class="flex w-full justify-center rounded bg-[#6B728033] p-2 text-tertiary"
@@ -90,45 +95,12 @@ export default {
     search: {
       immediate: true,
       handler(search) {
-        if (search != '') {
+        if (search !== '') {
           this.searchActive = true
         } else {
           this.searchActive = false
         }
       },
-    },
-  },
-
-  mounted() {
-    const vm = this
-    window.addEventListener('scroll', function (e) {
-      const scrollPos = window.scrollY
-      const winHeight = window.innerHeight
-      const docHeight = document.documentElement.scrollHeight
-      const perc = (100 * scrollPos) / (docHeight - winHeight)
-      if (perc > 15) {
-        // vm.limitedAt += 50
-        vm.fetchData()
-      }
-    })
-  },
-
-  methods: {
-    async fetchData() {
-      this.artists = await this.$fire.firestore
-        .collection('artists')
-        .orderBy('name')
-        /* .limit(this.limitedAt) */
-        .get()
-        .then((snapshot) => {
-          const artists = []
-          snapshot.forEach((doc) => {
-            artists.push(doc.data())
-          })
-          this.loading = false
-          this.limitedAt = this.limitedAt + 20
-          return artists
-        })
     },
   },
 }

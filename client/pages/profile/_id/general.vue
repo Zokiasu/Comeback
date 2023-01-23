@@ -14,7 +14,7 @@
         name="object"
         class="md:inner grid w-full grid-cols-2 gap-5 md:flex md:flex-wrap md:justify-center lg:justify-start"
       >
-        <ArtistCard
+        <artist-card
           v-for="artist in artistUser.slice(0, 9)"
           :id="artist.id"
           :key="artist.id"
@@ -36,7 +36,7 @@
         name="object"
         class="md:inner grid w-full grid-cols-2 gap-5 md:flex md:flex-wrap md:justify-center lg:justify-start"
       >
-        <ReleaseCard
+        <release-card
           v-for="release in releaseUser.slice(0, 9)"
           :id="release.id"
           :key="release.id"

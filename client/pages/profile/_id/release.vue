@@ -7,7 +7,7 @@
       name="object"
       class="md:inner grid w-full grid-cols-2 gap-y-5 md:flex md:flex-wrap md:justify-center lg:justify-start"
     >
-      <ReleaseCard
+      <release-card
         v-for="release in releases.slice(0, 9)"
         :id="release.id"
         :key="release.id"
@@ -53,7 +53,6 @@ export default {
 
   methods: {
     infiniteScroll($state) {
-      const artTmp = []
       this.enough = false
       setTimeout(() => {
         this.maxRelease = this.maxRelease + 20
@@ -63,20 +62,6 @@ export default {
         } else {
           $state.loaded()
         }
-        /* this.$axios.get(`https://comeback-api.herokuapp.com/users/${params.id}/releases?sortby=name&limit=9&offset=${this.maxRelease}`).then(response => {
-                        if(response.data.length) {
-                            artTmp = artTmp.concat(response.data)
-                            this.releases = [...new Set(artTmp)]
-                            this.maxRelease = this.maxRelease + 9
-                            $state.loaded();
-                        } else {
-                            this.enough = true
-                            $state.complete();
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    }); */
       }, 500)
     },
   },

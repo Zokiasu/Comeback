@@ -7,7 +7,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-newArtist'
+            $route.name !== 'dashboard-index-newArtist'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -21,7 +21,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-updateArtist'
+            $route.name !== 'dashboard-index-updateArtist'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -35,7 +35,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-artists'
+            $route.name !== 'dashboard-index-artists'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -47,7 +47,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-releases'
+            $route.name !== 'dashboard-index-releases'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -59,7 +59,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-musics'
+            $route.name !== 'dashboard-index-musics'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -71,7 +71,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-style'
+            $route.name !== 'dashboard-index-style'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -83,7 +83,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-news'
+            $route.name !== 'dashboard-index-news'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "
@@ -95,7 +95,7 @@
         <li
           class="flex w-full rounded px-10 py-2"
           :class="
-            $route.name != 'dashboard-index-users'
+            $route.name !== 'dashboard-index-users'
               ? 'hover:bg-gray-500 hover:bg-opacity-70'
               : 'bg-gray-500'
           "

@@ -267,7 +267,7 @@ export default {
         })
         return artists
       })
-      .catch((err) => {
+      .catch(() => {
         return { success: false, artists: [] }
       })
     artistList.sort((a, b) => {
@@ -283,7 +283,7 @@ export default {
       .then((snapshot) => {
         return snapshot.data().styles
       })
-      .catch((err) => {
+      .catch(() => {
         return { success: false, artists: [] }
       })
 
@@ -318,7 +318,7 @@ export default {
     ...mapGetters(['GET_USER']),
 
     createArtist() {
-      if (this.name == '' || this.source == '') {
+      if (this.name === '' || this.source === '') {
         this.$toast.error(
           'Please fill all fields before with * before send an artist',
           { duration: 5000, position: 'top-right' }
@@ -365,7 +365,7 @@ export default {
           const updateArtist =
             this.$fire.functions.httpsCallable('updateArtistById')
           updateArtist({ id: result.data.id })
-            .then((res) => {
+            .then(() => {
               this.$toast.success(
                 'Thank you, Your artist have been sent for verification',
                 { duration: 5000, position: 'top-right' }
@@ -380,12 +380,13 @@ export default {
             })
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.log(error)
         })
     },
 
     addStyle(newTag) {
-      if (this.styles == null) {
+      if (this.styles === null) {
         this.styles = [newTag]
       } else {
         this.styles.push(newTag)
@@ -403,7 +404,7 @@ export default {
     },
 
     addPlatformLink() {
-      if (this.platforms == null) {
+      if (this.platforms === null) {
         this.platforms = ['']
       } else {
         this.platforms.push('')
@@ -411,7 +412,7 @@ export default {
     },
 
     addSocialLink() {
-      if (this.socials == null) {
+      if (this.socials === null) {
         this.socials = ['']
       } else {
         this.socials.push('')
@@ -449,6 +450,7 @@ export default {
           })
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error(error)
         })
       uploadTask.then((url) => {

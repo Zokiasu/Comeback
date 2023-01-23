@@ -67,6 +67,20 @@ export default {
     }
   },
 
+  watch: {
+    newsDate: {
+      immediate: true,
+      handler(newsDate) {
+        if (process.client) {
+          if (newsDate)
+            this.newsMessage = `Next comeback on ${this.dateFormat(
+              new Date(newsDate)
+            )}`
+        }
+      },
+    },
+  },
+
   mounted() {
     this.user = this.GET_USER_DATA()
     this.createNews = this.$fire.functions.httpsCallable('createNews')
@@ -75,7 +89,7 @@ export default {
   methods: {
     ...mapGetters(['GET_USER_DATA']),
 
-    async sendNews() {
+    sendNews() {
       this.user = this.GET_USER_DATA()
       if (!this.newsMessage) {
         this.$toast.error('Please write a news or close the window', {
@@ -122,20 +136,6 @@ export default {
 
     closeModal() {
       this.$emit('close')
-    },
-  },
-
-  watch: {
-    newsDate: {
-      immediate: true,
-      handler(newsDate) {
-        if (process.client) {
-          if (newsDate)
-            this.newsMessage = `Next comeback on ${this.dateFormat(
-              new Date(newsDate)
-            )}`
-        }
-      },
     },
   },
 }

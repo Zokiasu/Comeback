@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import LinkImg from './LinkImg.vue'
 export default {
-  components: { LinkImg },
   props: {
     element: {
       type: String,

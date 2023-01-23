@@ -3,7 +3,7 @@
     <div
       class="animate__animated animate__fadeInUp flex flex-wrap justify-center gap-2 md:justify-evenly md:gap-5"
     >
-      <ReleaseCard
+      <release-card
         v-for="release in newRelease"
         :id="release.id"
         :key="release.id"

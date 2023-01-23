@@ -220,7 +220,7 @@ export default {
         })
         return artists
       })
-      .catch((err) => {
+      .catch(() => {
         return { success: false, artists: [] }
       })
     artistList.sort((a, b) => {
@@ -297,7 +297,7 @@ export default {
       object.verified = !object.verified
       await this.$axios
         .put(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
-        .then((response) => {
+        .then(() => {
           this.$toast.error('News verified has been changed', {
             duration: 2000,
             position: 'top-right',
@@ -308,7 +308,7 @@ export default {
     async editObjectNews(object) {
       await this.$axios
         .put(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
-        .then((response) => {
+        .then(() => {
           this.$toast.error('News has been edited', {
             duration: 2000,
             position: 'top-right',
@@ -320,7 +320,7 @@ export default {
     async removeNews(object, index) {
       await this.$axios
         .delete(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
-        .then((response) => {
+        .then(() => {
           this.$toast.error('News has been deleted', {
             duration: 2000,
             position: 'top-right',
@@ -332,11 +332,11 @@ export default {
     async adminChecker() {
       const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user != null) {
+        if (user !== null) {
           const userData = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
           )
-          if (userData.role != 'NONE') {
+          if (userData.role !== 'NONE') {
             return true
           } else {
             return false

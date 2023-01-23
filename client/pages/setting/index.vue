@@ -5,18 +5,20 @@
         <NuxtLink
           :to="`/setting/profile`"
           class="rounded-t-xl py-1 px-5"
-          :class="$route.name == 'setting-index-profile' ? 'bg-gray-three' : ''"
+          :class="
+            $route.name === 'setting-index-profile' ? 'bg-gray-three' : ''
+          "
           >Profile</NuxtLink
         >
         <NuxtLink
           :to="`/setting/security`"
           class="rounded-t-xl py-1 px-5"
           :class="
-            $route.name == 'setting-index-security' ? 'bg-gray-three' : ''
+            $route.name === 'setting-index-security' ? 'bg-gray-three' : ''
           "
           >Security</NuxtLink
         >
-        <!--<NuxtLink :to="`/setting/subscription`" class="py-1 px-5 rounded-t-xl" :class="$route.name == 'setting-index-subscription' ? 'bg-gray-three':''">Subscription</NuxtLink>-->
+        <!--<NuxtLink :to="`/setting/subscription`" class="py-1 px-5 rounded-t-xl" :class="$route.name === 'setting-index-subscription' ? 'bg-gray-three':''">Subscription</NuxtLink>-->
       </ul>
     </section>
     <section class="space-y-5 bg-gray-three p-10">
@@ -35,8 +37,8 @@ export default {
 
   beforeCreate() {
     if (
-      this.$router.currentRoute.name != 'setting-index-profile' &&
-      this.$router.currentRoute.name != 'setting-index-security'
+      this.$router.currentRoute.name !== 'setting-index-profile' &&
+      this.$router.currentRoute.name !== 'setting-index-security'
     )
       this.$router.push(`/setting/profile`)
   },

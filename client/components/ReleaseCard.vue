@@ -38,7 +38,7 @@
     </NuxtLink>
     <div>
       <p class="truncate font-semibold">{{ name }}</p>
-      <div class="text-xs md:text-sm">
+      <div v-if="artists !== null" class="text-xs md:text-sm">
         <NuxtLink :to="`/artist/${artists.id}`" class="mt-1">
           <p v-if="artists" class="hover-underline-animation truncate">
             {{ artists.name }}
@@ -64,6 +64,7 @@ export default {
       required: true,
     },
     date: {
+      type: String,
       required: true,
     },
     name: {
@@ -76,6 +77,8 @@ export default {
     },
     artists: {
       type: Object,
+      required: false,
+      default: null,
     },
     displayDate: {
       type: Boolean,

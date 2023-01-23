@@ -21,7 +21,7 @@
             <div class="mt-auto flex">
               <div class="mt-auto space-y-5 py-5">
                 <div>
-                  <!--<span v-if="userConnected && userConnected.id == user.uid" class="text-lg">Edit</span>-->
+                  <!--<span v-if="userConnected && userConnected.id === user.uid" class="text-lg">Edit</span>-->
                   <h1
                     class="tShadowRelease cursor-default text-6xl font-semibold filter xl:text-8xl"
                   >
@@ -67,7 +67,7 @@
             :to="`/profile/${$route.params.id}/general`"
             class="w-full cursor-pointer justify-self-center py-2 text-center"
             :class="
-              $route.name == 'profile-id-general'
+              $route.name === 'profile-id-general'
                 ? 'z-50 border-b-2 border-red-500'
                 : 'border-b border-main-gray'
             "
@@ -77,7 +77,7 @@
             :to="`/profile/${$route.params.id}/artist`"
             class="w-full cursor-pointer justify-self-center py-2 text-center"
             :class="
-              $route.name == 'profile-id-artist'
+              $route.name === 'profile-id-artist'
                 ? 'z-50 border-b-2 border-red-500'
                 : 'border-b border-main-gray'
             "
@@ -87,13 +87,13 @@
             :to="`/profile/${$route.params.id}/release`"
             class="w-full cursor-pointer justify-self-center py-2 text-center"
             :class="
-              $route.name == 'profile-id-release'
+              $route.name === 'profile-id-release'
                 ? 'z-50 border-b-2 border-red-500'
                 : 'border-b border-main-gray'
             "
             >Release</NuxtLink
           >
-          <!--<li @click="actualPage = 'Stats'" class="justify-self-center text-center w-full cursor-pointer" :class="actualPage == 'Stats' ? 'border-b-2 border-red-500 z-50':'border-b border-main-gray'">Stats</li>-->
+          <!--<li @click="actualPage = 'Stats'" class="justify-self-center text-center w-full cursor-pointer" :class="actualPage === 'Stats' ? 'border-b-2 border-red-500 z-50':'border-b border-main-gray'">Stats</li>-->
         </ul>
         <NuxtChild />
       </div>
@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   async asyncData({ $axios, params }) {
@@ -127,9 +127,9 @@ export default {
 
   beforeCreate() {
     if (
-      this.$router.currentRoute.name != 'profile-id-general' &&
-      this.$router.currentRoute.name != 'profile-id-artist' &&
-      this.$router.currentRoute.name != 'profile-id-release'
+      this.$router.currentRoute.name !== 'profile-id-general' &&
+      this.$router.currentRoute.name !== 'profile-id-artist' &&
+      this.$router.currentRoute.name !== 'profile-id-release'
     )
       this.$router.push(`/profile/${this.$route.params.id}/general`)
   },

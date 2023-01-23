@@ -7,7 +7,7 @@
       name="object"
       class="md:inner grid w-full grid-cols-2 gap-5 md:flex md:flex-wrap md:justify-center lg:justify-start"
     >
-      <ArtistCard
+      <artist-card
         v-for="artist in artists.slice(0, maxArtist)"
         :id="artist.id"
         :key="artist.id"
@@ -53,7 +53,6 @@ export default {
 
   methods: {
     infiniteScroll($state) {
-      const artTmp = []
       this.enough = false
       setTimeout(() => {
         this.maxArtist = this.maxArtist + 20

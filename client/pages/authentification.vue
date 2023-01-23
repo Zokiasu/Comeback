@@ -102,7 +102,7 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Authentification',
@@ -133,7 +133,7 @@ export default {
       }
     },
 
-    async signIn() {
+    signIn() {
       this.$fire.auth
         .signInWithEmailAndPassword(this.email, this.password)
         .then((res) => {
@@ -141,7 +141,7 @@ export default {
         })
     },
 
-    async signUp() {
+    signUp() {
       this.$fire.auth
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((res) => {
@@ -159,6 +159,7 @@ export default {
               this.$router.push('/')
             })
             .catch((error) => {
+              // eslint-disable-next-line no-console
               console.log(error)
             })
         })

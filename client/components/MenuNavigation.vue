@@ -7,19 +7,7 @@
             <!-- Mobile menu button-->
             <button
               type="button"
-              class="
-                inline-flex
-                items-center
-                justify-center
-                rounded-md
-                p-2
-                text-gray-400
-                hover:bg-zinc-700 hover:text-tertiary
-                focus:outline-none
-                focus:ring-2
-                focus:ring-inset
-                focus:ring-tertiary
-              "
+              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-zinc-700 hover:text-tertiary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-tertiary"
               aria-controls="mobile-menu"
               aria-expanded="false"
               @click="navMenu = !navMenu"
@@ -59,21 +47,11 @@
           </div>
           <!-- PC Navigation -->
           <nav
-            class="
-              flex flex-1
-              items-center
-              justify-center
-              sm:items-stretch sm:justify-start
-            "
+            class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
           >
             <NuxtLink
               :to="`/`"
-              class="
-                relative
-                flex flex-shrink-0
-                items-end
-                lg:items-center lg:space-x-1
-              "
+              class="relative flex flex-shrink-0 items-end lg:items-center lg:space-x-1"
             >
               <img
                 class="block h-8 w-auto lg:hidden"
@@ -92,7 +70,7 @@
                   :to="`/`"
                   class="rounded-md px-3 py-2 text-sm font-medium"
                   :class="
-                    $route.name != 'index'
+                    $route.name !== 'index'
                       ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
                       : 'bg-zinc-600 text-tertiary'
                   "
@@ -103,7 +81,7 @@
                   :to="`/calendar`"
                   class="rounded-md px-3 py-2 text-sm font-medium"
                   :class="
-                    $route.name != 'calendar'
+                    $route.name !== 'calendar'
                       ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
                       : 'bg-zinc-600 text-tertiary'
                   "
@@ -114,7 +92,7 @@
                   :to="`/artist`"
                   class="rounded-md px-3 py-2 text-sm font-medium"
                   :class="
-                    $route.name != 'artist'
+                    $route.name !== 'artist'
                       ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
                       : 'bg-zinc-600 text-tertiary'
                   "
@@ -127,28 +105,11 @@
 
           <!-- PC User Menu -->
           <div
-            class="
-              absolute
-              inset-y-0
-              right-0
-              flex
-              items-center
-              pr-2
-              sm:static sm:inset-auto sm:ml-6 sm:pr-0
-            "
+            class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
           >
             <div v-if="userLogged" class="hidden lg:flex">
               <button
-                class="
-                  bg-bg-primary
-                  Card
-                  flex
-                  rounded-md
-                  px-3
-                  py-2
-                  text-tertiary
-                  focus:outline-none
-                "
+                class="bg-bg-primary Card flex rounded-md px-3 py-2 text-tertiary focus:outline-none"
                 @click="newsModal = true"
               >
                 <svg
@@ -178,17 +139,7 @@
               <button
                 id="user-menu-button"
                 type="button"
-                class="
-                  flex
-                  rounded-full
-                  bg-gray-500 bg-opacity-10
-                  text-sm
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-tertiary
-                  focus:ring-offset-2
-                  focus:ring-offset-gray-800
-                "
+                class="flex rounded-full bg-gray-500 bg-opacity-10 text-sm focus:outline-none focus:ring-2 focus:ring-tertiary focus:ring-offset-2 focus:ring-offset-gray-800"
                 @click="openUserMenu()"
               >
                 <span class="sr-only">Open user menu</span>
@@ -201,19 +152,7 @@
               <div
                 v-if="userMenu"
                 v-click-outside="closeUserMenu"
-                class="
-                  absolute
-                  right-0
-                  mt-2
-                  w-48
-                  origin-top-right
-                  rounded-md
-                  bg-black-one
-                  py-1
-                  text-tertiary
-                  shadow-lg
-                  focus:outline-none
-                "
+                class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-black-one py-1 text-tertiary shadow-lg focus:outline-none"
                 @click="closeUserMenu"
               >
                 <!--<NuxtLink
@@ -229,7 +168,7 @@
                   Add New Artist
                 </NuxtLink>
                 <NuxtLink
-                  v-if="userLogged && userRole != 'NONE'"
+                  v-if="userLogged && userRole !== 'NONE'"
                   :to="`/dashboard/newArtist`"
                   class="block px-4 py-2 text-sm hover:bg-gray-700"
                 >
@@ -237,30 +176,14 @@
                 </NuxtLink>
                 <button
                   type="button"
-                  class="
-                    block
-                    h-full
-                    w-full
-                    px-4
-                    py-2
-                    text-left text-sm
-                    hover:bg-gray-700
-                  "
+                  class="block h-full w-full px-4 py-2 text-left text-sm hover:bg-gray-700"
                   @click="newsModal = true"
                 >
                   New Comeback
                 </button>
                 <button
                   type="button"
-                  class="
-                    block
-                    h-full
-                    w-full
-                    px-4
-                    py-2
-                    text-left text-sm
-                    hover:bg-gray-700
-                  "
+                  class="block h-full w-full px-4 py-2 text-left text-sm hover:bg-gray-700"
                   @click="logout()"
                 >
                   Sign out
@@ -275,21 +198,14 @@
       <div
         v-if="navMenu"
         id="mobile-menu"
-        class="
-          animate__animated animate__fadeInDown animate__faster
-          absolute
-          w-full
-          origin-top-right
-          bg-black-one
-          sm:hidden
-        "
+        class="animate__animated animate__fadeInDown animate__faster absolute w-full origin-top-right bg-black-one sm:hidden"
       >
         <div class="space-y-1 px-2 pt-2 pb-3" @click="navMenu = false">
           <NuxtLink
             :to="`/`"
             class="block rounded-md px-3 py-2 text-base font-medium"
             :class="
-              $route.name != 'index'
+              $route.name !== 'index'
                 ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
                 : 'bg-zinc-600 text-tertiary'
             "
@@ -300,7 +216,7 @@
             :to="`/calendar`"
             class="block rounded-md px-3 py-2 text-base font-medium"
             :class="
-              $route.name != 'calendar'
+              $route.name !== 'calendar'
                 ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
                 : 'bg-zinc-600 text-tertiary'
             "
@@ -311,7 +227,7 @@
             :to="`/artist`"
             class="block rounded-md px-3 py-2 text-base font-medium"
             :class="
-              $route.name != 'artist'
+              $route.name !== 'artist'
                 ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
                 : 'bg-zinc-600 text-tertiary'
             "
@@ -372,7 +288,7 @@ export default {
         })
         return artists
       })
-      .catch((err) => {
+      .catch(() => {
         return { success: false, artists: [] }
       })
     this.artistList.sort((a, b) => {
@@ -384,18 +300,19 @@ export default {
 
   // watch isLoggedIn function in store
   watch: {
-    '$store.getters.isLoggedIn': function (newVal, oldVal) {
+    '$store.getters.isLoggedIn': function (newVal) {
       this.userLogged = newVal
     },
   },
 
-  async created() {
+  created() {
     this.userLogged = this.isLoggedIn()
     if (this.userLogged) {
       this.userRole = this.GET_USER_DATA().role
     }
   },
 
+  // eslint-disable-next-line require-await
   async mounted() {
     this.$toast.info(
       'This website is currently under development, so you may encounter some bugs while using it.',
@@ -418,6 +335,7 @@ export default {
           })
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.log(error)
         })
     },

@@ -125,8 +125,8 @@
             </div>
             <div class="flex space-x-2">
               <a
-                v-for="(platforms, index) in release.platforms"
-                :key="index"
+                v-for="(platforms, indexPlatform) in release.platforms"
+                :key="indexPlatform"
                 :href="platforms"
                 target="_blank"
                 ><img
@@ -141,8 +141,8 @@
         </div>
         <div class="mb-2">
           <span
-            v-for="(style, index) in release.styles"
-            :key="index"
+            v-for="(style, indexStyle) in release.styles"
+            :key="indexStyle"
             class="rounded bg-gray-500 p-1 px-2 text-xs"
           >
             {{ style.name }}
@@ -152,19 +152,21 @@
         <span class="font-semibold text-gray-400">Artists :</span>
         <div class="mb-5">
           <span
-            v-for="(artist, index) in release.artists"
-            :key="index"
+            v-for="(artist, indexArtist) in release.artists"
+            :key="indexArtist"
             class="rounded"
             >{{ artist.name
-            }}<span v-if="index < release.artists.length - 1">, </span></span
+            }}<span v-if="indexArtist < release.artists.length - 1"
+              >,
+            </span></span
           >
           <span v-if="!release.artists" class="text-red-500"> No Artists </span>
         </div>
         <span class="font-semibold text-gray-400">Tracklist :</span>
         <div v-if="release.musics" class="grid grid-cols-1 gap-y-1">
           <span
-            v-for="(music, index) in release.musics"
-            :key="index"
+            v-for="(music, indexMusic) in release.musics"
+            :key="indexMusic"
             class="truncate rounded text-sm"
             >{{ music.name }}</span
           >
@@ -237,6 +239,7 @@ export default {
             }
           })
           .catch((error) => {
+            // eslint-disable-next-line no-console
             console.log(error)
           })
       }, 500)
@@ -282,11 +285,11 @@ export default {
     async adminChecker() {
       const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user != null) {
+        if (user !== null) {
           const userData = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
           )
-          if (userData.role != 'NONE') {
+          if (userData.role !== 'NONE') {
             return true
           } else {
             return false

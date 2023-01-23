@@ -34,7 +34,6 @@
       id="releases-body"
       class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3"
     >
-      <!--<TitleRelease v-for="title in musics" :key="title.id" :title="title" ref="title"/>-->
       <div
         v-for="(music, index) in musics"
         :key="index"
@@ -112,7 +111,7 @@
               <span>{{ music.release.type }}</span>
             </div>
             <div>
-              <span v-if="sorting == 'createdAt'"
+              <span v-if="sorting === 'createdAt'"
                 >Created At :
                 <span
                   >{{
@@ -131,7 +130,7 @@
                   })
                 }}</span></span
               >
-              <span v-if="sorting == 'updatedAt'"
+              <span v-if="sorting === 'updatedAt'"
                 >Updated At :
                 <span
                   >{{
@@ -229,6 +228,7 @@ export default {
             }
           })
           .catch((error) => {
+            // eslint-disable-next-line no-console
             console.log(error)
           })
       }, 500)
@@ -287,11 +287,11 @@ export default {
     async adminChecker() {
       const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user != null) {
+        if (user !== null) {
           const userData = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
           )
-          if (userData.role != 'NONE') {
+          if (userData.role !== 'NONE') {
             return true
           } else {
             return false

@@ -432,7 +432,11 @@ export default {
     ...mapGetters(['GET_USER']),
 
     updateArtist() {
-      if (this.name == '' || this.idYoutubeMusic == '' || this.source == '') {
+      if (
+        this.name === '' ||
+        this.idYoutubeMusic === '' ||
+        this.source === ''
+      ) {
         this.$toast.error(
           'Please fill all fields before with * before send an artist',
           { duration: 5000, position: 'top-right' }
@@ -502,12 +506,13 @@ export default {
           this.$router.push('/')
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.log(error)
         })
     },
 
     addStyle(newTag) {
-      if (this.styles == null) {
+      if (this.styles === null) {
         this.styles = [newTag]
       } else {
         this.styles.push(newTag)
@@ -525,7 +530,7 @@ export default {
     },
 
     addPlatformLink() {
-      if (this.platforms == null) {
+      if (this.platforms === null) {
         this.platforms = ['']
       } else {
         this.platforms.push('')
@@ -533,7 +538,7 @@ export default {
     },
 
     addSocialLink() {
-      if (this.socials == null) {
+      if (this.socials === null) {
         this.socials = ['']
       } else {
         this.socials.push('')
@@ -571,6 +576,7 @@ export default {
           })
         })
         .catch((error) => {
+          // eslint-disable-next-line no-console
           console.error(error)
         })
       uploadTask.then((url) => {

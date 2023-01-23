@@ -110,8 +110,8 @@
             </div>
             <div class="flex space-x-2">
               <a
-                v-for="(social, index) in artist.socials"
-                :key="index"
+                v-for="(social, indexSocial) in artist.socials"
+                :key="indexSocial"
                 :href="social"
                 target="_blank"
               >
@@ -126,8 +126,8 @@
             </div>
             <div class="flex space-x-2">
               <a
-                v-for="(platforms, index) in artist.platforms"
-                :key="index"
+                v-for="(platforms, indexPlatforms) in artist.platforms"
+                :key="indexPlatforms"
                 :href="platforms"
                 target="_blank"
                 ><img
@@ -142,8 +142,8 @@
         </div>
         <div class="space-x-1">
           <span
-            v-for="(style, index) in artist.styles"
-            :key="index"
+            v-for="(style, indexStyle) in artist.styles"
+            :key="indexStyle"
             class="rounded bg-gray-500 p-1 px-2 text-xs"
           >
             {{ style }}
@@ -216,9 +216,9 @@ export default {
   computed: {
     filteredList() {
       return this.artists.filter((element) => {
-        if (this.onlyGroup && element.type.toLowerCase() != 'group')
+        if (this.onlyGroup && element.type.toLowerCase() !== 'group')
           return false
-        if (this.onlySolo && element.type.toLowerCase() != 'solo') return false
+        if (this.onlySolo && element.type.toLowerCase() !== 'solo') return false
         return true
       })
     },
