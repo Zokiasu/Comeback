@@ -1,17 +1,33 @@
 <template>
-  <div class="space-y-1 text-white max-w-[10rem]">
+  <div class="space-y-1 text-tertiary max-w-[10rem]">
     <NuxtLink :to="`/release/${id}`">
       <div class="relative group">
         <div class="bg-gray-500 rounded-md">
+          <div
+            :ref="'hide_' + name"
+            class="
+              rounded-md
+              aspect-square
+              w-full
+              max-h-[10rem]
+              min-h-[10rem]
+              transition-all
+              duration-1000
+              ease-in-out
+              absolute
+              z-10
+              bg-bg-primary
+            "
+          ></div>
           <img
             :src="image"
             :alt="name"
+            @load="imageLoaded"
             loading="lazy"
             class="
               rounded-md
               object-cover
               aspect-square
-              bg-gray-500
               drop-shadow-2xl
               w-full
               max-h-[10rem]
@@ -28,7 +44,7 @@
             px-2
             py-0.5
             rounded
-            text-white
+            text-tertiary
             bg-gray-500 bg-opacity-80
             invisible
             group-hover:visible
@@ -52,7 +68,7 @@
             px-2
             py-0.5
             rounded
-            text-white
+            text-tertiary
             bg-gray-500/70
             invisible
             group-hover:visible
@@ -118,6 +134,10 @@ export default {
   methods: {
     checkDate() {
       return moment(new Date(this.date)).isAfter(new Date());
+    },
+    imageLoaded() {
+      const hide = this.$refs["hide_" + this.name];
+      hide.classList.add("opacity-0");
     },
   },
 };

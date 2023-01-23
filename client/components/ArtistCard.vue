@@ -1,14 +1,31 @@
 <template>
-  <div :id="`artist-card-${id}`" class="text-white max-w-[10rem] aspect-square">
+  <div
+    :id="`artist-card-${id}`"
+    class="text-tertiary max-w-[10rem] aspect-square"
+  >
     <NuxtLink :to="`/artist/${id}`">
+      <div
+        :ref="'hide_' + name"
+        class="
+          rounded-full
+          object-cover
+          min-w-[10rem] min-h-[10rem]
+          transition-all
+          duration-1000
+          ease-in-out
+          absolute
+          z-10
+          bg-primary
+        "
+      ></div>
       <img
         :src="image"
         :alt="name"
+        @load="imageLoaded"
         loading="lazy"
         class="
           rounded-full
           object-cover
-          bg-gray-700
           aspect-square
           max-h-[10rem]
           min-h-[10rem]
@@ -42,6 +59,13 @@ export default {
     image: {
       type: String,
       required: true,
+    },
+  },
+
+  methods: {
+    imageLoaded() {
+      const hide = this.$refs["hide_" + this.name];
+      hide.classList.add("opacity-0");
     },
   },
 };

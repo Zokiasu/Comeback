@@ -1,6 +1,15 @@
 <template>
   <home-section title="Last Releases">
-    <div class="flex flex-wrap gap-2 md:gap-5 justify-center md:justify-evenly">
+    <div
+      class="
+        flex flex-wrap
+        gap-2
+        md:gap-5
+        justify-center
+        md:justify-evenly
+        animate__animated animate__fadeInUp
+      "
+    >
       <ReleaseCard
         v-for="release in newRelease"
         :key="release.id"

@@ -1,6 +1,6 @@
 <template>
   <home-section title="Comeback">
-    <div class="flex flex-wrap gap-5 w-full justify-center">
+    <div class="relative grid grid-cols-5 gap-5 w-full">
       <NewsCard
         v-for="news in newsList"
         :key="news.id"
