@@ -6,13 +6,7 @@
       </div>
       <div class="w-full">
         <button
-          class="
-            bg-blue-500 bg-opacity-30
-            px-3
-            py-2
-            border border-blue-700
-            rounded
-          "
+          class="rounded border border-blue-700 bg-blue-500 bg-opacity-30 px-3 py-2"
         >
           Change Password
         </button>
@@ -24,13 +18,7 @@
       </div>
       <div class="w-full">
         <button
-          class="
-            bg-red-500 bg-opacity-30
-            px-3
-            py-2
-            border border-bg-primary
-            rounded
-          "
+          class="border-bg-primary rounded border bg-red-500 bg-opacity-30 px-3 py-2"
         >
           Yes, desactive my account
         </button>
@@ -43,11 +31,10 @@
 export default {
   data() {
     return {
-      data: "",
-    };
+      data: '',
+    }
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

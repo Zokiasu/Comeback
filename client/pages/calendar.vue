@@ -1,26 +1,26 @@
 <template>
-  <div class="flex flex-col container mx-auto p-5 text-tertiary">
+  <div class="container mx-auto flex flex-col p-5 text-tertiary">
     <div class="space-y-5">
       <div>
         <div class="flex gap-5">
           <p class="text-3xl">{{ currentYear }}</p>
-          <div class="grid grid-cols-2 my-auto">
-            <button @click="changeYear(currentYear + 1)" class="px-1">
-              <icons-arrow-up class="w-5 h-5" />
+          <div class="my-auto grid grid-cols-2">
+            <button class="px-1" @click="changeYear(currentYear + 1)">
+              <icons-arrow-up class="h-5 w-5" />
             </button>
-            <button @click="changeYear(currentYear - 1)" class="px-1">
-              <icons-arrow-down class="w-5 h-5" />
+            <button class="px-1" @click="changeYear(currentYear - 1)">
+              <icons-arrow-down class="h-5 w-5" />
             </button>
           </div>
         </div>
         <div class="flex gap-5">
           <h1 class="text-7xl font-semibold">{{ month[currentMonth] }}</h1>
-          <div class="grid grid-cols-1 my-auto mt-4 space-y-2">
-            <button @click="changeMonth(currentMonth + 1)" class="p-1">
-              <icons-arrow-up class="w-5 h-5" />
+          <div class="my-auto mt-4 grid grid-cols-1 space-y-2">
+            <button class="p-1" @click="changeMonth(currentMonth + 1)">
+              <icons-arrow-up class="h-5 w-5" />
             </button>
-            <button @click="changeMonth(currentMonth - 1)" class="p-1">
-              <icons-arrow-down class="w-5 h-5" />
+            <button class="p-1" @click="changeMonth(currentMonth - 1)">
+              <icons-arrow-down class="h-5 w-5" />
             </button>
           </div>
         </div>
@@ -29,16 +29,16 @@
         <ul class="flex flex-wrap gap-5">
           <li>
             <button
-              @click="
-                onlyAlbums = !onlyAlbums;
-                onlyEps = false;
-                onlySingles = false;
-              "
-              class="px-3 py-2 border rounded"
+              class="rounded border px-3 py-2"
               :class="
                 onlyAlbums
-                  ? 'border-red-500 text-red-500 font-semibold border-2'
+                  ? 'border-2 border-red-500 font-semibold text-red-500'
                   : ''
+              "
+              @click="
+                onlyAlbums = !onlyAlbums
+                onlyEps = false
+                onlySingles = false
               "
             >
               Album
@@ -46,16 +46,16 @@
           </li>
           <li>
             <button
-              @click="
-                onlyEps = !onlyEps;
-                onlyAlbums = false;
-                onlySingles = false;
-              "
-              class="px-3 py-2 border rounded"
+              class="rounded border px-3 py-2"
               :class="
                 onlyEps
-                  ? 'border-red-500 text-red-500 font-semibold border-2'
+                  ? 'border-2 border-red-500 font-semibold text-red-500'
                   : ''
+              "
+              @click="
+                onlyEps = !onlyEps
+                onlyAlbums = false
+                onlySingles = false
               "
             >
               EP
@@ -63,16 +63,16 @@
           </li>
           <li>
             <button
-              @click="
-                onlySingles = !onlySingles;
-                onlyAlbums = false;
-                onlyEps = false;
-              "
-              class="px-3 py-2 border rounded"
+              class="rounded border px-3 py-2"
               :class="
                 onlySingles
-                  ? 'border-red-500 text-red-500 font-semibold border-2'
+                  ? 'border-2 border-red-500 font-semibold text-red-500'
                   : ''
+              "
+              @click="
+                onlySingles = !onlySingles
+                onlyAlbums = false
+                onlyEps = false
               "
             >
               Single
@@ -83,23 +83,23 @@
       <transition-group
         name="list-complete"
         tag="div"
-        class="flex flex-wrap gap-7 max-w-[110rem]"
+        class="flex max-w-[110rem] flex-wrap gap-7"
       >
         <ReleaseCard
           v-for="release in filteredList"
-          :key="release.id"
           :id="release.id"
+          :key="release.id"
           :image="release.image"
           :date="release.date"
           :name="release.name"
           :type="release.type"
           :artists="{ id: release.artistsId, name: release.artistsName }"
-          displayDate
+          display-date
           class="list-complete-item w-32 md:w-40"
         />
       </transition-group>
       <div v-if="(filteredList.length < 1) & !loading">
-        <p class="text-center text-xl bg-gray-500 w-full p-5 rounded">
+        <p class="w-full rounded bg-gray-500 p-5 text-center text-xl">
           Oops... {{ filteredList.length }} releases found
         </p>
       </div>
@@ -109,18 +109,31 @@
 
 <script>
 export default {
-  head() {
-    return {
-      title: "Comeback - Calendar",
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content:
-            "Find all the artists' releases by day and according to your preferences.",
-        },
-      ],
-    };
+  async asyncData({ $fire, $fireModule }) {
+    const releaseList = []
+    const currentYear = new Date().getFullYear()
+    const currentMonth = new Date().getMonth()
+    const startDate = $fireModule.firestore.Timestamp.fromDate(
+      new Date(currentYear, currentMonth, 1)
+    )
+    const endDate = $fireModule.firestore.Timestamp.fromDate(
+      new Date(currentYear, currentMonth + 1, 1)
+    )
+    $fire.firestore
+      .collection('releases')
+      .where('date', '>=', startDate)
+      .where('date', '<=', endDate)
+      .orderBy('date', 'desc')
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          const release = doc.data()
+          release.id = doc.id
+          release.date = new Date(doc.data().date.seconds * 1000)
+          releaseList.push(release)
+        })
+      })
+    return { releaseList }
   },
 
   data() {
@@ -135,126 +148,112 @@ export default {
       currentYear: new Date().getFullYear(),
       currentMonth: new Date().getMonth(),
       month: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
       ],
-    };
+    }
   },
-
-  async asyncData({ $fire, $fireModule }) {
-    const releaseList = [];
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    const startDate = $fireModule.firestore.Timestamp.fromDate(
-      new Date(currentYear, currentMonth, 1)
-    );
-    const endDate = $fireModule.firestore.Timestamp.fromDate(
-      new Date(currentYear, currentMonth + 1, 1)
-    );
-    $fire.firestore
-      .collection("releases")
-      .where("date", ">=", startDate)
-      .where("date", "<=", endDate)
-      .orderBy("date", "desc")
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const release = doc.data();
-          release.id = doc.id;
-          release.date = new Date(doc.data().date.seconds * 1000);
-          releaseList.push(release);
-        });
-      });
-    return { releaseList: releaseList };
-  },
-
-  created() {
-    this.startDate = new Date(this.currentYear, this.currentMonth, 1);
-    this.endDate = new Date(this.currentYear, this.currentMonth + 1, 1);
+  head() {
+    return {
+      title: 'Comeback - Calendar',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            "Find all the artists' releases by day and according to your preferences.",
+        },
+      ],
+    }
   },
 
   computed: {
     filteredList() {
       return this.releaseList.filter((element) => {
-        if (this.onlyAlbums && element.type.toLowerCase() !== "album")
-          return false;
-        if (this.onlyEps && element.type.toLowerCase() !== "ep") return false;
-        if (this.onlySingles && element.type.toLowerCase() !== "single")
-          return false;
-        return true;
-      });
+        if (this.onlyAlbums && element.type.toLowerCase() !== 'album')
+          return false
+        if (this.onlyEps && element.type.toLowerCase() !== 'ep') return false
+        if (this.onlySingles && element.type.toLowerCase() !== 'single')
+          return false
+        return true
+      })
     },
+  },
+
+  created() {
+    this.startDate = new Date(this.currentYear, this.currentMonth, 1)
+    this.endDate = new Date(this.currentYear, this.currentMonth + 1, 1)
   },
 
   methods: {
     async fetchData() {
-      this.releaseList = [];
-      const tmpList = [];
+      this.releaseList = []
+      const tmpList = []
       this.releaseList = await this.$fire.firestore
-        .collection("releases")
+        .collection('releases')
         .where(
-          "date",
-          ">=",
+          'date',
+          '>=',
           this.$fireModule.firestore.Timestamp.fromDate(this.startDate)
         )
         .where(
-          "date",
-          "<=",
+          'date',
+          '<=',
           this.$fireModule.firestore.Timestamp.fromDate(this.endDate)
         )
-        .orderBy("date", "desc")
+        .orderBy('date', 'desc')
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
-            const release = doc.data();
-            release.id = doc.id;
-            release.date = new Date(doc.data().date.seconds * 1000);
-            tmpList.push(release);
-          });
-          return tmpList;
-        });
+            const release = doc.data()
+            release.id = doc.id
+            release.date = new Date(doc.data().date.seconds * 1000)
+            tmpList.push(release)
+          })
+          return tmpList
+        })
     },
 
     dateFormat(d) {
-      let ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
-      let mo = new Intl.DateTimeFormat("en", { month: "numeric" }).format(d);
-      let da = new Intl.DateTimeFormat("en", { day: "numeric" }).format(d);
-      return `${mo}/${da}/${ye}`;
+      const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(d)
+      const mo = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(d)
+      const da = new Intl.DateTimeFormat('en', { day: 'numeric' }).format(d)
+      return `${mo}/${da}/${ye}`
     },
 
     changeMonth(month) {
       if (month < 0) {
-        this.currentMonth = 11;
-        this.currentYear--;
+        this.currentMonth = 11
+        this.currentYear--
       } else if (month > 11) {
-        this.currentMonth = 0;
-        this.currentYear++;
+        this.currentMonth = 0
+        this.currentYear++
       } else {
-        this.currentMonth = month;
+        this.currentMonth = month
       }
-      this.startDate = new Date(this.currentYear, this.currentMonth, 1);
-      this.endDate = new Date(this.currentYear, this.currentMonth + 1, 1);
-      this.fetchData();
+      this.startDate = new Date(this.currentYear, this.currentMonth, 1)
+      this.endDate = new Date(this.currentYear, this.currentMonth + 1, 1)
+      this.fetchData()
     },
 
     changeYear(year) {
-      this.startDate = new Date(year, this.currentMonth, 1);
-      this.endDate = new Date(year, this.currentMonth + 1, 1);
-      this.currentYear = year;
-      this.fetchData();
+      this.startDate = new Date(year, this.currentMonth, 1)
+      this.endDate = new Date(year, this.currentMonth + 1, 1)
+      this.currentYear = year
+      this.fetchData()
     },
   },
-};
+}
 </script>
 
 <style scoped>

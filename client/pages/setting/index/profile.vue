@@ -9,7 +9,7 @@
       </div>
       <div class="lg:mt-auto">
         <button
-          class="bg-bg-primary Card px-5 py-2 rounded-md focus:outline-none"
+          class="bg-bg-primary Card rounded-md px-5 py-2 focus:outline-none"
         >
           Upload
         </button>
@@ -21,8 +21,8 @@
       </div>
       <div class="w-full">
         <t-input
-          type="text"
           v-model="data"
+          type="text"
           placeholder="Display Name"
           name="displayName"
         ></t-input>
@@ -34,9 +34,9 @@
       </div>
       <div class="w-full">
         <t-input
+          v-model="data"
           type="id"
           disabled
-          v-model="data"
           placeholder="ID User"
           name="idUser"
         ></t-input>
@@ -48,8 +48,8 @@
       </div>
       <div class="w-full">
         <t-input
-          type="email"
           v-model="data"
+          type="email"
           placeholder="Email"
           name="email"
         ></t-input>
@@ -61,8 +61,8 @@
       </div>
       <div class="w-full">
         <t-input
-          type="text"
           v-model="data"
+          type="text"
           placeholder="Location"
           name="location"
         ></t-input>
@@ -74,8 +74,8 @@
       </div>
       <div class="w-full">
         <t-input
-          type="text"
           v-model="data"
+          type="text"
           placeholder="Gender"
           name="gender"
         ></t-input>
@@ -87,11 +87,11 @@
       </div>
       <div class="w-full">
         <t-datepicker
-          class="text-black"
           v-model="data"
+          class="text-black"
           placeholder="Birthday"
           initial-view="month"
-          dateFormat="Y-m-d"
+          date-format="Y-m-d"
           clearable
         >
         </t-datepicker>
@@ -103,15 +103,15 @@
       </div>
       <div class="w-full">
         <t-textarea
-          type="text"
           v-model="data"
+          type="text"
           placeholder="Presentation"
           name="presentation"
         ></t-textarea>
       </div>
     </div>
     <div class="flex justify-end">
-      <button class="bg-blue-500 Card px-5 py-2 rounded-md focus:outline-none">
+      <button class="Card rounded-md bg-blue-500 px-5 py-2 focus:outline-none">
         Save Changes
       </button>
     </div>
@@ -122,12 +122,11 @@
 export default {
   data() {
     return {
-      data: "",
+      data: '',
       user: null,
-    };
+    }
   },
-};
+}
 </script>
 
-<style>
-</style>
+<style></style>

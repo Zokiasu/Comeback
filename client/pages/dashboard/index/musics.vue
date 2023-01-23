@@ -1,30 +1,30 @@
 <template>
-  <div class="p-5 px-10 space-y-5">
+  <div class="space-y-5 p-5 px-10">
     <div class="mb-5">
       <button
+        class="rounded bg-gray-500 px-2 py-1 text-tertiary focus:outline-none"
         @click="
-          sorting = 'name';
-          updateDateList();
+          sorting = 'name'
+          updateDateList()
         "
-        class="focus:outline-none bg-gray-500 text-tertiary rounded px-2 py-1"
       >
         Name
       </button>
       <button
+        class="rounded bg-gray-500 px-2 py-1 text-tertiary focus:outline-none"
         @click="
-          sorting = 'createdAt';
-          updateDateList();
+          sorting = 'createdAt'
+          updateDateList()
         "
-        class="focus:outline-none bg-gray-500 text-tertiary rounded px-2 py-1"
       >
         Creation
       </button>
       <button
+        class="rounded bg-gray-500 px-2 py-1 text-tertiary focus:outline-none"
         @click="
-          sorting = 'updatedAt';
-          updateDateList();
+          sorting = 'updatedAt'
+          updateDateList()
         "
-        class="focus:outline-none bg-gray-500 text-tertiary rounded px-2 py-1"
       >
         Last Update
       </button>
@@ -32,27 +32,20 @@
     <section
       v-if="musics.length > 0"
       id="releases-body"
-      class="pb-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3"
+      class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3"
     >
       <!--<TitleRelease v-for="title in musics" :key="title.id" :title="title" ref="title"/>-->
       <div
-        v-for="(music, index) in this.musics"
+        v-for="(music, index) in musics"
         :key="index"
         style="background-color: #6b728033"
-        class="
-          flex flex-col
-          text-tertiary
-          rounded-sm
-          relative
-          p-3
-          overflow-hidden
-        "
+        class="relative flex flex-col overflow-hidden rounded-sm p-3 text-tertiary"
       >
         <span
-          class="absolute text-tertiary bottom-0 right-0 bg-gray-900 px-2 z-50"
+          class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2 text-tertiary"
           >{{ index }}</span
         >
-        <div class="flex xl:absolute mb-2 xl:mb-0 right-2 top-3 space-x-2">
+        <div class="right-2 top-3 mb-2 flex space-x-2 xl:absolute xl:mb-0">
           <!--<NuxtLink :to="`/edit/release/${release.id}`" target="_blank"><img src="https://img.icons8.com/material-sharp/20/ffffff/edit--v1.png"/></NuxtLink>-->
           <button class="focus:outline-none" @click="removeVideo(music)">
             <svg
@@ -92,19 +85,19 @@
           <img
             v-if="adminCheck"
             class="cursor-pointer"
-            @click="removeMusic(music.id, music, index)"
             src="https://img.icons8.com/material-rounded/20/ffffff/delete-trash.png"
+            @click="removeMusic(music.id, music, index)"
           />
         </div>
         <div class="flex space-x-2">
           <img
             :src="music.release.image"
-            class="w-20 h-20 object-cover"
+            class="h-20 w-20 object-cover"
             :alt="music.release.name"
           />
-          <div class="flex flex-col -mt-1">
-            <div class="flex space-x-2 mb-1.5">
-              <span class="font-semibold text-lg"
+          <div class="-mt-1 flex flex-col">
+            <div class="mb-1.5 flex space-x-2">
+              <span class="text-lg font-semibold"
                 ><NuxtLink
                   :to="`/release/${music.release.id}`"
                   target="_blank"
@@ -124,17 +117,17 @@
                 <span
                   >{{
                     new Date(music.createdAt).toLocaleDateString({
-                      day: "numeric",
-                      month: "numeric",
-                      year: "numeric",
+                      day: 'numeric',
+                      month: 'numeric',
+                      year: 'numeric',
                     })
                   }}
                 </span>
                 -
                 <span>{{
                   new Date(music.createdAt).toLocaleTimeString({
-                    hour: "numeric",
-                    minute: "numeric",
+                    hour: 'numeric',
+                    minute: 'numeric',
                   })
                 }}</span></span
               >
@@ -143,24 +136,24 @@
                 <span
                   >{{
                     new Date(music.updatedAt).toLocaleDateString({
-                      day: "numeric",
-                      month: "numeric",
-                      year: "numeric",
+                      day: 'numeric',
+                      month: 'numeric',
+                      year: 'numeric',
                     })
                   }}
                 </span>
                 -
                 <span>{{
                   new Date(music.updatedAt).toLocaleTimeString({
-                    hour: "numeric",
-                    minute: "numeric",
+                    hour: 'numeric',
+                    minute: 'numeric',
                   })
                 }}</span></span
               >
             </div>
           </div>
         </div>
-        <div v-if="music.clip" class="p-2 flex justify-center">
+        <div v-if="music.clip" class="flex justify-center p-2">
           <iframe
             v-if="music.clip"
             class="justify-self-center"
@@ -183,7 +176,7 @@
     <div v-if="musics.length < 1" class="px-5">
       <span
         style="background-color: #6b728033"
-        class="text-tertiary w-full flex justify-center rounded p-2"
+        class="flex w-full justify-center rounded p-2 text-tertiary"
         >No Release found.</span
       >
     </div>
@@ -192,122 +185,122 @@
 
 <script>
 export default {
-  name: "ReleaseList",
+  name: 'ReleaseList',
 
   data() {
     return {
-      search: "",
+      search: '',
       musics: [],
       maxObjectDisplay: 20,
       enough: false,
-      sorting: "name",
-    };
+      sorting: 'name',
+    }
   },
 
   computed: {
     userId() {
-      let utmp = this.$store.state.dataUser;
-      return utmp.id;
+      const utmp = this.$store.state.dataUser
+      return utmp.id
     },
 
     adminCheck() {
-      return this.adminChecker();
+      return this.adminChecker()
     },
   },
 
   methods: {
     infiniteScroll($state) {
-      let artTmp = [];
+      let artTmp = []
       setTimeout(() => {
-        artTmp = artTmp.concat(this.musics);
+        artTmp = artTmp.concat(this.musics)
         this.$axios
           .get(
             `https://comeback-api.herokuapp.com/musics?sortby=${this.sorting}&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
           )
           .then((response) => {
             if (response.data.length > 0) {
-              artTmp = artTmp.concat(response.data);
-              this.musics = [...new Set(artTmp)];
-              this.maxObjectDisplay = this.maxObjectDisplay + 20;
-              $state.loaded();
+              artTmp = artTmp.concat(response.data)
+              this.musics = [...new Set(artTmp)]
+              this.maxObjectDisplay = this.maxObjectDisplay + 20
+              $state.loaded()
             } else {
-              this.enough = true;
-              $state.complete();
+              this.enough = true
+              $state.complete()
             }
           })
           .catch((error) => {
-            console.log(error);
-          });
-      }, 500);
+            console.log(error)
+          })
+      }, 500)
     },
 
     async updateDateList() {
-      let artTmp = [];
-      this.maxObjectDisplay = 0;
+      let artTmp = []
+      this.maxObjectDisplay = 0
       const { data: response } = await this.$axios.get(
         `https://comeback-api.herokuapp.com/musics?sortby=${this.sorting}&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
-      );
+      )
       if (response.length > 0) {
-        artTmp = artTmp.concat(response);
-        this.musics = [...new Set(artTmp)]; //Remove all double entry
+        artTmp = artTmp.concat(response)
+        this.musics = [...new Set(artTmp)] // Remove all double entry
         if (response.length < 20) {
-          this.enough = true;
+          this.enough = true
         } else {
-          this.maxObjectDisplay = this.maxObjectDisplay + 20;
+          this.maxObjectDisplay = this.maxObjectDisplay + 20
         }
       } else {
-        this.enough = true;
+        this.enough = true
       }
     },
 
     getYoutubeId(url) {
-      let id, fullId;
-      if (url?.includes("list=")) {
-        id = url.split("list=")[1];
-        fullId = "https://www.youtube.com/embed/videoseries?list=" + id;
-      } else if (url?.includes("v=")) {
-        id = url.split("v=")[1];
-        fullId = "https://www.youtube.com/embed/" + id;
-      } else if (url?.includes(".be/")) {
-        id = url.split(".be/")[1];
-        fullId = "https://www.youtube.com/embed/" + id;
+      let id, fullId
+      if (url?.includes('list=')) {
+        id = url.split('list=')[1]
+        fullId = 'https://www.youtube.com/embed/videoseries?list=' + id
+      } else if (url?.includes('v=')) {
+        id = url.split('v=')[1]
+        fullId = 'https://www.youtube.com/embed/' + id
+      } else if (url?.includes('.be/')) {
+        id = url.split('.be/')[1]
+        fullId = 'https://www.youtube.com/embed/' + id
       }
-      return fullId;
+      return fullId
     },
 
     removeVideo(object) {
-      object.clip = null;
+      object.clip = null
       this.$axios.put(
         `https://comeback-api.herokuapp.com/musics/${object.id}`,
         object
-      );
+      )
     },
 
     removeMusic(id, object, index) {
       this.$axios
         .delete(`https://comeback-api.herokuapp.com/musics/${id}`, object)
         .then((response) => {
-          this.musics.splice(index, 1);
-        });
+          this.musics.splice(index, 1)
+        })
     },
 
     async adminChecker() {
-      let that = this;
+      const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
         if (user != null) {
-          let userData = await that.$axios.$get(
+          const userData = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
-          );
-          if (userData.role != "NONE") {
-            return true;
+          )
+          if (userData.role != 'NONE') {
+            return true
           } else {
-            return false;
+            return false
           }
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
   },
-};
+}
 </script>

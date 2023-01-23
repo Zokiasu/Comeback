@@ -1,60 +1,25 @@
 <template>
   <div class="text-tertiary">
     <div
-      class="
-        background-top
-        bg-cover bg-no-repeat
-        relative
-        h-60
-        lg:h-96
-        xl:h-[35rem]
-        overflow-hidden
-      "
+      class="background-top relative h-60 overflow-hidden bg-cover bg-no-repeat lg:h-96 xl:h-[35rem]"
     >
       <img
         :src="imageBackground"
         :alt="artist.name"
-        class="
-          absolute
-          top-0
-          bottom-0
-          left-0
-          right-0
-          w-full
-          h-full
-          object-cover
-        "
+        class="absolute top-0 bottom-0 left-0 right-0 h-full w-full object-cover"
       />
       <div
-        class="
-          absolute
-          top-0
-          bottom-0
-          left-0
-          right-0
-          flex
-          p-5
-          lg:p-10
-          xl:p-14 xl:px-32
-          bg-black/50
-        "
+        class="absolute top-0 bottom-0 left-0 right-0 flex bg-black/50 p-5 lg:p-10 xl:p-14 xl:px-32"
       >
-        <div class="overflow-x-auto flex flex-col gap-2 lg:gap-8 mt-auto">
+        <div class="mt-auto flex flex-col gap-2 overflow-x-auto lg:gap-8">
           <div>
-            <h1 class="text-5xl lg:text-8xl font-semibold">
+            <h1 class="text-5xl font-semibold lg:text-8xl">
               {{ artist.name }}
             </h1>
           </div>
           <div
             v-if="artist.platforms.length"
-            class="
-              flex flex-wrap
-              text-sm
-              overflow-x-scroll
-              gap-1
-              lg:gap-3
-              testa
-            "
+            class="testa flex flex-wrap gap-1 overflow-x-scroll text-sm lg:gap-3"
           >
             <cb-external-link
               v-for="link in artist.platforms"
@@ -64,14 +29,7 @@
           </div>
           <div
             v-if="artist.socials.length"
-            class="
-              flex flex-wrap
-              text-sm
-              overflow-x-scroll
-              gap-1
-              lg:gap-3
-              testa
-            "
+            class="testa flex flex-wrap gap-1 overflow-x-scroll text-sm lg:gap-3"
           >
             <cb-external-link
               v-for="link in artist.socials"
@@ -85,14 +43,14 @@
         v-if="displayOnlineOption"
         class="absolute top-5 right-5 flex items-center gap-2"
       >
-        <div @click="followTest()" class="cursor-pointer">
+        <div class="cursor-pointer" @click="followTest()">
           <icons-heart-filled
             v-if="liked"
-            class="text-tertiary w-8 h-8 transition ease-in-out duration-300"
+            class="h-8 w-8 text-tertiary transition duration-300 ease-in-out"
           />
           <icons-heart-outline
             v-else
-            class="text-tertiary w-8 h-8 transition ease-in-out duration-300"
+            class="h-8 w-8 text-tertiary transition duration-300 ease-in-out"
           />
         </div>
         <div v-if="admin">
@@ -102,7 +60,7 @@
         </div>
       </div>
     </div>
-    <div class="p-5 lg:p-10 xl:p-14 xl:px-32 space-y-10">
+    <div class="space-y-10 p-5 lg:p-10 xl:p-14 xl:px-32">
       <div>
         <p>{{ artist.description }}</p>
       </div>
@@ -115,10 +73,10 @@
         >
           <artist-card
             v-for="artist in soloMembers"
+            :id="artist.id"
             :key="artist.id"
             :image="artist.image"
             :name="artist.name"
-            :id="artist.id"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -132,14 +90,14 @@
         >
           <release-card
             v-for="release in releases"
-            :key="release.id"
             :id="release.id"
+            :key="release.id"
             :image="release.image"
             :date="release.date"
             :name="release.name"
             :type="release.type"
             :artists="{ id: release.artistsId, name: release.artistsName }"
-            :displayDate="true"
+            :display-date="true"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -153,10 +111,10 @@
         >
           <artist-group-card
             v-for="artist in groupMembers"
+            :id="artist.id"
             :key="artist.id"
             :image="artist.image"
             :name="artist.name"
-            :id="artist.id"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -170,10 +128,10 @@
         >
           <artist-group-card
             v-for="artist in groups"
+            :id="artist.id"
             :key="artist.id"
             :image="artist.image"
             :name="artist.name"
-            :id="artist.id"
             class="w-32 md:w-40"
           />
         </transition-group>
@@ -183,20 +141,93 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
-  head() {
+  async asyncData({ params, $fire, store }) {
+    const getArtist = await $fire.firestore
+      .collection('artists')
+      .doc(params.id)
+      .get()
+      .then((doc) => {
+        return doc.data()
+      })
+
+    const getReleaseByArtist = await $fire.firestore
+      .collection('releases')
+      .where('artistsId', '==', params.id)
+      .get()
+      .then((snapshot) => {
+        const releaseL = []
+        // ajouter dans releaseL et trier par date
+        snapshot.forEach((doc) => {
+          const release = doc.data()
+          release.date = new Date(doc.data().date.seconds * 1000)
+          releaseL.push(release)
+        })
+        // trier par date
+        releaseL.sort((a, b) => {
+          return b.date - a.date
+        })
+        return releaseL
+      })
+
+    const getMembers = await $fire.firestore
+      .collection('artists')
+      .doc(params.id)
+      .collection('members')
+      .orderBy('name', 'asc')
+      .get()
+      .then((snapshot) => {
+        const members = []
+        snapshot.forEach((doc) => {
+          members.push(doc.data())
+        })
+        return members
+      })
+
+    const getGroups = await $fire.firestore
+      .collection('artists')
+      .doc(params.id)
+      .collection('groups')
+      .orderBy('name', 'asc')
+      .get()
+      .then((snapshot) => {
+        const groups = []
+        snapshot.forEach((doc) => {
+          const group = doc.data()
+          group.id = doc.id
+          groups.push(group)
+        })
+        return groups
+      })
+
+    const liked = false
+    if (store.state.isLoggedIn) {
+      liked = await $fire.firestore
+        .collection('artists')
+        .doc(params.id)
+        .collection('followers')
+        .where('id', '==', store.state.user.uid)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.size > 0) {
+            return true
+          }
+          return false
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
     return {
-      title: this.artist?.name,
-      meta: [
-        {
-          hid: "description",
-          name: "description",
-          content: this.artist?.description,
-        },
-      ],
-    };
+      artist: getArtist,
+      releases: getReleaseByArtist,
+      members: getMembers,
+      groups: getGroups,
+      liked,
+    }
   },
 
   data() {
@@ -210,137 +241,63 @@ export default {
       groups: [],
       releases: [],
       userInfo: null,
-      imageBackground: "https://picsum.photos/200",
-    };
-  },
-
-  async asyncData({ params, $fire, store }) {
-    const getArtist = await $fire.firestore
-      .collection("artists")
-      .doc(params.id)
-      .get()
-      .then((doc) => {
-        return doc.data();
-      });
-
-    const getReleaseByArtist = await $fire.firestore
-      .collection("releases")
-      .where("artistsId", "==", params.id)
-      .get()
-      .then((snapshot) => {
-        const releaseL = [];
-        // ajouter dans releaseL et trier par date
-        snapshot.forEach((doc) => {
-          const release = doc.data();
-          release.date = new Date(doc.data().date.seconds * 1000);
-          releaseL.push(release);
-        });
-        //trier par date
-        releaseL.sort((a, b) => {
-          return b.date - a.date;
-        });
-        return releaseL;
-      });
-
-    const getMembers = await $fire.firestore
-      .collection("artists")
-      .doc(params.id)
-      .collection("members")
-      .orderBy("name", "asc")
-      .get()
-      .then((snapshot) => {
-        const members = [];
-        snapshot.forEach((doc) => {
-          members.push(doc.data());
-        });
-        return members;
-      });
-
-    const getGroups = await $fire.firestore
-      .collection("artists")
-      .doc(params.id)
-      .collection("groups")
-      .orderBy("name", "asc")
-      .get()
-      .then((snapshot) => {
-        const groups = [];
-        snapshot.forEach((doc) => {
-          const group = doc.data();
-          group.id = doc.id;
-          groups.push(group);
-        });
-        return groups;
-      });
-
-    const liked = false;
-    if (store.state.isLoggedIn) {
-      liked = await $fire.firestore
-        .collection("artists")
-        .doc(params.id)
-        .collection("followers")
-        .where("id", "==", store.state.user.uid)
-        .get()
-        .then((snapshot) => {
-          if (snapshot.size > 0) {
-            return true;
-          }
-          return false;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      imageBackground: 'https://picsum.photos/200',
     }
-
+  },
+  head() {
     return {
-      artist: getArtist,
-      releases: getReleaseByArtist,
-      members: getMembers,
-      groups: getGroups,
-      liked: liked,
-    };
-  },
-
-  async created() {
-    if (this.isLoggedIn()) {
-      this.displayOnlineOption = this.isLoggedIn();
-      this.admin = this.isAdmin();
-      this.userInfo = this.GET_USER_DATA();
+      title: this.artist?.name,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.artist?.description,
+        },
+      ],
     }
-    this.imageBackground = this.artist.image.toString();
-  },
-
-  watch: {
-    "$store.getters.isLoggedIn": function (newVal, oldVal) {
-      this.displayOnlineOption = newVal;
-    },
-    "$store.getters.isAdmin": function (newVal, oldVal) {
-      this.admin = newVal;
-    },
   },
 
   computed: {
     soloMembers() {
-      return this.members.filter((member) => member.type === "SOLO");
+      return this.members.filter((member) => member.type === 'SOLO')
     },
     groupMembers() {
-      return this.members.filter((member) => member.type === "GROUP");
+      return this.members.filter((member) => member.type === 'GROUP')
     },
   },
 
+  watch: {
+    '$store.getters.isLoggedIn': function (newVal, oldVal) {
+      this.displayOnlineOption = newVal
+    },
+    '$store.getters.isAdmin': function (newVal, oldVal) {
+      this.admin = newVal
+    },
+  },
+
+  async created() {
+    if (this.isLoggedIn()) {
+      this.displayOnlineOption = this.isLoggedIn()
+      this.admin = this.isAdmin()
+      this.userInfo = this.GET_USER_DATA()
+    }
+    this.imageBackground = this.artist.image.toString()
+  },
+
   methods: {
-    ...mapGetters(["GET_USER", "GET_USER_DATA", "isLoggedIn", "isAdmin"]),
+    ...mapGetters(['GET_USER', 'GET_USER_DATA', 'isLoggedIn', 'isAdmin']),
 
     followTest() {
       if (this.liked) {
-        this.unfollowArtist();
+        this.unfollowArtist()
       } else {
-        this.followArtist();
+        this.followArtist()
       }
     },
 
     async followArtist() {
       const addFollowerArtist =
-        this.$fire.functions.httpsCallable("addFollowerArtist");
+        this.$fire.functions.httpsCallable('addFollowerArtist')
       addFollowerArtist({
         id: this.artist.id,
         user: {
@@ -349,14 +306,14 @@ export default {
           name: this.GET_USER_DATA().name,
         },
       }).then((res) => {
-        this.liked = true;
-      });
+        this.liked = true
+      })
     },
 
     async unfollowArtist() {
       const deleteFollowerArtist = this.$fire.functions.httpsCallable(
-        "deleteFollowerArtist"
-      );
+        'deleteFollowerArtist'
+      )
       deleteFollowerArtist({
         id: this.artist.id,
         user: {
@@ -365,11 +322,11 @@ export default {
           name: this.GET_USER_DATA().name,
         },
       }).then((res) => {
-        this.liked = false;
-      });
+        this.liked = false
+      })
     },
   },
-};
+}
 </script>
 
 <style scoped>

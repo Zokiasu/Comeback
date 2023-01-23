@@ -1,42 +1,26 @@
 <template>
   <div
     :id="`artist-card-${id}`"
-    class="text-tertiary max-w-[10rem] aspect-square"
+    class="aspect-square max-w-[10rem] text-tertiary"
   >
     <NuxtLink :to="`/artist/${id}`">
       <div
         :ref="'hide_' + name"
-        class="
-          rounded-full
-          object-cover
-          min-w-[10rem] min-h-[10rem]
-          transition-all
-          duration-1000
-          ease-in-out
-          absolute
-          z-10
-          bg-primary
-        "
+        class="absolute z-10 min-h-[10rem] min-w-[10rem] rounded-full bg-primary object-cover transition-all duration-1000 ease-in-out"
       ></div>
       <img
         :src="image"
         :alt="name"
-        @load="imageLoaded"
         loading="lazy"
-        class="
-          rounded-full
-          object-cover
-          aspect-square
-          max-h-[10rem]
-          min-h-[10rem]
-        "
+        class="aspect-square max-h-[10rem] min-h-[10rem] rounded-full object-cover"
+        @load="imageLoaded"
       />
     </NuxtLink>
     <NuxtLink
       :to="`/artist/${id}`"
-      class="w-full flex flex-col justify-center items-center"
+      class="flex w-full flex-col items-center justify-center"
     >
-      <h2 class="font-semibold text-center hover-underline-animation">
+      <h2 class="hover-underline-animation text-center font-semibold">
         {{ name }}
       </h2>
     </NuxtLink>
@@ -45,7 +29,7 @@
 
 <script>
 export default {
-  name: "artistCard",
+  name: 'ArtistCard',
 
   props: {
     id: {
@@ -64,9 +48,9 @@ export default {
 
   methods: {
     imageLoaded() {
-      const hide = this.$refs["hide_" + this.name];
-      hide.classList.add("opacity-0");
+      const hide = this.$refs['hide_' + this.name]
+      hide?.classList.add('opacity-0')
     },
   },
-};
+}
 </script>

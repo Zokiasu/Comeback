@@ -1,6 +1,6 @@
 <template>
   <home-section title="Comeback">
-    <div class="relative grid grid-cols-5 gap-5 w-full">
+    <div class="relative grid w-full grid-cols-5 gap-5">
       <NewsCard
         v-for="news in newsList"
         :key="news.id"
@@ -15,9 +15,13 @@
 </template>
 
 <script>
-import HomeSection from "./HomeSection.vue";
+import HomeSection from './HomeSection.vue'
 export default {
-  name: "ComebackSection",
+  name: 'ComebackSection',
+
+  components: {
+    HomeSection,
+  },
 
   props: {
     newsList: {
@@ -25,9 +29,5 @@ export default {
       default: () => [],
     },
   },
-
-  components: {
-    HomeSection,
-  },
-};
+}
 </script>

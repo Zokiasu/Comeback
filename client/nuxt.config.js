@@ -12,47 +12,51 @@ export default {
   },
 
   generate: {
-    fallback: true
+    fallback: true,
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Comeback - Track every next album, single, EP releases.',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'en',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Find your favorite artists and track all their comeback in one place.' },
-      { property: "og:site_name", content: "Pierrick's Portfolio - Zokiasu" },
-      { hid: "og:type", property: "og:type", content: "website" },
       {
-        hid: "og:url",
-        property: "og:url",
-        content: "https://come-back.netlify.app/",
+        hid: 'description',
+        name: 'description',
+        content:
+          'Find your favorite artists and track all their comeback in one place.',
+      },
+      { property: 'og:site_name', content: "Pierrick's Portfolio - Zokiasu" },
+      { hid: 'og:type', property: 'og:type', content: 'website' },
+      {
+        hid: 'og:url',
+        property: 'og:url',
+        content: 'https://come-back.netlify.app/',
       },
       {
-        hid: "og:title",
-        property: "og:title",
-        content: "Comeback - Track every next album, single, EP releases.",
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'Comeback - Track every next album, single, EP releases.',
       },
       {
-        hid: "og:description",
-        property: "og:description",
-        content: "Find your favorite artists and track all their comeback in one place.",
+        hid: 'og:description',
+        property: 'og:description',
+        content:
+          'Find your favorite artists and track all their comeback in one place.',
       },
       {
-        hid: "og:image",
-        property: "og:image",
-        content: "https://i.ibb.co/JkfZXwk/Comeback-Logo.png",
+        hid: 'og:image',
+        property: 'og:image',
+        content: 'https://i.ibb.co/JkfZXwk/Comeback-Logo.png',
       },
-      { property: "og:image:width", content: "740" },
-      { property: "og:image:height", content: "300" },
+      { property: 'og:image:width', content: '740' },
+      { property: 'og:image:height', content: '300' },
     ],
-    link: [
-      { rel: 'favicon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+    link: [{ rel: 'favicon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   target: 'static',
@@ -65,7 +69,7 @@ export default {
   loadingIndicator: {
     name: 'circle',
     color: 'white',
-    background: '#1F1D1D'
+    background: '#1F1D1D',
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -75,7 +79,7 @@ export default {
     '~/plugins/vueMultiselect.js',
     '~/plugins/vClickOutside.js',
     { src: '~/plugins/v-calendar.js', ssr: false },
-    { src: "~/plugins/infiniteloading", ssr: false }
+    { src: '~/plugins/infiniteloading', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -88,7 +92,7 @@ export default {
   ],
 
   eslint: {
-    fix: true
+    fix: true,
   },
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -112,40 +116,41 @@ export default {
             persistence: 'local', // default
             initialize: {
               onAuthStateChangedAction: 'onAuthStateChangedAction',
-              subscribeManually: false
+              subscribeManually: false,
             },
             ssr: false,
           },
           firestore: true,
           functions: {
             location: 'europe-west1',
-            // emulatorPort: null,
-            // emulatorHost: 'http://localhost',
+            emulatorPort: null,
+            emulatorHost: 'http://localhost',
           },
           storage: true,
           database: true,
           messaging: true,
           performance: true,
           analytics: true,
-          remoteConfig: true
-        }
-      }
-    ]  
+          remoteConfig: true,
+        },
+      },
+    ],
   ],
 
   axios: [],
 
   toast: {
     position: 'top-right',
-    register: [ // Register custom toasts
+    register: [
+      // Register custom toasts
       {
         name: 'my-error',
         message: 'Oops...Something went wrong',
         options: {
-          type: 'error'
-        }
-      }
-    ]
+          type: 'error',
+        },
+      },
+    ],
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -153,7 +158,7 @@ export default {
     babel: {
       plugins: [
         ['@babel/plugin-proposal-private-methods', { loose: true }],
-        ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
       ],
     },
   },

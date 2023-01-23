@@ -1,16 +1,16 @@
 <template>
-  <div class="px-10 py-5 flex flex-col space-y-10">
-    <div class="w-full flex justify-center">
-      <h2 class="text-tertiary text-4xl">Lastest News</h2>
+  <div class="flex flex-col space-y-10 px-10 py-5">
+    <div class="flex w-full justify-center">
+      <h2 class="text-4xl text-tertiary">Lastest News</h2>
     </div>
     <transition-group
       name="object"
-      class="flex flex-wrap justify-center w-full overflow-x-scroll inner"
+      class="inner flex w-full flex-wrap justify-center overflow-x-scroll"
     >
       <NewsCard
-        class="m-2"
         v-for="element in newsList"
         :key="element.id"
+        class="m-2"
         :element="element"
       />
     </transition-group>
@@ -19,19 +19,18 @@
 
 <script>
 export default {
+  async asyncData({ $axios }) {
+    const newsList = await $axios.$get(
+      'https://comeback-api.herokuapp.com/infos?sortby=date:desc'
+    )
+    return { newsList }
+  },
   data() {
     return {
       newsList: [],
-    };
+    }
   },
-
-  async asyncData({ $axios }) {
-    const newsList = await $axios.$get(
-      "https://comeback-api.herokuapp.com/infos?sortby=date:desc"
-    );
-    return { newsList };
-  },
-};
+}
 </script>
 
 <style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 px-10 space-y-5">
+  <div class="space-y-5 p-5 px-10">
     <section
       id="searchbar"
       class="flex w-full justify-start"
@@ -7,13 +7,7 @@
     >
       <div
         id="search-icon"
-        class="
-          bg-opacity-20 bg-gray-500
-          pr-1
-          pl-2
-          rounded-none rounded-l
-          py-1.5
-        "
+        class="rounded-none rounded-l bg-gray-500 bg-opacity-20 py-1.5 pr-1 pl-2"
       >
         <svg
           class=""
@@ -51,63 +45,41 @@
         </svg>
       </div>
       <input
-        @change="updateDateList()"
         id="search-input"
+        v-model="search"
         type="text"
         placeholder="Search"
-        v-model="search"
-        class="
-          w-full
-          pl-2
-          focus:outline-none
-          rounded-r rounded-none
-          bg-opacity-20 bg-gray-500
-          text-tertiary
-          placeholder-tertiary
-        "
+        class="w-full rounded-none rounded-r bg-gray-500 bg-opacity-20 pl-2 text-tertiary placeholder-tertiary focus:outline-none"
+        @change="updateDateList()"
       />
     </section>
-    <button @click="test()" class="p-5 border border-tertiary">DELETE</button>
+    <button class="border border-tertiary p-5" @click="test()">DELETE</button>
     <button
       v-if="search"
+      class="text-bg-primary mb-5 focus:outline-none"
       @click="
-        search = '';
-        updateDateList();
+        search = ''
+        updateDateList()
       "
-      class="text-bg-primary focus:outline-none mb-5"
     >
       Reset
     </button>
     <section
       v-if="releases.length > 0"
       id="releases-body"
-      class="
-        pb-5
-        grid grid-cols-1
-        lg:grid-cols-2
-        xl:grid-cols-3
-        2xl:grid-cols-4
-        gap-3
-      "
+      class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
     >
       <div
-        v-for="(release, index) in this.releases"
+        v-for="(release, index) in releases"
         :key="index"
         style="background-color: #6b728033"
-        class="
-          flex flex-col
-          text-tertiary
-          rounded-sm
-          relative
-          p-3
-          overflow-hidden
-        "
+        class="relative flex flex-col overflow-hidden rounded-sm p-3 text-tertiary"
       >
         <span
-          class="absolute text-tertiary bottom-0 right-0 bg-gray-900 px-2 z-50"
+          class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2 text-tertiary"
           >{{ index }}</span
         >
-        <div class="flex 2xl:absolute mb-2 2xl:mb-0 right-2 top-3 space-x-2">
+        <div class="right-2 top-3 mb-2 flex space-x-2 2xl:absolute 2xl:mb-0">
           <NuxtLink :to="`/edit/release/${release.id}`" target="_blank"
             ><img
               src="https://img.icons8.com/material-sharp/20/ffffff/edit--v1.png"
@@ -115,19 +87,19 @@
           <img
             v-if="adminCheck"
             class="cursor-pointer"
-            @click="removeRelease(release.id, releases[release.place], index)"
             src="https://img.icons8.com/material-rounded/20/ffffff/delete-trash.png"
+            @click="removeRelease(release.id, releases[release.place], index)"
           />
         </div>
         <div class="flex space-x-2">
           <img
             :src="release.releases ? release.releases[0].image : release.image"
-            class="w-20 h-20 object-cover"
+            class="h-20 w-20 object-cover"
             alt=""
           />
-          <div class="flex flex-col -mt-1">
-            <div class="flex space-x-2 mb-1.5">
-              <span class="font-semibold text-lg"
+          <div class="-mt-1 flex flex-col">
+            <div class="mb-1.5 flex space-x-2">
+              <span class="text-lg font-semibold"
                 ><NuxtLink
                   :to="`/release/${release.id}`"
                   target="_blank"
@@ -143,10 +115,10 @@
                 }}
                 -
                 {{
-                  new Date(release.date).toLocaleDateString("en-EN", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
+                  new Date(release.date).toLocaleDateString('en-EN', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
                   })
                 }}
               </span>
@@ -171,7 +143,7 @@
           <span
             v-for="(style, index) in release.styles"
             :key="index"
-            class="bg-gray-500 p-1 px-2 rounded text-xs"
+            class="rounded bg-gray-500 p-1 px-2 text-xs"
           >
             {{ style.name }}
           </span>
@@ -193,7 +165,7 @@
           <span
             v-for="(music, index) in release.musics"
             :key="index"
-            class="rounded truncate text-sm"
+            class="truncate rounded text-sm"
             >{{ music.name }}</span
           >
         </div>
@@ -209,7 +181,7 @@
     <div v-if="releases.length < 1" class="px-5">
       <span
         style="background-color: #6b728033"
-        class="text-tertiary w-full flex justify-center rounded p-2"
+        class="flex w-full justify-center rounded p-2 text-tertiary"
         >No Release found.</span
       >
     </div>
@@ -218,112 +190,112 @@
 
 <script>
 export default {
-  name: "ReleaseList",
+  name: 'ReleaseList',
 
   data() {
     return {
-      search: "",
+      search: '',
       releases: [],
       maxObjectDisplay: 20,
       enough: false,
-    };
+    }
   },
 
   computed: {
     userId() {
-      let utmp = this.$store.state.dataUser;
-      return utmp.id;
+      const utmp = this.$store.state.dataUser
+      return utmp.id
     },
 
     adminCheck() {
-      return this.adminChecker();
+      return this.adminChecker()
     },
   },
 
   methods: {
     infiniteScroll($state) {
-      let artTmp = [];
+      let artTmp = []
       setTimeout(() => {
-        artTmp = artTmp.concat(this.releases);
+        artTmp = artTmp.concat(this.releases)
         this.$axios
           .get(
             `https://comeback-api.herokuapp.com/releases/full?sortby=date&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
           )
           .then((response) => {
             if (response.data) {
-              artTmp = artTmp.concat(response.data);
-              this.releases = [...new Set(artTmp)];
-              this.maxObjectDisplay = this.maxObjectDisplay + 20;
-              $state.loaded();
+              artTmp = artTmp.concat(response.data)
+              this.releases = [...new Set(artTmp)]
+              this.maxObjectDisplay = this.maxObjectDisplay + 20
+              $state.loaded()
             } else if (!response.data && !artTmp && this.search) {
-              this.enough = true;
-              $state.complete();
-              this.releases = [];
+              this.enough = true
+              $state.complete()
+              this.releases = []
             } else {
-              this.enough = true;
-              $state.complete();
+              this.enough = true
+              $state.complete()
             }
           })
           .catch((error) => {
-            console.log(error);
-          });
-      }, 500);
+            console.log(error)
+          })
+      }, 500)
     },
 
     async updateDateList() {
-      let artTmp = [];
-      this.maxObjectDisplay = 0;
+      let artTmp = []
+      this.maxObjectDisplay = 0
       const { data: response } = await this.$axios.get(
         `https://comeback-api.herokuapp.com/releases/full?sortby=date&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
-      );
+      )
       if (response) {
-        artTmp = artTmp.concat(response);
-        this.releases = [...new Set(artTmp)]; //Remove all double entry
-        this.maxObjectDisplay = this.maxObjectDisplay + 20;
+        artTmp = artTmp.concat(response)
+        this.releases = [...new Set(artTmp)] // Remove all double entry
+        this.maxObjectDisplay = this.maxObjectDisplay + 20
         if (response.length < 20) {
-          this.enough = true;
+          this.enough = true
         }
       } else {
-        this.enough = true;
+        this.enough = true
       }
     },
 
     async test() {
       const { data: tests } = await this.$axios.get(
         `https://comeback-api.herokuapp.com/releases`
-      );
+      )
       tests.forEach(async (element) => {
         await this.$axios.delete(
           `https://comeback-api.herokuapp.com/releases/${element.id}`
-        );
-      });
+        )
+      })
     },
 
     removeRelease(id, object, index) {
       this.$axios
         .delete(`https://comeback-api.herokuapp.com/releases/${id}`, object)
         .then((response) => {
-          this.releases.splice(index, 1);
-        });
+          this.releases.splice(index, 1)
+        })
     },
 
     async adminChecker() {
-      let that = this;
+      const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
         if (user != null) {
-          let userData = await that.$axios.$get(
+          const userData = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
-          );
-          if (userData.role != "NONE") {
-            return true;
+          )
+          if (userData.role != 'NONE') {
+            return true
           } else {
-            return false;
+            return false
           }
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
   },
-};
+}
 </script>

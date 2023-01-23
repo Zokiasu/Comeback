@@ -1,21 +1,14 @@
 <template>
-  <div class="p-5 px-10 space-y-5">
-    <section id="users-body" class="pb-5 grid grid-cols-1 lg:grid-cols-2 gap-3">
+  <div class="space-y-5 p-5 px-10">
+    <section id="users-body" class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2">
       <div
-        v-for="(user, index) in this.users"
+        v-for="(user, index) in users"
         :key="index"
         style="background-color: #6b728033"
-        class="
-          flex flex-col
-          text-tertiary
-          rounded-sm
-          relative
-          p-3
-          overflow-hidden
-        "
+        class="relative flex flex-col overflow-hidden rounded-sm p-3 text-tertiary"
       >
         <span
-          class="absolute text-tertiary bottom-0 right-0 bg-gray-900 px-2"
+          class="absolute bottom-0 right-0 bg-gray-900 px-2 text-tertiary"
           >{{ index }}</span
         >
         <div class="flex space-x-5 p-2">
@@ -23,12 +16,12 @@
             :src="
               user.avatar ? user.avatar : require(`~/assets/image/artist.png`)
             "
-            class="w-20 h-20 object-cover rounded-full border border-gray-400"
+            class="h-20 w-20 rounded-full border border-gray-400 object-cover"
             alt=""
           />
-          <div class="flex flex-col space-y-1.5 -mt-1">
+          <div class="-mt-1 flex flex-col space-y-1.5">
             <div class="flex space-x-2">
-              <span class="font-semibold text-lg"
+              <span class="text-lg font-semibold"
                 ><NuxtLink
                   :to="`/users/${user.uid}`"
                   target="_blank"
@@ -72,53 +65,53 @@
 
 <script>
 export default {
-  name: "UserList",
+  name: 'UserList',
 
   data() {
     return {
       users: [],
       maxObjectDisplay: 0,
       enough: false,
-      search: "",
-    };
+      search: '',
+    }
   },
 
   computed: {
     userId() {
-      let utmp = this.$store.state.dataUser;
-      return utmp.id;
+      const utmp = this.$store.state.dataUser
+      return utmp.id
     },
 
     defaultImage() {
-      return "../../assets/image/profile.png";
+      return '../../assets/image/profile.png'
     },
   },
 
   methods: {
     infiniteScroll($state) {
-      let artTmp = [];
+      let artTmp = []
       setTimeout(() => {
-        artTmp = artTmp.concat(this.users);
+        artTmp = artTmp.concat(this.users)
         this.$axios
           .get(
             `https://comeback-api.herokuapp.com/users?sortby=username&limit=2&offset=${this.maxObjectDisplay}`
           )
           .then((response) => {
             if (response.data.length > 0) {
-              artTmp = artTmp.concat(response.data);
-              this.users = [...new Set(artTmp)];
-              this.maxObjectDisplay = this.maxObjectDisplay + 2;
-              $state.loaded();
+              artTmp = artTmp.concat(response.data)
+              this.users = [...new Set(artTmp)]
+              this.maxObjectDisplay = this.maxObjectDisplay + 2
+              $state.loaded()
             } else {
-              this.enough = true;
-              $state.complete();
+              this.enough = true
+              $state.complete()
             }
           })
           .catch((error) => {
-            console.log(error);
-          });
-      }, 500);
+            console.log(error)
+          })
+      }, 500)
     },
   },
-};
+}
 </script>

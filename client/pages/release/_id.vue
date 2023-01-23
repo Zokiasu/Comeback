@@ -1,30 +1,21 @@
 <template>
   <div
-    class="
-      container
-      mx-auto
-      head
-      w-full
-      text-tertiary
-      p-5
-      md:p-10
-      lg:flex lg:items-center
-    "
+    class="head container mx-auto w-full p-5 text-tertiary md:p-10 lg:flex lg:items-center"
   >
-    <div class="space-y-5 lg:space-y-10 w-fit mx-auto">
+    <div class="mx-auto w-fit space-y-5 lg:space-y-10">
       <div class="space-y-1">
-        <h1 class="text-2xl lg:text-5xl font-semibold">{{ release.name }}</h1>
+        <h1 class="text-2xl font-semibold lg:text-5xl">{{ release.name }}</h1>
         <div class="flex gap-2">
           <p class="text-2xl">{{ release.type }} -</p>
           <nuxt-link :to="`/artist/${release.artistsId}`">
-            <h2 class="text-2xl hover-underline-animation">
+            <h2 class="hover-underline-animation text-2xl">
               {{ release.artistsName }}
             </h2>
           </nuxt-link>
         </div>
         <div
           v-if="release.platforms"
-          class="flex flex-wrap overflow-x-scroll gap-3"
+          class="flex flex-wrap gap-3 overflow-x-scroll"
         >
           <cb-external-link
             v-for="link in release.platforms"
@@ -34,20 +25,15 @@
           />
         </div>
       </div>
-      <div class="flex flex-col gap-10 lg:flex-row xl:gap-20 w-fit">
-        <div class="w-fit h-fit mx-auto">
+      <div class="flex w-fit flex-col gap-10 lg:flex-row xl:gap-20">
+        <div class="mx-auto h-fit w-fit">
           <img
             :src="release.image"
-            class="bg-gray-300 rounded-md h-1/3 shadow-2xl shadow-zinc-700"
+            class="h-1/3 rounded-md bg-gray-300 shadow-2xl shadow-zinc-700"
           />
         </div>
         <div
-          class="
-            lg:h-[34rem] lg:w-[30rem]
-            pr-5
-            pb-2
-            overflow-hidden overflow-y-scroll
-          "
+          class="overflow-hidden overflow-y-scroll pr-5 pb-2 lg:h-[34rem] lg:w-[30rem]"
         >
           <ul class="space-y-5">
             <li
@@ -59,25 +45,19 @@
                 <img
                   :alt="music.name"
                   :src="release.image"
-                  class="
-                    bg-gray-300
-                    rounded-md
-                    h-14
-                    w-14
-                    shadow-2xl shadow-zinc-700
-                  "
+                  class="h-14 w-14 rounded-md bg-gray-300 shadow-2xl shadow-zinc-700"
                 />
                 <div>
                   <h3 class="font-semibold">{{ music.name }}</h3>
                   <nuxt-link :to="`/artist/${release.artistsId}`">
-                    <p class="flex text-left hover-underline-animation">
+                    <p class="hover-underline-animation flex text-left">
                       {{ release.artistsName }}
                     </p>
                   </nuxt-link>
                 </div>
               </div>
               <a :href="`https://youtu.be/${music.videoId}`" target="_blank">
-                <icons-play class="w-8 h-8" />
+                <icons-play class="h-8 w-8" />
               </a>
             </li>
           </ul>
@@ -90,33 +70,33 @@
 <script>
 export default {
   async asyncData({ params, $fire }) {
-    let release = await $fire.firestore
-      .collection("releases")
+    const release = await $fire.firestore
+      .collection('releases')
       .doc(params.id)
       .get()
       .then((doc) => {
-        const res = doc.data();
+        const res = doc.data()
         return $fire.firestore
-          .collection("releases")
+          .collection('releases')
           .doc(res.id)
-          .collection("musics")
+          .collection('musics')
           .get()
           .then((snap) => {
-            res["music"] = snap.docs.map((doc) => doc.data());
+            res.music = snap.docs.map((doc) => doc.data())
             return $fire.firestore
-              .collection("artists")
+              .collection('artists')
               .doc(res.artistsId)
               .get()
               .then((docs) => {
-                res["artist"] = docs.data();
-                return res;
-              });
-          });
-      });
+                res.artist = docs.data()
+                return res
+              })
+          })
+      })
 
-    return { release };
+    return { release }
   },
-};
+}
 </script>
 
 <style>

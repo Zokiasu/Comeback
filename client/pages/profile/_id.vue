@@ -1,66 +1,35 @@
 <template>
   <div class="text-tertiary">
     <div
-      class="background-top bg-slate-200 relative"
+      class="background-top relative bg-slate-200"
       :style="{ 'background-image': 'url(' + user.avatar + ')' }"
     >
-      <div class="h-full w-full bg-background bg-opacity-30 flex">
+      <div class="flex h-full w-full bg-background bg-opacity-30">
         <div
-          class="
-            flex flex-col
-            lg:space-y-5
-            justify-start
-            mt-auto
-            lg:my-auto
-            w-full
-            px-2
-            md:px-5
-            lg:px-20
-            py-16
-          "
+          class="mt-auto flex w-full flex-col justify-start px-2 py-16 md:px-5 lg:my-auto lg:space-y-5 lg:px-20"
         >
           <div
-            class="
-              flex
-              space-y-5
-              lg:space-y-0 lg:space-x-10
-              z-50
-              mt-auto
-              lg:my-auto
-            "
+            class="z-50 mt-auto flex space-y-5 lg:my-auto lg:space-y-0 lg:space-x-10"
           >
-            <div class="relative releaseJacket">
+            <div class="releaseJacket relative">
               <img
-                class="
-                  h-72
-                  w-72
-                  rounded-xl
-                  shadowRelease
-                  object-cover object-center
-                "
+                class="shadowRelease h-72 w-72 rounded-xl object-cover object-center"
                 :src="user.avatar"
                 :alt="user.avatar"
               />
             </div>
-            <div class="flex mt-auto">
-              <div class="mt-auto py-5 space-y-5">
+            <div class="mt-auto flex">
+              <div class="mt-auto space-y-5 py-5">
                 <div>
                   <!--<span v-if="userConnected && userConnected.id == user.uid" class="text-lg">Edit</span>-->
                   <h1
-                    class="
-                      cursor-default
-                      font-semibold
-                      filter
-                      tShadowRelease
-                      text-6xl
-                      xl:text-8xl
-                    "
+                    class="tShadowRelease cursor-default text-6xl font-semibold filter xl:text-8xl"
                   >
                     {{ user.username }}
                   </h1>
                 </div>
                 <div>
-                  <span class="bg-dark-gray py-2 px-5 rounded-3xl">
+                  <span class="rounded-3xl bg-dark-gray py-2 px-5">
                     {{ user.role }}
                   </span>
                 </div>
@@ -78,9 +47,9 @@
                 <span class="font-semibold">Birthday :</span>
                 <span>
                   {{
-                    new Date(user.birthday).toLocaleDateString("en-EN", {
-                      month: "long",
-                      day: "numeric",
+                    new Date(user.birthday).toLocaleDateString('en-EN', {
+                      month: 'long',
+                      day: 'numeric',
                     })
                   }}
                 </span>
@@ -88,38 +57,38 @@
             </ul>
           </div>
         </div>
-        <div class="gradient w-full h-32 font-bold absolute bottom-0"></div>
+        <div class="gradient absolute bottom-0 h-32 w-full font-bold"></div>
       </div>
     </div>
     <section>
       <div class="lg:px-20">
         <ul class="grid grid-cols-3 lg:text-2xl">
           <NuxtLink
-            :to="`/profile/${this.$route.params.id}/general`"
-            class="justify-self-center text-center w-full cursor-pointer py-2"
+            :to="`/profile/${$route.params.id}/general`"
+            class="w-full cursor-pointer justify-self-center py-2 text-center"
             :class="
               $route.name == 'profile-id-general'
-                ? 'border-b-2 border-red-500 z-50'
+                ? 'z-50 border-b-2 border-red-500'
                 : 'border-b border-main-gray'
             "
             >General</NuxtLink
           >
           <NuxtLink
-            :to="`/profile/${this.$route.params.id}/artist`"
-            class="justify-self-center text-center w-full cursor-pointer py-2"
+            :to="`/profile/${$route.params.id}/artist`"
+            class="w-full cursor-pointer justify-self-center py-2 text-center"
             :class="
               $route.name == 'profile-id-artist'
-                ? 'border-b-2 border-red-500 z-50'
+                ? 'z-50 border-b-2 border-red-500'
                 : 'border-b border-main-gray'
             "
             >Artist</NuxtLink
           >
           <NuxtLink
-            :to="`/profile/${this.$route.params.id}/release`"
-            class="justify-self-center text-center w-full cursor-pointer py-2"
+            :to="`/profile/${$route.params.id}/release`"
+            class="w-full cursor-pointer justify-self-center py-2 text-center"
             :class="
               $route.name == 'profile-id-release'
-                ? 'border-b-2 border-red-500 z-50'
+                ? 'z-50 border-b-2 border-red-500'
                 : 'border-b border-main-gray'
             "
             >Release</NuxtLink
@@ -133,47 +102,46 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-  head() {
-    return {
-      title: this.user.username,
-    };
+  async asyncData({ $axios, params }) {
+    const user = await $axios.$get(
+      `https://comeback-api.herokuapp.com/users/${params.id}`
+    )
+    return { user }
   },
 
   data() {
     return {
       user: null,
-      actualPage: "General",
+      actualPage: 'General',
       userConnected: null,
-    };
+    }
   },
-
-  async asyncData({ $axios, params }) {
-    const user = await $axios.$get(
-      `https://comeback-api.herokuapp.com/users/${params.id}`
-    );
-    return { user };
+  head() {
+    return {
+      title: this.user.username,
+    }
   },
 
   beforeCreate() {
     if (
-      this.$router.currentRoute.name != "profile-id-general" &&
-      this.$router.currentRoute.name != "profile-id-artist" &&
-      this.$router.currentRoute.name != "profile-id-release"
+      this.$router.currentRoute.name != 'profile-id-general' &&
+      this.$router.currentRoute.name != 'profile-id-artist' &&
+      this.$router.currentRoute.name != 'profile-id-release'
     )
-      this.$router.push(`/profile/${this.$route.params.id}/general`);
+      this.$router.push(`/profile/${this.$route.params.id}/general`)
   },
 
   mounted() {
-    this.userConnected = this.GET_USER();
+    this.userConnected = this.GET_USER()
   },
 
   methods: {
-    ...mapGetters(["GET_USER"]),
+    ...mapGetters(['GET_USER']),
   },
-};
+}
 </script>
 
 <style>
@@ -230,8 +198,8 @@ export default {
 }
 
 .title {
-  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

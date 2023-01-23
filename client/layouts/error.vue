@@ -1,6 +1,6 @@
 <template>
-  <div class="text-tertiary flex justify-center items-center h-screen">
-    <div class="flex flex-col text-center space-y-32">
+  <div class="flex h-screen items-center justify-center text-tertiary">
+    <div class="flex flex-col space-y-32 text-center">
       <h1 v-if="error.statusCode === 404" class="text-2xl lg:text-9xl">
         404. Page not found
       </h1>
@@ -8,7 +8,7 @@
       <div>
         <NuxtLink
           to="/"
-          class="bg-bg-primary hover:bg-red-900 px-5 py-2 rounded Card"
+          class="bg-bg-primary Card rounded px-5 py-2 hover:bg-red-900"
           >Home page</NuxtLink
         >
       </div>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  props: ["error"],
-  layout: "error", // you can set a custom layout for the error page
-};
+  layout: 'error',
+  props: ['error'], // you can set a custom layout for the error page
+}
 </script>

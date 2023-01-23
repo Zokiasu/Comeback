@@ -1,23 +1,23 @@
 export const state = () => ({
   user: null,
-  userData: null
+  userData: null,
 })
 
 export const getters = {
   GET_USER: (state) => {
     return state.user
   },
-  
+
   GET_USER_DATA: (state) => {
     return state.userData
   },
 
   isLoggedIn(state) {
-      let userLoggedIn = false
-      if (state.user) {
-        userLoggedIn = true
-      }
-      return userLoggedIn
+    let userLoggedIn = false
+    if (state.user) {
+      userLoggedIn = true
+    }
+    return userLoggedIn
   },
 
   isAdmin(state) {
@@ -28,7 +28,7 @@ export const getters = {
       }
     }
     return isAdmin
-  }
+  },
 }
 
 export const actions = {
@@ -39,16 +39,16 @@ export const actions = {
     } else {
       const { uid, email, refreshToken, displayName, photoURL } = authUser
       state.commit('SET_USER', {
-          uid,
-          email,
-          refreshToken,
-          displayName,
-          photoURL
-      });
-      const stepOne = this.$fire.functions.httpsCallable("readUser")
+        uid,
+        email,
+        refreshToken,
+        displayName,
+        photoURL,
+      })
+      const stepOne = this.$fire.functions.httpsCallable('readUser')
       const stepTwo = await stepOne({ id: authUser.uid })
       const stepThree = stepTwo.data
-      //console.log('stepThree', stepThree.data)
+      // console.log('stepThree', stepThree.data)
       state.commit('SET_USER_DATA', stepThree.data)
     }
   },
@@ -62,18 +62,18 @@ export const actions = {
       await dispatch('onAuthStateChangedAction', {
         authUser,
         claims,
-        token
-      });
+        token,
+      })
     }
-  }
+  },
 }
 
 export const mutations = {
   SET_USER: (state, payload) => {
-    state.user = payload;
+    state.user = payload
   },
 
   SET_USER_DATA: (state, payload) => {
-    state.userData = payload;
-  }
+    state.userData = payload
+  },
 }

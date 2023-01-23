@@ -1,19 +1,12 @@
 <template>
   <home-section title="Last Releases">
     <div
-      class="
-        flex flex-wrap
-        gap-2
-        md:gap-5
-        justify-center
-        md:justify-evenly
-        animate__animated animate__fadeInUp
-      "
+      class="animate__animated animate__fadeInUp flex flex-wrap justify-center gap-2 md:justify-evenly md:gap-5"
     >
       <ReleaseCard
         v-for="release in newRelease"
-        :key="release.id"
         :id="release.id"
+        :key="release.id"
         :image="release.image"
         :date="release.date"
         :name="release.name"
@@ -26,9 +19,13 @@
 </template>
 
 <script>
-import HomeSection from "./HomeSection.vue";
+import HomeSection from './HomeSection.vue'
 export default {
-  name: "LastReleasesSection",
+  name: 'LastReleasesSection',
+
+  components: {
+    HomeSection,
+  },
 
   props: {
     newRelease: {
@@ -36,9 +33,5 @@ export default {
       default: () => [],
     },
   },
-
-  components: {
-    HomeSection,
-  },
-};
+}
 </script>

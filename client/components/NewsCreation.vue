@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col justify-center space-y-2 py-3 text-tertiary">
     <multiselect
+      v-model="artistSelected"
       label="name"
       track-by="name"
-      v-model="artistSelected"
       :options="artistList"
       placeholder="Please select an artist"
       :close-on-select="true"
@@ -11,54 +11,39 @@
       :preserve-search="false"
     />
     <t-datepicker
+      v-model="newsDate"
       placeholder="Date"
       initial-view="month"
-      dateFormat="Y-m-d"
+      date-format="Y-m-d"
       clearable
-      v-model="newsDate"
       class="text-black"
     />
     <t-textarea
+      v-model="newsMessage"
       type="text"
       name="News"
       placeholder="Your News*"
-      v-model="newsMessage"
     />
     <t-textarea
+      v-model="newsSource"
       type="text"
       name="Source"
       placeholder="Source*"
-      v-model="newsSource"
     />
     <button
-      class="
-        texts
-        px-3
-        py-2
-        rounded-sm
-        flex
-        justify-center
-        transition
-        duration-500
-        ease-in-out
-        bg-bg-primary
-        hover:bg-red-900
-        transform
-        hover:-translate-y-1 hover:scale-110 hover:font-bold
-        text-tertiary
-      "
+      class="texts bg-bg-primary flex transform justify-center rounded-sm px-3 py-2 text-tertiary transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900 hover:font-bold"
       @click="sendNews()"
     >
-      {{ loading ? "Loading..." : "Send the news" }}
+      {{ loading ? 'Loading...' : 'Send the news' }}
     </button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex'
 
 export default {
-  name: "NewsCreation",
+  name: 'NewsCreation',
 
   props: {
     artistList: {
@@ -79,29 +64,29 @@ export default {
       loading: false,
       user: null,
       createNews: null,
-    };
+    }
   },
 
   mounted() {
-    this.user = this.GET_USER_DATA();
-    this.createNews = this.$fire.functions.httpsCallable("createNews");
+    this.user = this.GET_USER_DATA()
+    this.createNews = this.$fire.functions.httpsCallable('createNews')
   },
 
   methods: {
-    ...mapGetters(["GET_USER_DATA"]),
+    ...mapGetters(['GET_USER_DATA']),
 
     async sendNews() {
-      this.user = this.GET_USER_DATA();
+      this.user = this.GET_USER_DATA()
       if (!this.newsMessage) {
-        this.$toast.error("Please write a news or close the window", {
+        this.$toast.error('Please write a news or close the window', {
           duration: 3000,
-          position: "top-right",
-        });
+          position: 'top-right',
+        })
       } else if (!this.artistSelected) {
-        this.$toast.error("Please select a artist or suggest one", {
+        this.$toast.error('Please select a artist or suggest one', {
           duration: 3000,
-          position: "top-right",
-        });
+          position: 'top-right',
+        })
       } else {
         this.createNews({
           message: this.newsMessage,
@@ -119,24 +104,24 @@ export default {
             image: this.artistSelected.image,
           },
         }).then((res) => {
-          this.$toast.success("News sent", {
+          this.$toast.success('News sent', {
             duration: 3000,
-            position: "top-right",
-          });
-          this.$emit("close");
-        });
+            position: 'top-right',
+          })
+          this.$emit('close')
+        })
       }
     },
 
     dateFormat(d) {
-      let ye = new Intl.DateTimeFormat("en", { year: "2-digit" }).format(d);
-      let mo = new Intl.DateTimeFormat("en", { month: "2-digit" }).format(d);
-      let da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
-      return `${da}/${mo}/${ye}`;
+      const ye = new Intl.DateTimeFormat('en', { year: '2-digit' }).format(d)
+      const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(d)
+      const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(d)
+      return `${da}/${mo}/${ye}`
     },
 
     closeModal() {
-      this.$emit("close");
+      this.$emit('close')
     },
   },
 
@@ -148,10 +133,10 @@ export default {
           if (newsDate)
             this.newsMessage = `Next comeback on ${this.dateFormat(
               new Date(newsDate)
-            )}`;
+            )}`
         }
       },
     },
   },
-};
+}
 </script>

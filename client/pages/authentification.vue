@@ -1,13 +1,13 @@
 <template>
   <div class="w-full px-5">
-    <div class="max-w-md mx-auto translate-y-2/3">
+    <div class="mx-auto max-w-md translate-y-2/3">
       <div>
         <icons-comeback class="h-33 mx-auto" />
       </div>
       <client-only>
-        <form class="mt-8 space-y-6" v-on:submit.prevent="authentification()">
+        <form class="mt-8 space-y-6" @submit.prevent="authentification()">
           <input type="hidden" name="remember" value="true" />
-          <div class="rounded-md shadow-sm -space-y-px">
+          <div class="-space-y-px rounded-md shadow-sm">
             <div>
               <label for="email-address" class="sr-only">Email address</label>
               <input
@@ -18,24 +18,7 @@
                 autocomplete="email"
                 required
                 placeholder="Email address"
-                class="
-                  appearance-none
-                  rounded-none
-                  relative
-                  block
-                  w-full
-                  px-3
-                  py-2
-                  border border-gray-300
-                  placeholder-gray-500
-                  text-gray-900
-                  rounded-t-md
-                  focus:outline-none
-                  focus:ring-red-500
-                  focus:border-red-500
-                  focus:z-10
-                  sm:text-sm
-                "
+                class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
               />
             </div>
             <div>
@@ -47,23 +30,7 @@
                 type="password"
                 required
                 placeholder="Password"
-                class="
-                  appearance-none
-                  rounded-none
-                  relative
-                  block
-                  w-full
-                  px-3
-                  py-2
-                  border border-gray-300
-                  placeholder-gray-500
-                  text-gray-900
-                  focus:outline-none
-                  focus:ring-red-500
-                  focus:border-red-500
-                  focus:z-10
-                  sm:text-sm
-                "
+                class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
                 :class="{ 'rounded-b-md': !signUpOption }"
               />
             </div>
@@ -78,24 +45,7 @@
                 type="password"
                 required
                 placeholder="Password Verification"
-                class="
-                  appearance-none
-                  rounded-none
-                  relative
-                  block
-                  w-full
-                  px-3
-                  py-2
-                  border border-gray-300
-                  placeholder-gray-500
-                  text-gray-900
-                  rounded-b-md
-                  focus:outline-none
-                  focus:ring-red-500
-                  focus:border-red-500
-                  focus:z-10
-                  sm:text-sm
-                "
+                class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
               />
             </div>
           </div>
@@ -103,28 +53,9 @@
           <div class="space-y-2">
             <button
               type="submit"
-              class="
-                group
-                relative
-                w-full
-                flex
-                justify-center
-                py-2
-                px-4
-                border border-transparent
-                text-sm
-                font-medium
-                rounded-md
-                text-tertiary
-                bg-red-500
-                hover:bg-bg-primary
-                focus:outline-none
-                focus:ring-2
-                focus:ring-offset-2
-                focus:ring-red-500
-              "
+              class="hover:bg-bg-primary group relative flex w-full justify-center rounded-md border border-transparent bg-red-500 py-2 px-4 text-sm font-medium text-tertiary focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
-              <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -139,31 +70,25 @@
                   />
                 </svg>
               </span>
-              {{ signUpOption ? "Sign Up" : "Sign In" }}
+              {{ signUpOption ? 'Sign Up' : 'Sign In' }}
             </button>
             <div class="flex items-center justify-center">
-              <div class="text-sm flex gap-2 text-red-500">
+              <div class="flex gap-2 text-sm text-red-500">
                 <button
                   type="button"
+                  class="hover:text-bg-primary hover-underline-animation font-medium"
                   @click="signUpOption = !signUpOption"
-                  class="
-                    font-medium
-                    hover:text-bg-primary hover-underline-animation
-                  "
                 >
                   {{
                     signUpOption
                       ? "You've an account? Sign in"
-                      : "No Account? Sign up"
+                      : 'No Account? Sign up'
                   }}
                 </button>
                 <p class="font-medium">|</p>
                 <a
                   href="#"
-                  class="
-                    font-medium
-                    hover:text-bg-primary hover-underline-animation
-                  "
+                  class="hover:text-bg-primary hover-underline-animation font-medium"
                 >
                   Forgot your password?
                 </a>
@@ -177,34 +102,34 @@
 </template>
 
 <script>
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
-  name: "Authentification",
-
-  head() {
-    return {
-      title: "Comeback - Authentification",
-    };
-  },
+  name: 'Authentification',
 
   data() {
     return {
-      email: "",
-      password: "",
-      passwordVerification: "",
+      email: '',
+      password: '',
+      passwordVerification: '',
       signUpOption: false,
-    };
+    }
+  },
+
+  head() {
+    return {
+      title: 'Comeback - Authentification',
+    }
   },
 
   methods: {
-    ...mapGetters(["GET_USER"]),
+    ...mapGetters(['GET_USER']),
 
     authentification() {
       if (this.signUpOption) {
-        this.signUp();
+        this.signUp()
       } else {
-        this.signIn();
+        this.signIn()
       }
     },
 
@@ -212,32 +137,32 @@ export default {
       this.$fire.auth
         .signInWithEmailAndPassword(this.email, this.password)
         .then((res) => {
-          this.$router.push("/");
-        });
+          this.$router.push('/')
+        })
     },
 
     async signUp() {
       this.$fire.auth
         .createUserWithEmailAndPassword(this.email, this.password)
         .then((res) => {
-          const createUser = this.$fire.functions.httpsCallable("createUser");
+          const createUser = this.$fire.functions.httpsCallable('createUser')
           createUser({
             id: res.user.uid,
             name: res.user.uid,
             email: res.user.email,
           })
             .then((result) => {
-              this.$toast.success("Thank you, Your account has been created", {
+              this.$toast.success('Thank you, Your account has been created', {
                 duration: 5000,
-                position: "top-right",
-              });
-              this.$router.push("/");
+                position: 'top-right',
+              })
+              this.$router.push('/')
             })
             .catch((error) => {
-              console.log(error);
-            });
-        });
+              console.log(error)
+            })
+        })
     },
   },
-};
+}
 </script>

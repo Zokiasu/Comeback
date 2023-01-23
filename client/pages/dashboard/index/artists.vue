@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 px-10 space-y-5">
+  <div class="space-y-5 p-5 px-10">
     <section
       id="searchbar"
       class="flex w-full justify-start"
@@ -7,30 +7,16 @@
     >
       <div
         id="search-icon"
-        class="
-          bg-opacity-20 bg-gray-500
-          pr-1
-          pl-2
-          rounded-none rounded-l
-          py-1.5
-        "
+        class="rounded-none rounded-l bg-gray-500 bg-opacity-20 py-1.5 pr-1 pl-2"
       >
-        <icons-search class="w-5 h-5" />
+        <icons-search class="h-5 w-5" />
       </div>
       <input
         id="search-input"
+        v-model="search"
         type="text"
         placeholder="Search"
-        v-model="search"
-        class="
-          w-full
-          pl-2
-          focus:outline-none
-          rounded-r rounded-none
-          bg-opacity-20 bg-gray-500
-          text-tertiary
-          placeholder-tertiary
-        "
+        class="w-full rounded-none rounded-r bg-gray-500 bg-opacity-20 pl-2 text-tertiary placeholder-tertiary focus:outline-none"
       />
     </section>
 
@@ -38,10 +24,10 @@
       <ul class="flex flex-wrap gap-5">
         <li>
           <button
-            class="px-3 py-2 border rounded"
+            class="rounded border px-3 py-2"
             @click="
-              onlySolo = false;
-              onlyGroup = false;
+              onlySolo = false
+              onlyGroup = false
             "
           >
             ALL
@@ -49,13 +35,13 @@
         </li>
         <li>
           <button
-            class="px-3 py-2 border rounded"
+            class="rounded border px-3 py-2"
             :class="{
-              'border-red-500 text-red-500 font-semibold border-2': onlyGroup,
+              'border-2 border-red-500 font-semibold text-red-500': onlyGroup,
             }"
             @click="
-              onlyGroup = !onlyGroup;
-              onlySolo = false;
+              onlyGroup = !onlyGroup
+              onlySolo = false
             "
           >
             GROUP
@@ -63,13 +49,13 @@
         </li>
         <li>
           <button
-            class="px-3 py-2 border rounded"
+            class="rounded border px-3 py-2"
             :class="{
-              'border-red-500 text-red-500 font-semibold border-2': onlySolo,
+              'border-2 border-red-500 font-semibold text-red-500': onlySolo,
             }"
             @click="
-              onlySolo = !onlySolo;
-              onlyGroup = false;
+              onlySolo = !onlySolo
+              onlyGroup = false
             "
           >
             SOLIST
@@ -81,26 +67,19 @@
     <section
       v-if="artists.length > 0"
       id="page-body"
-      class="pb-5 grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3"
+      class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3"
     >
       <div
-        v-for="(artist, index) in this.filteredList"
+        v-for="(artist, index) in filteredList"
         :key="index"
         style="background-color: #6b728033"
-        class="
-          flex flex-col
-          text-tertiary
-          rounded-sm
-          relative
-          p-3
-          overflow-hidden
-        "
+        class="relative flex flex-col overflow-hidden rounded-sm p-3 text-tertiary"
       >
         <span
-          class="absolute text-tertiary bottom-0 right-0 bg-gray-900 px-2"
+          class="absolute bottom-0 right-0 bg-gray-900 px-2 text-tertiary"
           >{{ index }}</span
         >
-        <div class="flex absolute right-2 top-3 space-x-2">
+        <div class="absolute right-2 top-3 flex space-x-2">
           <NuxtLink :to="`/edit/artist/${artist.id}`" target="_blank">
             <img
               src="https://img.icons8.com/material-sharp/20/ffffff/edit--v1.png"
@@ -108,12 +87,12 @@
           </NuxtLink>
           <img
             class="cursor-pointer"
-            @click="removeArtist(artist, index)"
             src="https://img.icons8.com/material-rounded/20/ffffff/delete-trash.png"
+            @click="removeArtist(artist, index)"
           />
         </div>
-        <div class="flex space-x-2 mb-2">
-          <img :src="artist.image" class="w-20 h-20 object-cover" alt="" />
+        <div class="mb-2 flex space-x-2">
+          <img :src="artist.image" class="h-20 w-20 object-cover" alt="" />
           <div class="flex flex-col justify-between">
             <div class="flex space-x-2">
               <NuxtLink
@@ -121,9 +100,9 @@
                 target="_blank"
                 class="hover:underline"
               >
-                <p class="font-semibold text-xl">{{ artist.name }}</p>
+                <p class="text-xl font-semibold">{{ artist.name }}</p>
               </NuxtLink>
-              <span class="text-base mt-1"
+              <span class="mt-1 text-base"
                 >{{
                   artist.type.charAt(0).toUpperCase() + artist.type.slice(1)
                 }}
@@ -165,7 +144,7 @@
           <span
             v-for="(style, index) in artist.styles"
             :key="index"
-            class="bg-gray-500 p-1 px-2 rounded text-xs"
+            class="rounded bg-gray-500 p-1 px-2 text-xs"
           >
             {{ style }}
           </span>
@@ -176,13 +155,7 @@
         <div>
           <span
             v-if="artist.description"
-            class="
-              truncate
-              hover:overflow-ellipsis
-              break-words
-              overflow-wrap
-              block
-            "
+            class="overflow-wrap block truncate break-words hover:overflow-ellipsis"
           >
             {{ artist.description }}
           </span>
@@ -196,7 +169,7 @@
     <div v-if="artists.length < 1" class="px-5">
       <p
         style="background-color: #6b728033"
-        class="text-tertiary w-full flex justify-center rounded p-2"
+        class="flex w-full justify-center rounded p-2 text-tertiary"
       >
         No Artist found.
       </p>
@@ -206,84 +179,84 @@
 
 <script>
 export default {
-  name: "ArtistList",
+  name: 'ArtistList',
+
+  async asyncData({ $fire }) {
+    const artists = await $fire.firestore
+      .collection('artists')
+      .orderBy('name')
+      .limit(50)
+      .get()
+      .then((snapshot) => {
+        const artistList = []
+        snapshot.forEach((doc) => {
+          artistList.push(doc.data())
+        })
+        return artistList
+      })
+
+    return {
+      artists,
+    }
+  },
 
   data() {
     return {
-      search: "",
-      typeFilter: "",
+      search: '',
+      typeFilter: '',
       artists: [],
       maxObjectDisplay: 0,
       enough: false,
       onlyGroup: false,
       onlySolo: false,
       limitedAt: 50,
-    };
-  },
-
-  async asyncData({ $fire }) {
-    const artists = await $fire.firestore
-      .collection("artists")
-      .orderBy("name")
-      .limit(50)
-      .get()
-      .then((snapshot) => {
-        const artistList = [];
-        snapshot.forEach((doc) => {
-          artistList.push(doc.data());
-        });
-        return artistList;
-      });
-
-    return {
-      artists,
-    };
-  },
-
-  mounted() {
-    var vm = this;
-    window.addEventListener("scroll", function (e) {
-      var scrollPos = window.scrollY;
-      var winHeight = window.innerHeight;
-      var docHeight = document.documentElement.scrollHeight;
-      var perc = (100 * scrollPos) / (docHeight - winHeight);
-      if (perc > 15) {
-        vm.limitedAt += 50;
-        vm.fetchData();
-      }
-    });
+    }
   },
 
   computed: {
     filteredList() {
       return this.artists.filter((element) => {
-        if (this.onlyGroup && element.type.toLowerCase() != "group")
-          return false;
-        if (this.onlySolo && element.type.toLowerCase() != "solo") return false;
-        return true;
-      });
+        if (this.onlyGroup && element.type.toLowerCase() != 'group')
+          return false
+        if (this.onlySolo && element.type.toLowerCase() != 'solo') return false
+        return true
+      })
     },
+  },
+
+  mounted() {
+    const vm = this
+    window.addEventListener('scroll', function (e) {
+      const scrollPos = window.scrollY
+      const winHeight = window.innerHeight
+      const docHeight = document.documentElement.scrollHeight
+      const perc = (100 * scrollPos) / (docHeight - winHeight)
+      if (perc > 15) {
+        vm.limitedAt += 50
+        vm.fetchData()
+      }
+    })
   },
 
   methods: {
     async fetchData() {
       this.artists = await this.$fire.firestore
-        .collection("artists")
-        .orderBy("name")
+        .collection('artists')
+        .orderBy('name')
         .limit(this.limitedAt)
         .get()
         .then((snapshot) => {
-          const artists = [];
+          const artists = []
           snapshot.forEach((doc) => {
-            artists.push(doc.data());
-          });
-          return artists;
-        });
+            artists.push(doc.data())
+          })
+          return artists
+        })
     },
 
     async removeArtist(object, index) {
-      //remove from firebase
+      // remove from firebase
     },
   },
-};
+}
 </script>

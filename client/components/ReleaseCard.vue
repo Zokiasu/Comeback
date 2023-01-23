@@ -1,78 +1,36 @@
 <template>
-  <div class="space-y-1 text-tertiary max-w-[10rem]">
+  <div class="max-w-[10rem] space-y-1 text-tertiary">
     <NuxtLink :to="`/release/${id}`">
-      <div class="relative group">
-        <div class="bg-gray-500 rounded-md">
+      <div class="group relative">
+        <div class="rounded-md bg-gray-500">
           <div
             :ref="'hide_' + name"
-            class="
-              rounded-md
-              aspect-square
-              w-full
-              max-h-[10rem]
-              min-h-[10rem]
-              transition-all
-              duration-1000
-              ease-in-out
-              absolute
-              z-10
-              bg-bg-primary
-            "
+            class="bg-bg-primary absolute z-10 aspect-square max-h-[10rem] min-h-[10rem] w-full rounded-md transition-all duration-1000 ease-in-out"
           ></div>
           <img
             :src="image"
             :alt="name"
-            @load="imageLoaded"
             loading="lazy"
-            class="
-              rounded-md
-              object-cover
-              aspect-square
-              drop-shadow-2xl
-              w-full
-              max-h-[10rem]
-              min-h-[10rem]
-            "
+            class="aspect-square max-h-[10rem] min-h-[10rem] w-full rounded-md object-cover drop-shadow-2xl"
+            @load="imageLoaded"
           />
         </div>
         <div
           v-if="displayDate"
-          class="
-            absolute
-            top-2
-            right-1.5
-            px-2
-            py-0.5
-            rounded
-            text-tertiary
-            bg-gray-500 bg-opacity-80
-            invisible
-            group-hover:visible
-          "
+          class="invisible absolute top-2 right-1.5 rounded bg-gray-500 bg-opacity-80 px-2 py-0.5 text-tertiary group-hover:visible"
         >
           <p class="text-center text-xs">
             {{
-              new Date(date).toLocaleDateString("fr-FR", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "2-digit",
+              new Date(date).toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
               })
             }}
           </p>
         </div>
         <div
-          class="
-            absolute
-            bottom-1
-            left-1
-            px-2
-            py-0.5
-            rounded
-            text-tertiary
-            bg-gray-500/70
-            invisible
-            group-hover:visible
-          "
+          class="invisible absolute bottom-1 left-1 rounded bg-gray-500/70 px-2 py-0.5 text-tertiary group-hover:visible"
         >
           <p class="text-center text-xs">{{ type }}</p>
         </div>
@@ -82,7 +40,7 @@
       <p class="truncate font-semibold">{{ name }}</p>
       <div class="text-xs md:text-sm">
         <NuxtLink :to="`/artist/${artists.id}`" class="mt-1">
-          <p v-if="artists" class="truncate hover-underline-animation">
+          <p v-if="artists" class="hover-underline-animation truncate">
             {{ artists.name }}
           </p>
         </NuxtLink>
@@ -92,9 +50,9 @@
 </template>
 
 <script>
-import moment from "moment-timezone";
+import moment from 'moment-timezone'
 export default {
-  name: "releaseCard",
+  name: 'ReleaseCard',
 
   props: {
     id: {
@@ -127,18 +85,18 @@ export default {
 
   computed: {
     validationDate() {
-      return this.checkDate();
+      return this.checkDate()
     },
   },
 
   methods: {
     checkDate() {
-      return moment(new Date(this.date)).isAfter(new Date());
+      return moment(new Date(this.date)).isAfter(new Date())
     },
     imageLoaded() {
-      const hide = this.$refs["hide_" + this.name];
-      hide.classList.add("opacity-0");
+      const hide = this.$refs['hide_' + this.name]
+      hide?.classList.add('opacity-0')
     },
   },
-};
+}
 </script>

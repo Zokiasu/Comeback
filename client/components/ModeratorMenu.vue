@@ -1,13 +1,13 @@
 <template>
   <section id="menu">
-    <ul class="flex space-x-2 text-tertiary text-xs md:text-sm lg:text-base">
+    <ul class="flex space-x-2 text-xs text-tertiary md:text-sm lg:text-base">
       <NuxtLink
         :to="`/moderator/pending`"
         class="px-3 py-1.5"
         :class="
           $route.name != 'moderator-pending'
             ? ''
-            : 'border-b-2 border-bg-primary'
+            : 'border-bg-primary border-b-2'
         "
       >
         <span>Pending</span>
@@ -18,7 +18,7 @@
         :class="
           $route.name != 'moderator-artistslist'
             ? ''
-            : 'border-b-2 border-bg-primary'
+            : 'border-bg-primary border-b-2'
         "
       >
         <span>Artists</span>
@@ -29,7 +29,7 @@
         :class="
           $route.name != 'moderator-releaseslist'
             ? ''
-            : 'border-b-2 border-bg-primary'
+            : 'border-bg-primary border-b-2'
         "
       >
         <span>Releases</span>
@@ -40,7 +40,7 @@
         :class="
           $route.name != 'moderator-musicslist'
             ? ''
-            : 'border-b-2 border-bg-primary'
+            : 'border-bg-primary border-b-2'
         "
       >
         <span>Musics</span>
@@ -51,7 +51,7 @@
         :class="
           $route.name != 'moderator-stylelist'
             ? ''
-            : 'border-b-2 border-bg-primary'
+            : 'border-bg-primary border-b-2'
         "
       >
         <span>Styles</span>
@@ -62,7 +62,7 @@
         :class="
           $route.name != 'moderator-newslist'
             ? ''
-            : 'border-b-2 border-bg-primary'
+            : 'border-bg-primary border-b-2'
         "
       >
         <span>News</span>
@@ -72,7 +72,7 @@
         :to="`/moderator/users`"
         class="px-3 py-1.5"
         :class="
-          $route.name != 'moderator-users' ? '' : 'border-b-2 border-bg-primary'
+          $route.name != 'moderator-users' ? '' : 'border-bg-primary border-b-2'
         "
       >
         <span>Users</span>
@@ -86,38 +86,38 @@ export default {
   data() {
     return {
       adminCheck: false,
-    };
-  },
-
-  created() {
-    this.adminChecker();
+    }
   },
 
   computed: {
     userData() {
-      let utmp = this.$store.state.dataUser;
-      return utmp;
+      const utmp = this.$store.state.dataUser
+      return utmp
     },
+  },
+
+  created() {
+    this.adminChecker()
   },
 
   methods: {
     async adminChecker() {
-      let that = this;
+      const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
         if (user != null) {
-          let userDatas = await that.$axios.$get(
+          const userDatas = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
-          );
-          if (userDatas.role != "NONE") {
-            that.adminCheck = true;
+          )
+          if (userDatas.role != 'NONE') {
+            that.adminCheck = true
           } else {
-            that.adminCheck = false;
+            that.adminCheck = false
           }
         } else {
-          that.adminCheck = false;
+          that.adminCheck = false
         }
-      });
+      })
     },
   },
-};
+}
 </script>

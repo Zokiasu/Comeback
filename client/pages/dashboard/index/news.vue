@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 px-10 space-y-3">
+  <div class="space-y-3 p-5 px-10">
     <section
       id="searchbar"
       class="flex w-full justify-start"
@@ -7,13 +7,7 @@
     >
       <div
         id="search-icon"
-        class="
-          bg-opacity-20 bg-gray-500
-          pr-1
-          pl-2
-          rounded-none rounded-l
-          py-1.5
-        "
+        class="rounded-none rounded-l bg-gray-500 bg-opacity-20 py-1.5 pr-1 pl-2"
       >
         <svg
           class=""
@@ -51,77 +45,59 @@
         </svg>
       </div>
       <input
-        @change="updateDateList(true)"
         id="search-input"
+        v-model="search"
         type="text"
         placeholder="Search by username or artistname"
-        v-model="search"
-        class="
-          w-full
-          pl-2
-          focus:outline-none
-          rounded-r rounded-none
-          bg-opacity-20 bg-gray-500
-          text-tertiary
-          placeholder-tertiary
-        "
+        class="w-full rounded-none rounded-r bg-gray-500 bg-opacity-20 pl-2 text-tertiary placeholder-tertiary focus:outline-none"
+        @change="updateDateList(true)"
       />
     </section>
     <button
       v-if="search"
+      class="text-bg-primary mb-5 focus:outline-none"
       @click="
-        search = '';
-        updateDateList(true);
+        search = ''
+        updateDateList(true)
       "
-      class="text-bg-primary focus:outline-none mb-5"
     >
       Reset
     </button>
     <section id="page-body" class="flex flex-wrap justify-center">
       <div
-        v-for="(element, index) in this.news"
+        v-for="(element, index) in news"
         :key="element.id"
-        class="
-          flex flex-col
-          m-2
-          bg-black-four
-          min-h-full
-          text-tertiary
-          rounded-sm
-          relative
-          p-5
-          overflow-hidden
-        "
+        class="relative m-2 flex min-h-full flex-col overflow-hidden rounded-sm bg-black-four p-5 text-tertiary"
       >
-        <div class="flex w-full justify-between mb-2 relative">
+        <div class="relative mb-2 flex w-full justify-between">
           <div class="flex flex-col">
             <span class="font-semibold"
               >Created At
               {{
-                new Date(element.createdAt).toLocaleDateString("en-US", {
-                  month: "numeric",
-                  day: "numeric",
-                  year: "numeric",
+                new Date(element.createdAt).toLocaleDateString('en-US', {
+                  month: 'numeric',
+                  day: 'numeric',
+                  year: 'numeric',
                 })
               }}</span
             >
             <span class="text-sm">{{ element.id }}</span>
           </div>
-          <div class="flex space-x-2 absolute top-0 right-0">
+          <div class="absolute top-0 right-0 flex space-x-2">
             <img
-              @click="verifiedNews(element)"
-              class="w-5 h-5 cursor-pointer"
+              class="h-5 w-5 cursor-pointer"
               src="https://img.icons8.com/material/20/ffffff/checked-2--v2.png"
+              @click="verifiedNews(element)"
             />
             <img
-              @click="openEditView(element)"
-              class="w-5 h-5 cursor-pointer"
+              class="h-5 w-5 cursor-pointer"
               src="https://img.icons8.com/material-sharp/20/ffffff/edit--v1.png"
+              @click="openEditView(element)"
             />
             <img
-              @click="removeNews(element, index)"
-              class="w-5 h-5 cursor-pointer"
+              class="h-5 w-5 cursor-pointer"
               src="https://img.icons8.com/material-rounded/20/ffffff/delete-trash.png"
+              @click="removeNews(element, index)"
             />
           </div>
         </div>
@@ -131,7 +107,7 @@
     <div v-if="news.length < 1" class="px-5">
       <span
         style="background-color: #6b728033"
-        class="text-tertiary w-full flex justify-center rounded p-2"
+        class="flex w-full justify-center rounded p-2 text-tertiary"
         >No News found.</span
       >
     </div>
@@ -166,7 +142,7 @@
             <div class="flex space-x-1">
               <img
                 v-if="props.option.image"
-                class="option__image w-14 h-14 object-cover"
+                class="option__image h-14 w-14 object-cover"
                 :src="props.option.image"
               />
               <div class="option__desc flex flex-col space-y-1">
@@ -176,7 +152,7 @@
                     <span
                       v-for="(group, index) in props.option.groups"
                       :key="index"
-                      class="bg-gray-300 p-1 px-2 rounded text-xs"
+                      class="rounded bg-gray-300 p-1 px-2 text-xs"
                       >{{ group.name }}</span
                     >
                   </div>
@@ -188,7 +164,7 @@
             <div class="flex space-x-1">
               <img
                 v-if="props.option.image"
-                class="option__image w-14 h-14 object-cover"
+                class="option__image h-14 w-14 object-cover"
                 :src="props.option.image"
               />
               <div class="option__desc flex flex-col space-y-1">
@@ -198,7 +174,7 @@
                     <span
                       v-for="(group, index) in props.option.groups"
                       :key="index"
-                      class="bg-gray-300 p-1 px-2 rounded text-xs"
+                      class="rounded bg-gray-300 p-1 px-2 text-xs"
                       >{{ group.name }}</span
                     >
                   </div>
@@ -208,18 +184,18 @@
           </template>
         </multiselect>
         <t-datepicker
-          class="text-black"
           v-model="objectModify.date"
+          class="text-black"
           placeholder="Date"
           initial-view="month"
-          dateFormat="Y-m-d"
+          date-format="Y-m-d"
           clearable
         >
         </t-datepicker>
-        <t-input class="w-full" type="text" v-model="objectModify.message" />
+        <t-input v-model="objectModify.message" class="w-full" type="text" />
         <button
+          class="bg-bg-primary py-2 text-tertiary hover:bg-red-900"
           @click="editObjectNews(objectModify)"
-          class="bg-bg-primary hover:bg-red-900 text-tertiary py-2"
         >
           Confirm
         </button>
@@ -230,11 +206,34 @@
 
 <script>
 export default {
-  name: "ArtistList",
+  name: 'ArtistList',
+
+  async asyncData({ $fire }) {
+    const artistList = await $fire.firestore
+      .collection('artists')
+      .where('verified', '==', true)
+      .get()
+      .then((snapshot) => {
+        const artists = []
+        snapshot.forEach((doc) => {
+          artists.push(doc.data())
+        })
+        return artists
+      })
+      .catch((err) => {
+        return { success: false, artists: [] }
+      })
+    artistList.sort((a, b) => {
+      if (a.name < b.name) return -1
+      if (a.name > b.name) return 1
+      return 0
+    })
+    return { artistList }
+  },
 
   data() {
     return {
-      search: "",
+      search: '',
       news: [],
       maxObjectDisplay: 0,
       enough: false,
@@ -244,132 +243,109 @@ export default {
       objectModify: {},
 
       artistList: [],
-    };
+    }
   },
 
   computed: {
     userId() {
-      let utmp = this.$store.state.dataUser;
-      return utmp.id;
+      const utmp = this.$store.state.dataUser
+      return utmp.id
     },
   },
 
-  async asyncData({ $fire }) {
-    const artistList = await $fire.firestore
-      .collection("artists")
-      .where("verified", "==", true)
-      .get()
-      .then((snapshot) => {
-        const artists = [];
-        snapshot.forEach((doc) => {
-          artists.push(doc.data());
-        });
-        return artists;
-      })
-      .catch((err) => {
-        return { success: false, artists: [] };
-      });
-    artistList.sort((a, b) => {
-      if (a.name < b.name) return -1;
-      if (a.name > b.name) return 1;
-      return 0;
-    });
-    return { artistList };
-  },
-
   methods: {
-    //methods
+    // methods
     async updateDateList(reset) {
-      let artTmp = [];
+      let artTmp = []
       if (reset) {
-        this.maxObjectDisplay = 0;
+        this.maxObjectDisplay = 0
         const { data: response } = await this.$axios.get(
           `https://comeback-api.herokuapp.com/infos?sortby=createdAt:desc&limit=5&offset=${this.maxObjectDisplay}`
-        );
+        )
         if (response.length > 0) {
-          artTmp = artTmp.concat(response);
-          this.news = [...new Set(artTmp)]; //Remove all double entry
+          artTmp = artTmp.concat(response)
+          this.news = [...new Set(artTmp)] // Remove all double entry
           if (response.length < 20) {
-            this.enough = true;
+            this.enough = true
           } else {
-            this.maxObjectDisplay = this.maxObjectDisplay + 20;
+            this.maxObjectDisplay = this.maxObjectDisplay + 20
           }
         } else {
-          this.enough = true;
+          this.enough = true
         }
       } else {
-        artTmp = artTmp.concat(this.news);
+        artTmp = artTmp.concat(this.news)
         const { data: response } = await this.$axios.get(
           `https://comeback-api.herokuapp.com/infos?sortby=createdAt:desc&limit=5&offset=${this.maxObjectDisplay}`
-        );
+        )
         if (response.length > 0) {
-          artTmp = artTmp.concat(response); //Add next element into actual list
-          this.news = [...new Set(artTmp)]; //Remove all double entry
-          this.maxObjectDisplay = this.maxObjectDisplay + 20;
+          artTmp = artTmp.concat(response) // Add next element into actual list
+          this.news = [...new Set(artTmp)] // Remove all double entry
+          this.maxObjectDisplay = this.maxObjectDisplay + 20
         } else {
-          this.enough = true;
+          this.enough = true
         }
       }
     },
 
     openEditView(object) {
-      this.objectModify = object;
-      this.editNews = !this.editNews;
+      this.objectModify = object
+      this.editNews = !this.editNews
     },
 
     async verifiedNews(object) {
-      object.verified = !object.verified;
+      object.verified = !object.verified
       await this.$axios
         .put(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
         .then((response) => {
-          this.$toast.error("News verified has been changed", {
+          this.$toast.error('News verified has been changed', {
             duration: 2000,
-            position: "top-right",
-          });
-        });
+            position: 'top-right',
+          })
+        })
     },
 
     async editObjectNews(object) {
       await this.$axios
         .put(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
         .then((response) => {
-          this.$toast.error("News has been edited", {
+          this.$toast.error('News has been edited', {
             duration: 2000,
-            position: "top-right",
-          });
-        });
-      this.editNews = !this.editNews;
+            position: 'top-right',
+          })
+        })
+      this.editNews = !this.editNews
     },
 
     async removeNews(object, index) {
       await this.$axios
         .delete(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
         .then((response) => {
-          this.$toast.error("News has been deleted", {
+          this.$toast.error('News has been deleted', {
             duration: 2000,
-            position: "top-right",
-          });
-          this.news.splice(index, 1);
-        });
+            position: 'top-right',
+          })
+          this.news.splice(index, 1)
+        })
     },
 
     async adminChecker() {
-      let that = this;
+      const that = this
       await this.$fire.auth.onAuthStateChanged(async function (user) {
         if (user != null) {
-          let userData = await that.$axios.$get(
+          const userData = await that.$axios.$get(
             `https://comeback-api.herokuapp.com/users/${user.uid}`
-          );
-          if (userData.role != "NONE") {
-            return true;
+          )
+          if (userData.role != 'NONE') {
+            return true
           } else {
-            return false;
+            return false
           }
         } else {
-          return false;
+          return false
         }
-      });
+      })
     },
   },
-};
+}
 </script>

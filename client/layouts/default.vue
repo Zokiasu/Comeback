@@ -1,17 +1,19 @@
 <template>
   <div>
-    <header class="animate__animated animate__fadeInDown sticky top-0 z-50 bg-background">
-      <MenuNavigation ref="menu" class="z-50"/>
+    <header
+      class="animate__animated animate__fadeInDown sticky top-0 z-50 bg-background"
+    >
+      <MenuNavigation ref="menu" class="z-50" />
     </header>
     <main>
-      <Nuxt/>
+      <Nuxt />
     </main>
   </div>
 </template>
 
 <style>
 html {
-  background: #1F1D1D;
+  background: #1f1d1d;
 }
 
 ::-webkit-scrollbar {
@@ -31,7 +33,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #E1E1E1; /* color of the scroll thumb */
+  background-color: #e1e1e1; /* color of the scroll thumb */
   border-radius: 50px; /* roundness of the scroll thumb */
 }
 
