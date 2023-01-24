@@ -46,11 +46,7 @@ export default {
   },
 
   methods: {
-    async fetch() {
-      const startDate = this.$fireModule.firestore.Timestamp.fromDate(
-        new Date()
-      )
-
+    async fetchNews(startDate) {
       await this.$fire.firestore
         .collection('news')
         // .where("date", ">=", startDate)
@@ -65,9 +61,12 @@ export default {
             this.newsList.push(news)
           })
         })
+    },
 
+    async fetchArtist(startDate) {
       const newArtist = await this.$fire.firestore
         .collection('artists')
+        .where('verified', '==', true)
         .where('createdAt', '<=', startDate)
         .orderBy('createdAt', 'desc')
         .limit(10)
@@ -76,7 +75,9 @@ export default {
           return snapshot.docs.map((doc) => doc.data())
         })
       this.newArtist = newArtist
+    },
 
+    async fetchRelease(startDate) {
       await this.$fire.firestore
         .collection('releases')
         .where('date', '<=', startDate)
@@ -91,6 +92,15 @@ export default {
             this.newRelease.push(release)
           })
         })
+    },
+
+    async fetch() {
+      const startDate = this.$fireModule.firestore.Timestamp.fromDate(
+        new Date()
+      )
+      await this.fetchNews(startDate)
+      await this.fetchRelease(startDate)
+      await this.fetchArtist(startDate)
     },
   },
 }

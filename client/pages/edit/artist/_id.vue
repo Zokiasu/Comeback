@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-5 sm:mx-auto lg:p-10">
+  <div class="flex flex-col p-5 sm:mx-auto container">
     <div class="mx-auto w-full rounded-lg bg-black-one p-5 lg:max-w-full">
       <h2 class="mb-3 text-3xl font-semibold text-tertiary">Edit Artist</h2>
       <div class="flex flex-wrap gap-5">
@@ -7,7 +7,14 @@
         <div class="w-full">
           <label
             for="name"
-            class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+            class="
+              mb-2
+              block
+              font-semibold
+              uppercase
+              tracking-wide
+              text-tertiary
+            "
           >
             Picture*
           </label>
@@ -20,7 +27,16 @@
             <button
               :disabled="isUploadingImage"
               type="button"
-              class="h-full w-full rounded bg-red-one py-2 px-4 text-tertiary md:w-auto"
+              class="
+                h-full
+                w-full
+                rounded
+                bg-red-one
+                py-2
+                px-4
+                text-tertiary
+                md:w-auto
+              "
               @click="launchImageFile"
             >
               Upload
@@ -40,7 +56,14 @@
           <div class="w-full">
             <label
               for="name"
-              class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+              class="
+                mb-2
+                block
+                font-semibold
+                uppercase
+                tracking-wide
+                text-tertiary
+              "
             >
               Name*
             </label>
@@ -49,14 +72,33 @@
               v-model="name"
               type="text"
               placeholder="Name"
-              class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-tertiary focus:outline-none"
+              class="
+                block
+                w-full
+                appearance-none
+                rounded
+                border border-gray-200
+                bg-gray-200
+                py-3
+                px-4
+                leading-tight
+                text-gray-700
+                focus:border-gray-500 focus:bg-tertiary focus:outline-none
+              "
             />
           </div>
           <!-- Youtube Music Id -->
           <div class="w-full">
             <label
               for="ytb-music-id"
-              class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+              class="
+                mb-2
+                block
+                font-semibold
+                uppercase
+                tracking-wide
+                text-tertiary
+              "
             >
               Youtube Music Id*
             </label>
@@ -65,7 +107,19 @@
               v-model="idYoutubeMusic"
               type="text"
               placeholder="Youtube Music ID"
-              class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-tertiary focus:outline-none"
+              class="
+                block
+                w-full
+                appearance-none
+                rounded
+                border border-gray-200
+                bg-gray-200
+                py-3
+                px-4
+                leading-tight
+                text-gray-700
+                focus:border-gray-500 focus:bg-tertiary focus:outline-none
+              "
             />
           </div>
         </div>
@@ -73,7 +127,14 @@
         <div class="w-full">
           <label
             for="type"
-            class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+            class="
+              mb-2
+              block
+              font-semibold
+              uppercase
+              tracking-wide
+              text-tertiary
+            "
           >
             Type
           </label>
@@ -81,18 +142,39 @@
           <select
             id="type"
             v-model="type"
-            class="block w-full rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-tertiary focus:outline-none"
+            class="
+              block
+              w-full
+              rounded
+              border border-gray-200
+              bg-gray-200
+              py-3
+              px-4
+              leading-tight
+              text-gray-700
+              focus:border-gray-500 focus:bg-tertiary focus:outline-none
+            "
           >
             <option value="SOLO">Solo</option>
             <option value="GROUP">Group</option>
           </select>
         </div>
-        <div class="grid w-full grid-cols-1 gap-5 lg:grid-cols-2">
+        <div
+          class="grid w-full grid-cols-1 gap-5"
+          :class="{ 'lg:grid-cols-2': type !== 'SOLO' }"
+        >
           <!-- Members -->
-          <div class="w-full">
+          <div v-if="type !== 'SOLO'" class="w-full">
             <label
               for="members"
-              class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+              class="
+                mb-2
+                block
+                font-semibold
+                uppercase
+                tracking-wide
+                text-tertiary
+              "
               >Members or Subunits</label
             >
             <multiselect
@@ -112,7 +194,14 @@
           <div class="w-full">
             <label
               for="groups"
-              class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+              class="
+                mb-2
+                block
+                font-semibold
+                uppercase
+                tracking-wide
+                text-tertiary
+              "
             >
               Groups
             </label>
@@ -133,7 +222,14 @@
         <div class="w-full">
           <label
             for="styles"
-            class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+            class="
+              mb-2
+              block
+              font-semibold
+              uppercase
+              tracking-wide
+              text-tertiary
+            "
           >
             Styles
           </label>
@@ -154,7 +250,14 @@
         <div class="w-full">
           <label
             for="description"
-            class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+            class="
+              mb-2
+              block
+              font-semibold
+              uppercase
+              tracking-wide
+              text-tertiary
+            "
           >
             Description
           </label>
@@ -163,7 +266,19 @@
             v-model="description"
             type="text"
             placeholder="Description"
-            class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-tertiary focus:outline-none"
+            class="
+              block
+              w-full
+              appearance-none
+              rounded
+              border border-gray-200
+              bg-gray-200
+              py-3
+              px-4
+              leading-tight
+              text-gray-700
+              focus:border-gray-500 focus:bg-tertiary focus:outline-none
+            "
           />
         </div>
         <!-- Social Media & Streaming Platforms Links -->
@@ -172,7 +287,14 @@
           <div class="w-full">
             <label
               for="description"
-              class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+              class="
+                mb-2
+                block
+                font-semibold
+                uppercase
+                tracking-wide
+                text-tertiary
+              "
             >
               Social Media Link
             </label>
@@ -187,7 +309,17 @@
               @deleteinput="deleteList(socials, index)"
             />
             <button
-              class="flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
+              class="
+                flex
+                w-full
+                justify-center
+                space-x-2
+                rounded
+                bg-tertiary bg-opacity-30
+                p-2
+                text-left
+                focus:outline-none
+              "
               @click="addSocialLink()"
             >
               <icons-plus class="h-5 w-5 text-main-gray" />
@@ -197,7 +329,14 @@
           <div class="w-full">
             <label
               for="description"
-              class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+              class="
+                mb-2
+                block
+                font-semibold
+                uppercase
+                tracking-wide
+                text-tertiary
+              "
             >
               Streaming Platforms Link
             </label>
@@ -212,7 +351,17 @@
               @deleteinput="deleteList(platforms, index)"
             />
             <button
-              class="flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
+              class="
+                flex
+                w-full
+                justify-center
+                space-x-2
+                rounded
+                bg-tertiary bg-opacity-30
+                p-2
+                text-left
+                focus:outline-none
+              "
               @click="addPlatformLink()"
             >
               <icons-plus class="h-5 w-5 text-main-gray" />
@@ -223,7 +372,14 @@
         <div class="w-full">
           <label
             for="source"
-            class="mb-2 block font-semibold uppercase tracking-wide text-tertiary"
+            class="
+              mb-2
+              block
+              font-semibold
+              uppercase
+              tracking-wide
+              text-tertiary
+            "
           >
             Source*
           </label>
@@ -232,7 +388,19 @@
             v-model="source"
             type="text"
             placeholder="Source"
-            class="block w-full appearance-none rounded border border-gray-200 bg-gray-200 py-3 px-4 leading-tight text-gray-700 focus:border-gray-500 focus:bg-tertiary focus:outline-none"
+            class="
+              block
+              w-full
+              appearance-none
+              rounded
+              border border-gray-200
+              bg-gray-200
+              py-3
+              px-4
+              leading-tight
+              text-gray-700
+              focus:border-gray-500 focus:bg-tertiary focus:outline-none
+            "
           />
         </div>
         <div class="flex w-full justify-end">
