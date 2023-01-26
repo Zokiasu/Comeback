@@ -235,11 +235,11 @@
           </label>
           <multiselect
             v-model="styles"
+            label="name"
+            track-by="name"
             :options="styleList"
-            tag-placeholder="Add this as new style"
             placeholder="Search or add a style"
             :multiple="true"
-            :taggable="true"
             :close-on-select="false"
             :clear-on-select="false"
             :preserve-search="false"
@@ -403,14 +403,12 @@
             "
           />
         </div>
-        <div class="flex w-full justify-end">
-          <button
-            class="rounded bg-red-one px-4 py-2 font-semibold text-tertiary"
-            @click="updateArtist()"
-          >
-            Update Artist
-          </button>
-        </div>
+        <button
+          class="w-full rounded bg-red-one py-3 font-semibold text-tertiary"
+          @click="updateArtist()"
+        >
+          Update Artist
+        </button>
       </div>
     </div>
   </div>
@@ -526,7 +524,6 @@ export default {
     }
   },
 
-  // watch all changes
   watch: {
     name: {
       handler: function (val) {

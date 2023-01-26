@@ -1,13 +1,20 @@
 <template>
-  <div class="space-y-5 p-5 px-10">
+  <div class="space-y-5 py-5 px-10">
     <section
+      v-if="releases.length > 0"
       id="searchbar"
       class="flex w-full justify-start"
       :class="search ? '' : 'mb-5'"
     >
       <div
         id="search-icon"
-        class="rounded-none rounded-l bg-gray-500 bg-opacity-20 py-1.5 pr-1 pl-2"
+        class="
+          rounded-none rounded-l
+          bg-gray-500 bg-opacity-20
+          py-1.5
+          pr-1
+          pl-2
+        "
       >
         <svg
           class=""
@@ -49,11 +56,27 @@
         v-model="search"
         type="text"
         placeholder="Search"
-        class="w-full rounded-none rounded-r bg-gray-500 bg-opacity-20 pl-2 text-tertiary placeholder-tertiary focus:outline-none"
+        class="
+          w-full
+          rounded-none rounded-r
+          bg-gray-500 bg-opacity-20
+          pl-2
+          text-tertiary
+          placeholder-tertiary
+          focus:outline-none
+        "
         @change="updateDateList()"
       />
     </section>
-    <button class="border border-tertiary p-5" @click="test()">DELETE</button>
+
+    <button
+      v-if="releases.length > 0"
+      class="border border-tertiary p-5"
+      @click="test()"
+    >
+      DELETE
+    </button>
+
     <button
       v-if="search"
       class="text-bg-primary mb-5 focus:outline-none"
@@ -64,16 +87,31 @@
     >
       Reset
     </button>
+
     <section
       v-if="releases.length > 0"
       id="releases-body"
-      class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+      class="
+        grid grid-cols-1
+        gap-3
+        pb-5
+        lg:grid-cols-2
+        xl:grid-cols-3
+        2xl:grid-cols-4
+      "
     >
       <div
         v-for="(release, index) in releases"
         :key="index"
         style="background-color: #6b728033"
-        class="relative flex flex-col overflow-hidden rounded-sm p-3 text-tertiary"
+        class="
+          relative
+          flex flex-col
+          overflow-hidden
+          rounded-sm
+          p-3
+          text-tertiary
+        "
       >
         <span
           class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2 text-tertiary"
@@ -176,17 +214,12 @@
         </div>
       </div>
     </section>
-    <InfiniteLoading
-      spinner="spiral"
-      @infinite="infiniteScroll"
-    ></InfiniteLoading>
-    <div v-if="releases.length < 1" class="px-5">
-      <span
-        style="background-color: #6b728033"
-        class="flex w-full justify-center rounded p-2 text-tertiary"
-        >No Release found.</span
-      >
-    </div>
+
+    <section v-if="releases.length < 1">
+      <p class="flex bg-quaternary w-full justify-center rounded py-5 text-xl">
+        No Release found.
+      </p>
+    </section>
   </div>
 </template>
 

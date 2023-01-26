@@ -1,113 +1,101 @@
 <template>
   <div class="flex flex-row">
     <div
-      class="sticky top-0 flex min-h-screen flex-col justify-between bg-gray-500 bg-opacity-10 text-tertiary"
+      class="
+        sticky
+        top-0
+        flex
+        min-h-screen
+        flex-col
+        justify-between
+        bg-quinary bg-opacity-10
+      "
     >
       <ul class="space-y-5 p-5">
-        <li
+        <NuxtLink
+          :to="`/dashboard/newArtist`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-newArtist'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink
-            :to="`/dashboard/newArtist`"
-            class="mx-auto truncate text-center"
-            >New Artist</NuxtLink
-          >
-        </li>
-        <li
+          <p class="mx-auto truncate text-center">New Artist</p>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/dashboard/updateArtist`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-updateArtist'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink
-            :to="`/dashboard/updateArtist`"
-            class="mx-auto truncate text-center"
-            >Update Artist</NuxtLink
-          >
-        </li>
-        <li
+          <p class="mx-auto truncate text-center">Update Artist</p>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/dashboard/artists`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-artists'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink :to="`/dashboard/artists`" class="mx-auto text-center"
-            >Artists</NuxtLink
-          >
-        </li>
-        <li
+          <p class="mx-auto text-center">Artists</p>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/dashboard/releases`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-releases'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink :to="`/dashboard/releases`" class="mx-auto text-center"
-            >Releases</NuxtLink
-          >
-        </li>
-        <li
+          <p class="mx-auto text-center">Releases</p>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/dashboard/musics`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-musics'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink :to="`/dashboard/musics`" class="mx-auto text-center"
-            >Musics</NuxtLink
-          >
-        </li>
-        <li
-          class="flex w-full rounded px-10 py-2"
-          :class="
-            $route.name !== 'dashboard-index-style'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
-          "
-        >
-          <NuxtLink :to="`/dashboard/style`" class="mx-auto text-center"
-            >Style</NuxtLink
-          >
-        </li>
-        <li
+          <p class="mx-auto text-center">Musics</p>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/dashboard/news`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-news'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink :to="`/dashboard/news`" class="mx-auto text-center"
-            >News</NuxtLink
-          >
-        </li>
-        <li
+          <p class="mx-auto text-center">News</p>
+        </NuxtLink>
+        <NuxtLink
+          :to="`/dashboard/users`"
           class="flex w-full rounded px-10 py-2"
           :class="
             $route.name !== 'dashboard-index-users'
-              ? 'hover:bg-gray-500 hover:bg-opacity-70'
-              : 'bg-gray-500'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
           "
         >
-          <NuxtLink :to="`/dashboard/users`" class="mx-auto text-center"
-            >Users</NuxtLink
-          >
-        </li>
+          <p class="mx-auto text-center">Users</p>
+        </NuxtLink>
       </ul>
-      <div class="flex w-full items-center justify-center p-5">
-        <NuxtLink to="/" class="font-semibold">Back to website</NuxtLink>
-      </div>
+      <NuxtLink
+        to="/"
+        class="flex w-full hover:bg-quinary items-center justify-center p-5"
+      >
+        <p class="font-semibold">Back to website</p>
+      </NuxtLink>
     </div>
     <div class="min-h-screen w-full overflow-y-auto">
       <NuxtChild />

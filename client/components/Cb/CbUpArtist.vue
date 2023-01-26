@@ -75,7 +75,7 @@
           :key="`style_${index}`"
           class="rounded bg-gray-500 px-3 py-1"
         >
-          <p>{{ style }}</p>
+          <p>{{ style.name }}</p>
         </li>
       </ul>
     </div>
@@ -133,13 +133,33 @@
     </div>
     <div class="flex w-full justify-end gap-2">
       <button
-        class="hover:bg-bg-primary rounded bg-red-500 px-5 py-2 font-semibold transition-all duration-300 ease-in-out"
+        class="
+          hover:bg-primary
+          rounded
+          bg-red-500
+          px-5
+          py-2
+          font-semibold
+          transition-all
+          duration-300
+          ease-in-out
+        "
         @click="reject()"
       >
         Reject
       </button>
       <button
-        class="rounded bg-green-500 px-5 py-2 font-semibold transition-all duration-300 ease-in-out hover:bg-green-700"
+        class="
+          rounded
+          bg-green-500
+          px-5
+          py-2
+          font-semibold
+          transition-all
+          duration-300
+          ease-in-out
+          hover:bg-green-700
+        "
         @click="accept()"
       >
         Accept
@@ -213,8 +233,6 @@ export default {
       .then((doc) => {
         return doc.data()
       })
-    // eslint-disable-next-line no-console
-    console.log('originalArtist', this.originalArtist)
   },
 
   methods: {

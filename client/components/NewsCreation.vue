@@ -16,7 +16,6 @@
       initial-view="month"
       date-format="Y-m-d"
       clearable
-      class="text-black"
     />
     <t-textarea
       v-model="newsMessage"
@@ -31,7 +30,20 @@
       placeholder="Source*"
     />
     <button
-      class="texts bg-bg-primary flex transform justify-center rounded-sm px-3 py-2 text-tertiary transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900 hover:font-bold"
+      class="
+        bg-primary
+        flex
+        transform
+        justify-center
+        rounded-sm
+        px-3
+        py-2
+        text-tertiary
+        transition
+        duration-500
+        ease-in-out
+        hover:-translate-y-1 hover:scale-110 hover:bg-red-900 hover:font-bold
+      "
       @click="sendNews()"
     >
       {{ loading ? 'Loading...' : 'Send the news' }}

@@ -1,7 +1,12 @@
 /* ./assets/css/tailwind.css */
+@import url('https://fonts.googleapis.com/css2?family=Sarala:wght@400;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  font-family: 'Sarala', sans-serif;
+}
 
 .modal-custom {
   background: #1f1d1d;

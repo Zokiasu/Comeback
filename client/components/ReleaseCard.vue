@@ -5,19 +5,50 @@
         <div class="rounded-md bg-gray-500">
           <div
             :ref="'hide_' + name"
-            class="bg-bg-primary absolute z-10 aspect-square max-h-[10rem] min-h-[10rem] w-full rounded-md transition-all duration-1000 ease-in-out"
+            class="
+              bg-primary
+              absolute
+              z-10
+              aspect-square
+              max-h-[10rem]
+              min-h-[10rem]
+              w-full
+              rounded-md
+              transition-all
+              duration-1000
+              ease-in-out
+            "
           ></div>
           <img
             :src="image"
             :alt="name"
             loading="lazy"
-            class="aspect-square max-h-[10rem] min-h-[10rem] w-full rounded-md object-cover drop-shadow-2xl"
+            class="
+              aspect-square
+              max-h-[10rem]
+              min-h-[10rem]
+              w-full
+              rounded-md
+              object-cover
+              drop-shadow-2xl
+            "
             @load="imageLoaded"
           />
         </div>
         <div
           v-if="displayDate"
-          class="invisible absolute top-2 right-1.5 rounded bg-gray-500 bg-opacity-80 px-2 py-0.5 text-tertiary group-hover:visible"
+          class="
+            invisible
+            absolute
+            top-2
+            right-1.5
+            rounded
+            bg-gray-500 bg-opacity-80
+            px-2
+            py-0.5
+            text-tertiary
+            group-hover:visible
+          "
         >
           <p class="text-center text-xs">
             {{
@@ -30,7 +61,18 @@
           </p>
         </div>
         <div
-          class="invisible absolute bottom-1 left-1 rounded bg-gray-500/70 px-2 py-0.5 text-tertiary group-hover:visible"
+          class="
+            invisible
+            absolute
+            bottom-1
+            left-1
+            rounded
+            bg-gray-500/70
+            px-2
+            py-0.5
+            text-tertiary
+            group-hover:visible
+          "
         >
           <p class="text-center text-xs">{{ type }}</p>
         </div>
@@ -64,7 +106,7 @@ export default {
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
     name: {

@@ -2,7 +2,17 @@
   <a
     :href="checkUrl()"
     target="_blank"
-    class="flex items-center space-x-2 px-3 py-2 transition-all duration-300 ease-in-out hover:bg-background hover:drop-shadow-2xl"
+    class="
+      flex
+      items-center
+      space-x-2
+      px-3
+      py-2
+      transition-all
+      duration-300
+      ease-in-out
+      hover:bg-background hover:drop-shadow-2xl
+    "
   >
     <component :is="icon" class="h-5 w-5"></component>
     <p class="hidden md:block">{{ text }}</p>

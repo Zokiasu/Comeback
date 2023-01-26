@@ -1,10 +1,11 @@
 <template>
   <div class="space-y-5 p-5 text-tertiary">
-    <cb-up-artist
+    <artist-updated
       v-for="(artist, index) in artistList"
       :id="artist.id"
-      :key="`artist_${index}`"
+      :key="`artist_updated_${index}`"
       :id-pending="artist.idPending"
+      :id-youtube-music="artist.idYoutubeMusic"
       :name="artist.name"
       :type="artist.type"
       :image="artist.image"
@@ -23,6 +24,7 @@
 <script>
 export default {
   name: 'UpdateArtist',
+
   layout: 'dashboard',
 
   async asyncData({ $fire }) {
@@ -49,8 +51,7 @@ export default {
           }
         )
       })
-      // eslint-disable-next-line no-console
-      console.log(res.data.artists)
+
       return res.data.artists
     })
     return { artistList: secondStepArtist }
@@ -59,99 +60,110 @@ export default {
   methods: {
     async verify(artist, index) {
       const idPending = artist.idPending
-      const updateArtist =
-        this.$fire.functions.httpsCallable('updateArtistById')
-      const deleteArtist = this.$fire.functions.httpsCallable(
-        'deletePendingUpdateArtist'
-      )
-      await this.updateGroups(artist, index).then(async () => {
-        await this.updateMembers(artist, index).then(() => {
-          delete artist.idPending
-          delete artist.source
-          updateArtist(artist).then(() => {
-            deleteArtist({ idPending }).then(() => {
+      const groups = artist.groups
+      const members = artist.members
+
+      delete artist.idPending
+      delete artist.source
+
+      await this.$fire.firestore
+        .collection('artists')
+        .doc(artist.id)
+        .get()
+        .then(async (doc) => {
+          if (members?.length) {
+            this.firestoreAddMemberToGroup(
+              doc.data().id,
+              doc.data().name,
+              doc.data().image,
+              doc.data().type,
+              members
+            )
+          }
+
+          if (groups?.length) {
+            this.firestoreAddGroupToMember(
+              doc.data().id,
+              doc.data().name,
+              doc.data().image,
+              doc.data().type,
+              groups
+            )
+          }
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artist.id)
+            .update(artist)
+            .then(async () => {
               this.artistList.splice(index, 1)
+              await this.$fire.firestore
+                .collection('updateArtistPending')
+                .doc(idPending)
+                .delete()
             })
+        })
+    },
+
+    firestoreAddMemberToGroup(
+      artistId,
+      artistName,
+      artistImage,
+      artistType,
+      members
+    ) {
+      // ajouter les membres aux groupes
+      members.forEach(async (member) => {
+        await this.$fire.firestore
+          .collection('artists')
+          .doc(artistId)
+          .collection('members')
+          .doc(member.id)
+          .set(member)
+          .then(async () => {
+            const groupMembers = {
+              id: artistId,
+              name: artistName,
+              image: artistImage,
+              type: artistType,
+            }
+            await this.$fire.firestore
+              .collection('artists')
+              .doc(member.id)
+              .collection('groups')
+              .doc(artistId)
+              .set(groupMembers)
           })
-        })
       })
     },
 
-    async updateGroups(artist) {
-      await new Promise((resolve) => {
-        const deleteGroupFromArtist =
-          this.$fire.functions.httpsCallable('deleteGroupsArtist')
-        const getActualGroups =
-          this.$fire.functions.httpsCallable('getGroupsArtist')
-        getActualGroups({ id: artist.id }).then(async (res) => {
-          if (res.data.length) {
-            await res.data.map((element) => {
-              return deleteGroupFromArtist({
-                id: artist.id,
-                group: element,
-              }).then(async () => {
-                const addGroupsArtist =
-                  this.$fire.functions.httpsCallable('addGroupsArtist')
-                await artist.groups?.map(async (element) => {
-                  await addGroupsArtist({ id: artist.id, group: element })
-                })
-                delete artist.groups
-              })
-            })
-            resolve('Resolved')
-          } else {
-            const addGroupsArtist =
-              this.$fire.functions.httpsCallable('addGroupsArtist')
-            await artist.groups?.map(async (element) => {
-              await addGroupsArtist({ id: artist.id, group: element })
-            })
-            delete artist.groups
-            resolve('Resolved')
-          }
-        })
-      })
-    },
-
-    async updateMembers(artist) {
-      await new Promise(() => {
-        const deleteMembersFromArtist = this.$fire.functions.httpsCallable(
-          'deleteMembersArtist'
-        )
-        const getActualMembers =
-          this.$fire.functions.httpsCallable('getMembersArtist')
-        getActualMembers({ id: artist.id }).then(async (res) => {
-          if (res.data.length) {
-            await res.data.map((element) => {
-              return deleteMembersFromArtist({
-                id: artist.id,
-                member: element,
-              }).then(async () => {
-                const addMembersArtist =
-                  this.$fire.functions.httpsCallable('addMembersArtist')
-                await artist.members?.map(async (element) => {
-                  await addMembersArtist({ id: artist.id, member: element })
-                })
-                delete artist.members
-              })
-            })
-          } else {
-            const addMembersArtist =
-              this.$fire.functions.httpsCallable('addMembersArtist')
-            await artist.members?.map(async (element) => {
-              await addMembersArtist({ id: artist.id, member: element })
-            })
-            delete artist.members
-          }
-        })
-      })
-    },
-
-    delete(artist, index) {
-      const deleteArtist = this.$fire.functions.httpsCallable(
-        'deletePendingUpdateArtist'
-      )
-      deleteArtist({ idPending: artist.idPending }).then(() => {
-        this.artistList.splice(index, 1)
+    firestoreAddGroupToMember(
+      artistId,
+      artistName,
+      artistImage,
+      artistType,
+      groups
+    ) {
+      groups.forEach(async (group) => {
+        await this.$fire.firestore
+          .collection('artists')
+          .doc(artistId)
+          .collection('groups')
+          .doc(group.id)
+          .set(group)
+          .then(async () => {
+            const members = {
+              id: artistId,
+              name: artistName,
+              image: artistImage,
+              type: artistType,
+            }
+            await this.$fire.firestore
+              .collection('artists')
+              .doc(group.id)
+              .collection('members')
+              .doc(artistId)
+              .set(members)
+          })
       })
     },
 

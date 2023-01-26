@@ -1,8 +1,11 @@
 <template>
   <div class="space-y-5 p-5 px-10">
-    <div class="mb-5">
+    <section v-if="musics.length > 0">
       <button
-        class="rounded bg-gray-500 px-2 py-1 text-tertiary focus:outline-none"
+        class="rounded border px-3 py-2"
+        :class="{
+          'border-red-500 text-red-500': sorting === 'name',
+        }"
         @click="
           sorting = 'name'
           updateDateList()
@@ -11,7 +14,10 @@
         Name
       </button>
       <button
-        class="rounded bg-gray-500 px-2 py-1 text-tertiary focus:outline-none"
+        class="rounded border px-3 py-2"
+        :class="{
+          'border-red-500 text-red-500': sorting === 'createdAt',
+        }"
         @click="
           sorting = 'createdAt'
           updateDateList()
@@ -20,7 +26,10 @@
         Creation
       </button>
       <button
-        class="rounded bg-gray-500 px-2 py-1 text-tertiary focus:outline-none"
+        class="rounded border px-3 py-2"
+        :class="{
+          'border-red-500 text-red-500': sorting === 'updatedAt',
+        }"
         @click="
           sorting = 'updatedAt'
           updateDateList()
@@ -28,7 +37,8 @@
       >
         Last Update
       </button>
-    </div>
+    </section>
+
     <section
       v-if="musics.length > 0"
       id="releases-body"
@@ -38,7 +48,14 @@
         v-for="(music, index) in musics"
         :key="index"
         style="background-color: #6b728033"
-        class="relative flex flex-col overflow-hidden rounded-sm p-3 text-tertiary"
+        class="
+          relative
+          flex flex-col
+          overflow-hidden
+          rounded-sm
+          p-3
+          text-tertiary
+        "
       >
         <span
           class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2 text-tertiary"
@@ -168,17 +185,12 @@
         </div>
       </div>
     </section>
-    <InfiniteLoading
-      spinner="spiral"
-      @infinite="infiniteScroll"
-    ></InfiniteLoading>
-    <div v-if="musics.length < 1" class="px-5">
-      <span
-        style="background-color: #6b728033"
-        class="flex w-full justify-center rounded p-2 text-tertiary"
-        >No Release found.</span
-      >
-    </div>
+
+    <section v-if="musics.length < 1">
+      <p class="flex bg-quaternary w-full justify-center rounded py-5 text-xl">
+        No Release found.
+      </p>
+    </section>
   </div>
 </template>
 

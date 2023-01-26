@@ -7,7 +7,13 @@
     >
       <div
         id="search-icon"
-        class="rounded-none rounded-l bg-gray-500 bg-opacity-20 py-1.5 pr-1 pl-2"
+        class="
+          rounded-none rounded-l
+          bg-gray-500 bg-opacity-20
+          py-1.5
+          pr-1
+          pl-2
+        "
       >
         <svg
           class=""
@@ -49,7 +55,15 @@
         v-model="search"
         type="text"
         placeholder="Search by username or artistname"
-        class="w-full rounded-none rounded-r bg-gray-500 bg-opacity-20 pl-2 text-tertiary placeholder-tertiary focus:outline-none"
+        class="
+          w-full
+          rounded-none rounded-r
+          bg-gray-500 bg-opacity-20
+          pl-2
+          text-tertiary
+          placeholder-tertiary
+          focus:outline-none
+        "
         @change="updateDateList(true)"
       />
     </section>
@@ -67,7 +81,18 @@
       <div
         v-for="(element, index) in news"
         :key="element.id"
-        class="relative m-2 flex min-h-full flex-col overflow-hidden rounded-sm bg-black-four p-5 text-tertiary"
+        class="
+          relative
+          m-2
+          flex
+          min-h-full
+          flex-col
+          overflow-hidden
+          rounded-sm
+          bg-black-four
+          p-5
+          text-tertiary
+        "
       >
         <div class="relative mb-2 flex w-full justify-between">
           <div class="flex flex-col">
@@ -194,7 +219,7 @@
         </t-datepicker>
         <t-input v-model="objectModify.message" class="w-full" type="text" />
         <button
-          class="bg-bg-primary py-2 text-tertiary hover:bg-red-900"
+          class="bg-primary py-2 text-tertiary hover:bg-red-900"
           @click="editObjectNews(objectModify)"
         >
           Confirm

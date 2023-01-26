@@ -1,70 +1,179 @@
 <template>
-  <div class="text-tertiary">
-    <div
-      class="background-top relative h-60 overflow-hidden bg-cover bg-no-repeat lg:h-96 xl:h-[35rem]"
+  <div>
+    <section
+      class="
+        background-top
+        relative
+        overflow-hidden
+        bg-cover bg-no-repeat
+        h-[20vh]
+        md:h-[30vh]
+        lg:h-[40vh]
+        xl:h-[50vh]
+        2xl:h-[70vh]
+      "
     >
       <img
         :src="imageBackground"
         :alt="artist.name"
-        class="absolute top-0 bottom-0 left-0 right-0 h-full w-full object-cover"
+        class="
+          absolute
+          top-0
+          bottom-0
+          left-0
+          right-0
+          h-full
+          w-full
+          object-cover
+        "
       />
       <div
-        class="absolute top-0 bottom-0 left-0 right-0 flex bg-black/50 p-5 lg:p-10 xl:p-14 xl:px-32"
+        class="
+          absolute
+          top-0
+          bottom-0
+          left-0
+          right-0
+          flex
+          items-center
+          bg-secondary/60
+          p-5
+          lg:p-10
+          xl:p-14 xl:px-32
+        "
       >
-        <div class="mt-auto flex flex-col gap-2 overflow-x-auto lg:gap-8">
-          <div>
-            <h1 class="text-5xl font-semibold lg:text-8xl">
+        <div class="flex items-center space-x-5">
+          <div class="hidden xl:block relative overflow-hidden">
+            <img
+              :src="imageBackground"
+              :alt="artist.name"
+              class="
+                hover:scale-105
+                transition-all
+                duration-150
+                h-80
+                aspect-video
+                rounded-md
+                drop-shadow-2xl
+                object-cover
+              "
+            />
+          </div>
+          <div class="flex flex-col space-y-2 md:overflow-x-auto lg:space-y-5">
+            <h1 class="text-4xl md:text-6xl font-semibold lg:text-7xl">
               {{ artist.name }}
             </h1>
-          </div>
-          <div
-            v-if="artist.platforms.length"
-            class="testa flex flex-wrap gap-1 overflow-x-scroll text-sm lg:gap-3"
-          >
-            <cb-external-link
-              v-for="link in artist.platforms"
-              :key="link"
-              :href="link"
-            />
-          </div>
-          <div
-            v-if="artist.socials.length"
-            class="testa flex flex-wrap gap-1 overflow-x-scroll text-sm lg:gap-3"
-          >
-            <cb-external-link
-              v-for="link in artist.socials"
-              :key="link"
-              :href="link"
-            />
+            <div
+              v-if="artist.platforms.length > 0"
+              class="
+                testa
+                hidden
+                md:flex
+                flex-wrap
+                gap-1
+                overflow-x-scroll
+                text-sm
+                lg:gap-3
+              "
+            >
+              <cb-external-link
+                v-for="link in artist.platforms"
+                :key="link"
+                :href="link"
+              />
+            </div>
+            <div
+              v-if="artist.socials.length > 0"
+              class="
+                testa
+                hidden
+                md:flex
+                flex-wrap
+                gap-1
+                overflow-x-scroll
+                text-sm
+                lg:gap-3
+              "
+            >
+              <cb-external-link
+                v-for="link in artist.socials"
+                :key="link"
+                :href="link"
+              />
+            </div>
+            <div v-if="displayOnlineOption" class="flex space-x-2">
+              <button
+                class="flex items-center space-x-1 px-3 py-2"
+                @click="followTest()"
+              >
+                <icons-heart-filled
+                  v-if="liked"
+                  class="
+                    h-5
+                    w-5
+                    transition
+                    duration-300
+                    ease-in-out
+                    hover:bg-secondary
+                  "
+                />
+                <icons-heart-outline
+                  v-else
+                  class="
+                    h-5
+                    w-5
+                    transition
+                    duration-300
+                    ease-in-out
+                    hover:bg-secondary
+                  "
+                />
+                <p v-if="!liked">Add favoris</p>
+                <p v-else>Remove favoris</p>
+              </button>
+              <nuxt-link
+                v-if="admin"
+                :to="`/edit/artist/${$route.params.id}`"
+                class="flex items-center space-x-1 px-3 py-2"
+              >
+                <icons-edit class="h-4 w-4 -rotate-90" />
+                <p>Editer</p>
+              </nuxt-link>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="space-y-10 p-5 lg:p-10 xl:p-14 xl:px-32">
       <div
-        v-if="displayOnlineOption"
-        class="absolute top-5 right-5 flex items-center gap-2"
+        class="md:hidden mt-auto flex flex-col gap-2 overflow-x-auto lg:gap-8"
       >
-        <div class="cursor-pointer" @click="followTest()">
-          <icons-heart-filled
-            v-if="liked"
-            class="h-8 w-8 text-tertiary transition duration-300 ease-in-out"
-          />
-          <icons-heart-outline
-            v-else
-            class="h-8 w-8 text-tertiary transition duration-300 ease-in-out"
+        <div
+          v-if="artist.platforms.length > 0"
+          class="testa flex flex-wrap gap-1 overflow-x-scroll text-sm lg:gap-3"
+        >
+          <cb-external-link
+            v-for="link in artist.platforms"
+            :key="link"
+            :href="link"
           />
         </div>
-        <div v-if="admin">
-          <nuxt-link :to="`/edit/artist/${$route.params.id}`"
-            >Edit this page</nuxt-link
-          >
+        <div
+          v-if="artist.socials.length > 0"
+          class="testa flex flex-wrap gap-1 overflow-x-scroll text-sm lg:gap-3"
+        >
+          <cb-external-link
+            v-for="link in artist.socials"
+            :key="link"
+            :href="link"
+          />
         </div>
       </div>
-    </div>
-    <div class="space-y-10 p-5 lg:p-10 xl:p-14 xl:px-32">
-      <div>
-        <p>{{ artist.description }}</p>
-      </div>
-      <div v-if="soloMembers.length" class="space-y-5">
+      <p v-if="artist.description" class="whitespace-pre-line">
+        {{ artist.description }}
+      </p>
+      <div v-if="soloMembers.length > 0" class="space-y-5">
         <h2 class="text-xl font-semibold">Members</h2>
         <transition-group
           name="list-complete"
@@ -81,7 +190,7 @@
           />
         </transition-group>
       </div>
-      <div v-if="releases.length" class="space-y-5">
+      <div v-if="releases.length > 0" class="space-y-5">
         <h2 class="text-xl font-semibold">Release</h2>
         <transition-group
           name="list-complete"
@@ -102,7 +211,7 @@
           />
         </transition-group>
       </div>
-      <div v-if="groupMembers.length" class="space-y-5">
+      <div v-if="groupMembers.length > 0" class="space-y-5">
         <h2 class="text-xl font-semibold">Subunit</h2>
         <transition-group
           name="list-complete"
@@ -119,7 +228,7 @@
           />
         </transition-group>
       </div>
-      <div v-if="groups.length" class="space-y-5">
+      <div v-if="groups.length > 0" class="space-y-5">
         <h2 class="text-xl font-semibold">Group's Unit</h2>
         <transition-group
           name="list-complete"
@@ -136,14 +245,17 @@
           />
         </transition-group>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import IconsEdit from '~/components/Icons/IconsEdit.vue'
 
 export default {
+  components: { IconsEdit },
+
   async asyncData({ params, $fire, store }) {
     const getArtist = await $fire.firestore
       .collection('artists')
@@ -272,6 +384,7 @@ export default {
     '$store.getters.isLoggedIn': function (newVal, oldVal) {
       this.displayOnlineOption = newVal
     },
+
     '$store.getters.isAdmin': function (newVal, oldVal) {
       this.admin = newVal
     },

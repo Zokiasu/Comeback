@@ -24,7 +24,11 @@ import LastReleasesSection from '~/components/Section/LastReleasesSection.vue'
 import LastArtistSection from '~/components/Section/LastArtistSection.vue'
 
 export default {
-  components: { ComebackSection, LastReleasesSection, LastArtistSection },
+  components: {
+    ComebackSection,
+    LastReleasesSection,
+    LastArtistSection,
+  },
 
   data() {
     return {

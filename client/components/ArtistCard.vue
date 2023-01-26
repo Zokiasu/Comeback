@@ -6,13 +6,24 @@
     <NuxtLink :to="`/artist/${id}`">
       <div
         :ref="'hide_' + name"
-        class="absolute z-10 min-h-[10rem] min-w-[10rem] rounded-full bg-primary object-cover transition-all duration-1000 ease-in-out"
+        class="
+          absolute
+          z-10
+          rounded-full
+          bg-primary
+          object-cover
+          transition-all
+          duration-1000
+          ease-in-out
+        "
+        :class="dimension"
       ></div>
       <img
         :src="image"
         :alt="name"
         loading="lazy"
-        class="aspect-square max-h-[10rem] min-h-[10rem] rounded-full object-cover"
+        class="aspect-square rounded-full object-cover mx-auto"
+        :class="dimension"
         @load="imageLoaded"
       />
     </NuxtLink>
@@ -43,6 +54,10 @@ export default {
     image: {
       type: String,
       required: true,
+    },
+    dimension: {
+      type: String,
+      default: 'min-h-[10rem] min-w-[10rem]',
     },
   },
 

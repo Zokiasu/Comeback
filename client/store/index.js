@@ -33,7 +33,6 @@ export const getters = {
 
 export const actions = {
   async onAuthStateChangedAction(state, { authUser, claims }) {
-    // console.log('onAuthStateChangedAction', authUser)
     if (!authUser) {
       state.commit('SET_USER', authUser)
     } else {
@@ -48,7 +47,7 @@ export const actions = {
       const stepOne = this.$fire.functions.httpsCallable('readUser')
       const stepTwo = await stepOne({ id: authUser.uid })
       const stepThree = stepTwo.data
-      // console.log('stepThree', stepThree.data)
+      
       state.commit('SET_USER_DATA', stepThree.data)
     }
   },

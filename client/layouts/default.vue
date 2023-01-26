@@ -1,12 +1,18 @@
 <template>
   <div>
     <header
-      class="animate__animated animate__fadeInDown sticky top-0 z-50 bg-background"
+      class="
+        animate__animated animate__fadeInDown
+        sticky
+        top-0
+        z-50
+        bg-background
+      "
     >
       <MenuNavigation ref="menu" class="z-50" />
     </header>
     <main>
-      <Nuxt />
+      <Nuxt class="text-tertiary" />
     </main>
   </div>
 </template>

@@ -18,7 +18,7 @@
         <h2 class="my-auto text-2xl font-semibold">Edition Release</h2>
       </div>
       <button
-        class="Card hover:bg-bg-primary rounded px-5 py-1 text-tertiary"
+        class="Card hover:bg-primary rounded px-5 py-1 text-tertiary"
         @click="editRelease()"
       >
         Confirm
@@ -26,7 +26,13 @@
     </div>
     <section class="lg:px-5">
       <div
-        class="flex flex-col justify-center space-y-10 py-7 lg:flex-row lg:space-y-0 lg:space-x-5"
+        class="
+          flex flex-col
+          justify-center
+          space-y-10
+          py-7
+          lg:flex-row lg:space-y-0 lg:space-x-5
+        "
       >
         <div id="image" class="Card mx-auto">
           <img
@@ -38,7 +44,16 @@
             class="xl:bottom-2 xl:mx-auto xl:flex xl:w-full xl:justify-center"
           >
             <button
-              class="bg-bg-primary w-full rounded-b px-5 py-1 text-tertiary hover:bg-red-900 focus:outline-none"
+              class="
+                bg-primary
+                w-full
+                rounded-b
+                px-5
+                py-1
+                text-tertiary
+                hover:bg-red-900
+                focus:outline-none
+              "
               :disabled="isUploadingImage"
               type="button"
               @click="launchImageFile"
@@ -56,7 +71,11 @@
         </div>
         <div class="flex w-full flex-col space-y-7">
           <div
-            class="flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-2"
+            class="
+              flex flex-col
+              space-y-1
+              lg:flex-row lg:space-y-0 lg:space-x-2
+            "
           >
             <span class="my-auto w-28 text-lg font-semibold">Name*</span>
             <t-input
@@ -70,7 +89,11 @@
             />
           </div>
           <div
-            class="flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-2"
+            class="
+              flex flex-col
+              space-y-1
+              lg:flex-row lg:space-y-0 lg:space-x-2
+            "
           >
             <span class="my-auto w-28 text-lg font-semibold">Type</span>
             <t-select
@@ -86,7 +109,11 @@
           </div>
           <div
             id="artists"
-            class="flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-2"
+            class="
+              flex flex-col
+              space-y-1
+              lg:flex-row lg:space-y-0 lg:space-x-2
+            "
           >
             <span class="my-auto w-28 text-lg font-semibold">Artist(s)*</span>
             <multiselect
@@ -129,7 +156,11 @@
             </multiselect>
           </div>
           <div
-            class="flex flex-col space-y-1 lg:flex-row lg:space-y-0 lg:space-x-2"
+            class="
+              flex flex-col
+              space-y-1
+              lg:flex-row lg:space-y-0 lg:space-x-2
+            "
           >
             <span class="my-auto w-28 text-lg font-semibold">Style</span>
             <multiselect
@@ -235,7 +266,18 @@
             @deleteinput="deleteList(release.platforms, index)"
           />
           <button
-            class="Card flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
+            class="
+              Card
+              flex
+              w-full
+              justify-center
+              space-x-2
+              rounded
+              bg-tertiary bg-opacity-30
+              p-2
+              text-left
+              focus:outline-none
+            "
             @click="addStreamingLink()"
           >
             <img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png" />
@@ -265,7 +307,18 @@
               />
             </div>
             <button
-              class="Card flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
+              class="
+                Card
+                flex
+                w-full
+                justify-center
+                space-x-2
+                rounded
+                bg-tertiary bg-opacity-30
+                p-2
+                text-left
+                focus:outline-none
+              "
               @click="addMusic()"
             >
               <img src="https://img.icons8.com/ios/20/ffffff/plus--v2.png" />
@@ -284,7 +337,17 @@
         </div>
       </div>
       <button
-        class="Card bg-bg-primary my-2 w-full rounded px-5 py-1 text-tertiary hover:bg-red-900"
+        class="
+          Card
+          bg-primary
+          my-2
+          w-full
+          rounded
+          px-5
+          py-1
+          text-tertiary
+          hover:bg-red-900
+        "
         @click="editRelease()"
       >
         Confirm
