@@ -86,7 +86,7 @@
       class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3"
     >
       <LazyDashboardArtistView
-        v-for="(artist, index) in filteredList.slice(0, 12)"
+        v-for="(artist, index) in filteredList"
         :id="artist.id"
         :key="index"
         :index="index"
@@ -113,25 +113,6 @@
 export default {
   name: 'ArtistList',
 
-  async asyncData({ $fire }) {
-    const artists = await $fire.firestore
-      .collection('artists')
-      .orderBy('name')
-      .limit(50)
-      .get()
-      .then((snapshot) => {
-        const artistList = []
-        snapshot.forEach((doc) => {
-          artistList.push(doc.data())
-        })
-        return artistList
-      })
-
-    return {
-      artists,
-    }
-  },
-
   data() {
     return {
       search: '',
@@ -156,26 +137,14 @@ export default {
     },
   },
 
-  mounted() {
-    const vm = this
-    window.addEventListener('scroll', function (e) {
-      const scrollPos = window.scrollY
-      const winHeight = window.innerHeight
-      const docHeight = document.documentElement.scrollHeight
-      const perc = (100 * scrollPos) / (docHeight - winHeight)
-      if (perc > 15) {
-        vm.limitedAt += 50
-        vm.fetchData()
-      }
-    })
+  async mounted() {
+    await this.fetch()
   },
 
   methods: {
-    async fetchData() {
+    async fetch() {
       this.artists = await this.$fire.firestore
         .collection('artists')
-        .orderBy('name')
-        .limit(this.limitedAt)
         .get()
         .then((snapshot) => {
           const artists = []
@@ -185,7 +154,6 @@ export default {
           return artists
         })
     },
-
     async removeArtist(object, index) {
       // remove from firebase
       await this.$fire.firestore

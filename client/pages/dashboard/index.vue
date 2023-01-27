@@ -57,17 +57,6 @@
           <p class="mx-auto text-center">Releases</p>
         </NuxtLink>
         <NuxtLink
-          :to="`/dashboard/musics`"
-          class="flex w-full rounded px-10 py-2"
-          :class="
-            $route.name !== 'dashboard-index-musics'
-              ? 'hover:bg-quinary hover:bg-opacity-70'
-              : 'bg-quinary'
-          "
-        >
-          <p class="mx-auto text-center">Musics</p>
-        </NuxtLink>
-        <NuxtLink
           :to="`/dashboard/news`"
           class="flex w-full rounded px-10 py-2"
           :class="
