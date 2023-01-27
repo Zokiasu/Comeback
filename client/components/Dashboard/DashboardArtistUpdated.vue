@@ -120,13 +120,25 @@
       <div v-if="members.length > 0" class="space-y-1">
         <p>Members</p>
         <div class="grid grid-cols-3 gap-5 xl:grid-cols-5">
-          <artist-card
+          <nuxt-link
+            v-for="soloMember in members"
+            :key="soloMember.id"
+            :to="`/artist/${soloMember.id}`"
+          >
+            <img
+              :src="soloMember.image"
+              :alt="soloMember.name"
+              class="rounded-md aspect-video h-40 object-cover drop-shadow-xl"
+            />
+            <p>{{ soloMember.name }}</p>
+          </nuxt-link>
+          <!-- <artist-card
             v-for="soloMember in members"
             :id="soloMember.id"
             :key="soloMember.id"
             :image="soloMember.image"
             :name="soloMember.name"
-          />
+          /> -->
         </div>
       </div>
       <div v-if="groups.length > 0" class="space-y-1">

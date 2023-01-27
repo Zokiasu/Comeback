@@ -138,7 +138,6 @@ export default {
 
   async mounted() {
     await this.fetch()
-    console.log(this.artists)
   },
 
   methods: {
@@ -163,7 +162,7 @@ export default {
         .doc(object.id)
         .delete()
         .then(() => {
-          this.artists.splice(index, 1)
+          this.fetch()
         })
     },
   },

@@ -174,20 +174,45 @@
                 <NuxtLink
                   v-if="userLogged && userRole !== 'NONE'"
                   :to="`/dashboard/newArtist`"
-                  class="lg:block px-4 py-2 text-sm hidden hover:bg-quaternary"
+                  class="
+                    lg:block
+                    w-full
+                    text-left
+                    px-4
+                    py-2
+                    text-sm
+                    hidden
+                    hover:bg-quaternary
+                  "
                 >
                   Dashboard
                 </NuxtLink>
                 <button
                   type="button"
-                  class="block px-4 py-2 text-sm hover:bg-quaternary"
+                  class="
+                    block
+                    w-full
+                    text-left
+                    px-4
+                    py-2
+                    text-sm
+                    hover:bg-quaternary
+                  "
                   @click="newsModal = true"
                 >
                   New Comeback
                 </button>
                 <button
                   type="button"
-                  class="block px-4 py-2 text-sm hover:bg-quaternary"
+                  class="
+                    block
+                    w-full
+                    text-left
+                    px-4
+                    py-2
+                    text-sm
+                    hover:bg-quaternary
+                  "
                   @click="logout()"
                 >
                   Sign out

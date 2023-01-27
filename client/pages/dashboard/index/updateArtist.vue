@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-5 p-5">
-    <artist-updated
+    <dashboard-artist-updated
       v-for="(artist, index) in artistList"
       :id="artist.id"
       :key="`artist_updated_${index}`"
@@ -95,16 +95,18 @@ export default {
             .doc(artist.id)
             .update(artist)
             .then(async () => {
-              this.artistList.splice(index, 1)
               await this.$fire.firestore
                 .collection('updateArtistPending')
                 .doc(idPending)
                 .delete()
+                .then(() => {
+                  this.artistList.splice(index, 1)
+                })
             })
         })
     },
 
-    firestoreAddMemberToGroup(
+    async firestoreAddMemberToGroup(
       artistId,
       artistName,
       artistImage,
@@ -112,7 +114,7 @@ export default {
       members
     ) {
       // ajouter les membres aux groupes
-      this.deleteMember(artistId)
+      await this.deleteMember(artistId)
       members.forEach(async (member) => {
         await this.$fire.firestore
           .collection('artists')
@@ -127,7 +129,7 @@ export default {
               image: artistImage,
               type: artistType,
             }
-            this.deleteGroup(member.id)
+            await this.deleteGroup(member.id)
             await this.$fire.firestore
               .collection('artists')
               .doc(member.id)
@@ -138,14 +140,14 @@ export default {
       })
     },
 
-    firestoreAddGroupToMember(
+    async firestoreAddGroupToMember(
       artistId,
       artistName,
       artistImage,
       artistType,
       groups
     ) {
-      this.deleteGroup(artistId)
+      await this.deleteGroup(artistId)
       groups.forEach(async (group) => {
         await this.$fire.firestore
           .collection('artists')

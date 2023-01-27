@@ -334,6 +334,7 @@ export default {
         })
     }
 
+    console.log(getMembers)
     return {
       artist: getArtist,
       releases: getReleaseByArtist,
