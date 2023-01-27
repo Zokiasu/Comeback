@@ -131,6 +131,8 @@ export default {
         if (this.onlyGroup && element.type.toLowerCase() !== 'group')
           return false
         if (this.onlySolo && element.type.toLowerCase() !== 'solo') return false
+        if (!element.name.toLowerCase().includes(this.search.toLowerCase()))
+          return false
         return true
       })
     },

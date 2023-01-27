@@ -42,7 +42,7 @@
     </div>
     <div class="flex items-center bg-quaternary px-3">
       <p
-        v-if="!isDatePassed(date)"
+        v-if="!isDatePassed(date) && !checkDate(date)"
         class="my-auto whitespace-nowrap text-xl font-bold"
       >
         D-{{ countDays(date) }}
