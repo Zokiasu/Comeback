@@ -1,6 +1,6 @@
 <template>
   <div
-    class="head container mx-auto w-full p-5 text-tertiary md:p-10 lg:flex lg:items-center"
+    class="head container mx-auto w-full p-5 md:p-10 lg:flex lg:items-center"
   >
     <div class="mx-auto w-fit space-y-5 lg:space-y-10">
       <div class="space-y-1">
@@ -29,11 +29,16 @@
         <div class="mx-auto h-fit w-fit">
           <img
             :src="release.image"
-            class="h-1/3 rounded-md bg-gray-300 shadow-2xl shadow-zinc-700"
+            class="h-1/3 rounded-md bg-gray-300 shadow-2xl shadow-quinary"
           />
         </div>
         <div
-          class="overflow-hidden overflow-y-scroll pr-5 pb-2 lg:h-[34rem] lg:w-[30rem]"
+          class="
+            overflow-hidden overflow-y-scroll
+            pr-5
+            pb-2
+            lg:h-[34rem] lg:w-[30rem]
+          "
         >
           <ul class="space-y-5">
             <li
@@ -45,7 +50,13 @@
                 <img
                   :alt="music.name"
                   :src="release.image"
-                  class="h-14 w-14 rounded-md bg-gray-300 shadow-2xl shadow-zinc-700"
+                  class="
+                    h-14
+                    w-14
+                    rounded-md
+                    bg-gray-300
+                    shadow-2xl shadow-quinary
+                  "
                 />
                 <div>
                   <h3 class="font-semibold">{{ music.name }}</h3>

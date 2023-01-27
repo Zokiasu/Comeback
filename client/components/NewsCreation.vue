@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col justify-center space-y-2 py-3 text-tertiary">
+  <div class="flex flex-col justify-center space-y-2 py-3">
     <multiselect
       v-model="artistSelected"
       label="name"
@@ -38,7 +38,6 @@
         rounded-sm
         px-3
         py-2
-        text-tertiary
         transition
         duration-500
         ease-in-out

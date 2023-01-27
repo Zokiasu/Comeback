@@ -1,13 +1,31 @@
 <template>
   <NuxtLink
     :to="`/artist/${artist.id}`"
-    class="flex w-full overflow-hidden rounded-lg text-tertiary transition-all duration-500 ease-in-out hover:scale-110 hover:drop-shadow-lg"
+    class="
+      flex
+      w-full
+      overflow-hidden
+      rounded-lg
+      transition-all
+      duration-500
+      ease-in-out
+      hover:scale-110 hover:drop-shadow-lg
+    "
   >
     <div class="flex h-full w-full items-center space-x-5 bg-quinary p-3">
       <div>
         <div
           :ref="'hide_' + artist.name"
-          class="absolute z-50 min-h-[3.5rem] min-w-[3.5rem] rounded-full bg-primary transition-all duration-1000 ease-in-out"
+          class="
+            absolute
+            z-50
+            min-h-[3.5rem] min-w-[3.5rem]
+            rounded-full
+            bg-primary
+            transition-all
+            duration-1000
+            ease-in-out
+          "
         ></div>
         <img
           class="shadowCard h-14 w-14 rounded-full object-cover"
@@ -18,7 +36,7 @@
         />
       </div>
       <div>
-        <h2 class="text-lg font-bold">{{ artist.name }}'s news</h2>
+        <h2 class="lg:text-lg font-bold">{{ artist.name }}'s news</h2>
         <p class="text-xs">{{ message }}</p>
       </div>
     </div>

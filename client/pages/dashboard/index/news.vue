@@ -60,7 +60,6 @@
           rounded-none rounded-r
           bg-gray-500 bg-opacity-20
           pl-2
-          text-tertiary
           placeholder-tertiary
           focus:outline-none
         "
@@ -91,7 +90,6 @@
           rounded-sm
           bg-black-four
           p-5
-          text-tertiary
         "
       >
         <div class="relative mb-2 flex w-full justify-between">
@@ -132,7 +130,7 @@
     <div v-if="news.length < 1" class="px-5">
       <span
         style="background-color: #6b728033"
-        class="flex w-full justify-center rounded p-2 text-tertiary"
+        class="flex w-full justify-center rounded p-2"
         >No News found.</span
       >
     </div>
@@ -219,7 +217,7 @@
         </t-datepicker>
         <t-input v-model="objectModify.message" class="w-full" type="text" />
         <button
-          class="bg-primary py-2 text-tertiary hover:bg-red-900"
+          class="bg-primary py-2 hover:bg-red-900"
           @click="editObjectNews(objectModify)"
         >
           Confirm
@@ -232,145 +230,5 @@
 <script>
 export default {
   name: 'ArtistList',
-
-  async asyncData({ $fire }) {
-    const artistList = await $fire.firestore
-      .collection('artists')
-      .where('verified', '==', true)
-      .get()
-      .then((snapshot) => {
-        const artists = []
-        snapshot.forEach((doc) => {
-          artists.push(doc.data())
-        })
-        return artists
-      })
-      .catch(() => {
-        return { success: false, artists: [] }
-      })
-    artistList.sort((a, b) => {
-      if (a.name < b.name) return -1
-      if (a.name > b.name) return 1
-      return 0
-    })
-    return { artistList }
-  },
-
-  data() {
-    return {
-      search: '',
-      news: [],
-      maxObjectDisplay: 0,
-      enough: false,
-
-      editNews: false,
-
-      objectModify: {},
-
-      artistList: [],
-    }
-  },
-
-  computed: {
-    userId() {
-      const utmp = this.$store.state.dataUser
-      return utmp.id
-    },
-  },
-
-  methods: {
-    // methods
-    async updateDateList(reset) {
-      let artTmp = []
-      if (reset) {
-        this.maxObjectDisplay = 0
-        const { data: response } = await this.$axios.get(
-          `https://comeback-api.herokuapp.com/infos?sortby=createdAt:desc&limit=5&offset=${this.maxObjectDisplay}`
-        )
-        if (response.length > 0) {
-          artTmp = artTmp.concat(response)
-          this.news = [...new Set(artTmp)] // Remove all double entry
-          if (response.length < 20) {
-            this.enough = true
-          } else {
-            this.maxObjectDisplay = this.maxObjectDisplay + 20
-          }
-        } else {
-          this.enough = true
-        }
-      } else {
-        artTmp = artTmp.concat(this.news)
-        const { data: response } = await this.$axios.get(
-          `https://comeback-api.herokuapp.com/infos?sortby=createdAt:desc&limit=5&offset=${this.maxObjectDisplay}`
-        )
-        if (response.length > 0) {
-          artTmp = artTmp.concat(response) // Add next element into actual list
-          this.news = [...new Set(artTmp)] // Remove all double entry
-          this.maxObjectDisplay = this.maxObjectDisplay + 20
-        } else {
-          this.enough = true
-        }
-      }
-    },
-
-    openEditView(object) {
-      this.objectModify = object
-      this.editNews = !this.editNews
-    },
-
-    async verifiedNews(object) {
-      object.verified = !object.verified
-      await this.$axios
-        .put(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
-        .then(() => {
-          this.$toast.error('News verified has been changed', {
-            duration: 2000,
-            position: 'top-right',
-          })
-        })
-    },
-
-    async editObjectNews(object) {
-      await this.$axios
-        .put(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
-        .then(() => {
-          this.$toast.error('News has been edited', {
-            duration: 2000,
-            position: 'top-right',
-          })
-        })
-      this.editNews = !this.editNews
-    },
-
-    async removeNews(object, index) {
-      await this.$axios
-        .delete(`https://comeback-api.herokuapp.com/infos/${object.id}`, object)
-        .then(() => {
-          this.$toast.error('News has been deleted', {
-            duration: 2000,
-            position: 'top-right',
-          })
-          this.news.splice(index, 1)
-        })
-    },
-
-    async adminChecker() {
-      const that = this
-      await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user !== null) {
-          const userData = await that.$axios.$get(
-            `https://comeback-api.herokuapp.com/users/${user.uid}`
-          )
-          if (userData.role !== 'NONE') {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false
-        }
-      })
-    },
-  },
 }
 </script>

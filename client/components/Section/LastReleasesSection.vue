@@ -1,7 +1,13 @@
 <template>
   <home-section title="Last Releases">
     <div
-      class="animate__animated animate__fadeInUp flex flex-wrap justify-center gap-2 md:justify-evenly md:gap-5"
+      class="
+        animate__animated animate__fadeInUp
+        flex flex-wrap
+        justify-center
+        gap-2
+        md:justify-start md:gap-5
+      "
     >
       <release-card
         v-for="release in newRelease"

@@ -38,12 +38,6 @@ export default {
     }
   },
 
-  head() {
-    return {
-      title: 'Home',
-    }
-  },
-
   // eslint-disable-next-line require-await
   async mounted() {
     this.fetch()

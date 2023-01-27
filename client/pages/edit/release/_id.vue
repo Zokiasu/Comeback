@@ -1,6 +1,6 @@
 <template>
-  <div class="p-5 text-tertiary lg:p-10">
-    <div class="flex justify-between border-b border-tertiary">
+  <div class="p-5 lg:p-10">
+    <!-- <div class="flex justify-between border-b border-tertiary">
       <div class="flex space-x-2">
         <NuxtLink class="my-auto" :to="`/release/${$route.params.id}`">
           <svg
@@ -18,7 +18,7 @@
         <h2 class="my-auto text-2xl font-semibold">Edition Release</h2>
       </div>
       <button
-        class="Card hover:bg-primary rounded px-5 py-1 text-tertiary"
+        class="Card hover:bg-primary rounded px-5 py-1"
         @click="editRelease()"
       >
         Confirm
@@ -50,7 +50,7 @@
                 rounded-b
                 px-5
                 py-1
-                text-tertiary
+               
                 hover:bg-red-900
                 focus:outline-none
               "
@@ -215,9 +215,9 @@
               />
               <div class="pt-2">
                 <div class="flex w-full justify-between">
-                  <span class="text-sm font-bold text-tertiary">-11:00</span>
-                  <span class="text-sm font-bold text-tertiary">UTC</span>
-                  <span class="text-sm font-bold text-tertiary">+11:00</span>
+                  <span class="text-sm font-bold">-11:00</span>
+                  <span class="text-sm font-bold">UTC</span>
+                  <span class="text-sm font-bold">+11:00</span>
                 </div>
                 <input
                   v-model="timezoneIndex"
@@ -292,7 +292,6 @@
               class="mb-3 space-y-1"
             >
               <span>Track {{ index + 1 }}</span>
-              <!--<button @click="deleteList(release.musics, index)" class="text-bg-primary focus:outline-none text-sm font-semibold">Delete</button>-->
               <t-input
                 v-model="music.name"
                 type="text"
@@ -345,332 +344,19 @@
           rounded
           px-5
           py-1
-          text-tertiary
+         
           hover:bg-red-900
         "
         @click="editRelease()"
       >
         Confirm
       </button>
-    </section>
+    </section> -->
   </div>
 </template>
 
 <script>
-import moment from 'moment-timezone'
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'EditRelease',
-
-  async asyncData({ $axios, params }) {
-    const release = await $axios.$get(
-      `https://comeback-api.herokuapp.com/releases/${params.id}`
-    )
-    const artistList = await $axios.$get(
-      'https://comeback-api.herokuapp.com/artists/groups?sortby=name:asc'
-    )
-    const styleList = await $axios.$get(
-      'https://comeback-api.herokuapp.com/styles?sortby=name:asc'
-    )
-
-    release.newArtists = []
-
-    return { release, artistList, styleList }
-    // return {release}
-  },
-
-  data() {
-    return {
-      dates: new Date(),
-      actualTimezone: '',
-      timezoneIndex: 11,
-      timezones: [
-        'Pacific/Niue', // -11
-        'Pacific/Honolulu', // -10
-        'America/Anchorage', // -9
-        'America/Los_Angeles', // -8
-        'America/Denver', // -7
-        'America/Chicago', // -6
-        'America/New_York', // -5
-        'America/Puerto_Rico', // -4
-        'America/Buenos_Aires', // -3
-        'America/Sao_Paulo', // -2,
-        'Atlantic/Azores', // -1
-        'UTC', // 0
-        'Europe/Amsterdam', // +1
-        'Europe/Athens', // +2
-        'Europe/Moscow', // +3
-        'Indian/Mahe', // +4
-        'Asia/Ashgabat', // +5
-        'Asia/Dhaka', // +6
-        'Asia/Bangkok', // +7
-        'Asia/Hong_Kong', // +8
-        'Asia/Seoul', // +9
-        'Australia/Sydney', // +10
-        'Asia/Magadan', // +11
-      ],
-      nameZones: [
-        'Niue, Pago Pago', // -11
-        'Hawaii, Rarotonga, Tahiti', // -10
-        'Alaska Gambier', // -9
-        'Tijuana, Vancouver, Whitehorse', // -8
-        'Arizona, Mazatlan, Dawnson Creek, +3', // -7
-        'Mexico City, Costa Rica, Guatemala, +8', // -6
-        'Toronto, Jamaica, Panama, +11', // -5
-        'Guyana, Puerto Rico, Curacoa, +13', // -4
-        'Buenos Aires, Cayenne, Salvador, +17', // -3
-        'Noronha, Sao Paulo, South Georgia', // -2,
-        'Azores, Cape Verde, Scoresbysund', // -1
-        'Dublin, Lisbon, London, +11', // 0
-        'Amsterdam, Berlin, Oslo, +23', // +1
-        'Bucharest, Jerusalem, Johannesburg, +19', // +2
-        'Baghdad, Istanbul, Qatar, +5', // +3
-        'Dubai, Reunion, Yerevan, +5', // +4
-        'Maldives, Mawson, Karachi, +7', // +5
-        'Almaty, Vostok, Chagos, +4', // +6
-        'Hanoi, Jakarta, Davis, +4', // +7
-        'Taipei, Kuala Lumpur, Singapore, +10', // +8
-        'Tokyo, Palau, Dili, +3', // +9
-        'Guam, Vladivostok, Port Moresby, +3', // +10
-        'Noumea, Casey, Sydney, +7', // +11
-      ],
-      release: {},
-      sendToApi: {},
-      oldDataToApi: {},
-      artistList: [],
-      styleList: [],
-      updateRelease: false,
-      updateMusic: false,
-      sendToApiMusics: [],
-      isUploadingImage: false,
-      source: '',
-      user: null,
-    }
-  },
-
-  head() {
-    return {
-      title: this.release.name,
-    }
-  },
-
-  computed: {
-    timezone() {
-      return this.timezones[this.timezoneIndex]
-    },
-    abbrTimezone() {
-      return moment.tz(this.timezone).zoneAbbr()
-    },
-    namezone() {
-      return this.nameZones[this.timezoneIndex]
-    },
-    gmtzone() {
-      const moment = require('moment-timezone')
-      const zone = moment()
-        .tz(this.timezones[this.timezoneIndex])
-        .format()
-        .toString()
-        .slice(19, 25)
-      if (zone === 'Z') {
-        return '+00:00'
-      } else {
-        return zone
-      }
-    },
-  },
-
-  watch: {
-    dates: function (val) {
-      if (val.toString() !== new Date(this.release.date).toString()) {
-        this.newObjectToApi('date', val)
-      }
-    },
-  },
-
-  created() {
-    this.actualTimezone = moment.tz.guess()
-  },
-
-  async mounted() {
-    this.dates = new Date(this.release.date)
-    this.oldDataToApi = JSON.parse(JSON.stringify(this.release))
-    this.user = await this.GET_USER()
-  },
-
-  methods: {
-    ...mapGetters(['GET_USER']),
-
-    async editRelease() {
-      if (this.user === null) this.user = this.GET_USER()
-      if (this.updateRelease) {
-        await this.$axios
-          .post(`https://comeback-api.herokuapp.com/requests`, {
-            state: 'PENDING',
-            method: 'PUT',
-            endpoint: `/releases/${this.$route.params.id}`,
-            body: this.sendToApi,
-            currentData: this.oldDataToApi,
-            userId: this.user.uid,
-            source: this.source,
-          })
-          .then(() => {
-            if (!this.updateMusic) {
-              this.$router.push({ path: `/release/${this.$route.params.id}` })
-            }
-          })
-          .catch(function (error) {
-            // eslint-disable-next-line no-console
-            console.log(error)
-          })
-      }
-
-      if (this.updateMusic) {
-        this.sendToApiMusics.forEach(async (element) => {
-          let oldData = {}
-          oldData = this.oldDataToApi.musics
-
-          await this.$axios
-            .post(`https://comeback-api.herokuapp.com/requests`, {
-              state: 'PENDING',
-              method: 'PUT',
-              endpoint: `/musics/${element.id}`,
-              body: element,
-              currentData: oldData,
-              userId: this.user.uid,
-              source: this.source,
-            })
-            .then(() => {
-              this.$router.push({ path: `/release/${this.$route.params.id}` })
-            })
-            .catch(function (error) {
-              // eslint-disable-next-line no-console
-              console.log(error)
-            })
-        })
-      }
-    },
-
-    addArtist(newTag) {
-      const tag = {
-        name: newTag,
-        image:
-          'https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Fartists.jpg?alt=media&token=23be3721-5157-45a7-8c0e-e1c03c2e1827',
-        type: 'SOLO',
-        website: null,
-        description: null,
-        socials: null,
-        platforms: null,
-      }
-      this.artistList.push(tag)
-      this.release.artists.push(tag)
-      this.release.newArtists.push(tag)
-    },
-
-    addStyle(newTag) {
-      const tag = {
-        name: newTag,
-      }
-      if (this.release.styles === null) {
-        this.release.styles = [tag]
-      } else {
-        this.release.styles.push(tag)
-      }
-      this.styleList.push(tag)
-      this.newObjectToApi('styles', this.release.styles)
-    },
-
-    addMusic() {
-      this.release.musics.push({
-        id: null,
-        name: null,
-        clip: null,
-        platforms: null,
-      })
-    },
-
-    addStreamingLink() {
-      if (this.release.platforms === null) {
-        this.release.platforms = ['']
-      } else {
-        this.release.platforms.push('')
-      }
-    },
-
-    updateList(list, newElem, index, key) {
-      list[index] = newElem
-      this.newObjectToApi(key, list)
-    },
-
-    deleteList(list, index) {
-      list.splice(index, 1)
-    },
-
-    newObjectToApi(key, value) {
-      this.sendToApi[key] = value
-      this.updateRelease = true
-    },
-
-    newObjectToApiMusic(value, index) {
-      if (value[index].id) {
-        let elementExist = false
-        this.sendToApiMusics.forEach((element) => {
-          if (element.id === value[index].id) {
-            element = value[index]
-            elementExist = true
-          }
-        })
-        if (!elementExist) {
-          this.sendToApiMusics.push(value[index])
-        }
-        this.updateMusic = true
-      } else {
-        this.newObjectToApi('musics', value)
-      }
-    },
-
-    launchImageFile() {
-      this.$refs.imageFile.click()
-    },
-
-    uploadImageFile(files) {
-      if (!files.length) {
-        return
-      }
-      const file = files[0]
-
-      if (!file.type.match('image.*')) {
-        alert('Please upload an image.')
-        return
-      }
-
-      const metadata = {
-        contentType: file.type,
-      }
-
-      this.isUploadingImage = true
-
-      const imageRef = this.$fire.storage.ref(
-        `images/release/${this.release.id}`
-      )
-
-      const uploadTask = imageRef
-        .put(file, metadata)
-        .then((snapshot) => {
-          return snapshot.ref.getDownloadURL().then((url) => {
-            return url
-          })
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.error(error)
-        })
-      uploadTask.then((url) => {
-        this.newObjectToApi('image', url)
-        this.release.image = url
-        this.isUploadingImage = false
-      })
-    },
-  },
 }
 </script>

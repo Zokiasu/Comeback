@@ -1,8 +1,5 @@
 <template>
-  <div
-    :id="`artist-card-${id}`"
-    class="aspect-square max-w-[10rem] text-tertiary"
-  >
+  <div :id="`artist-card-${id}`" class="aspect-square max-w-[10rem]">
     <NuxtLink :to="`/artist/${id}`">
       <div
         :ref="'hide_' + name"

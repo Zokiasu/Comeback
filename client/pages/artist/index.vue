@@ -10,14 +10,32 @@
         v-model="search"
         type="text"
         placeholder="Search"
-        class="w-full rounded-none rounded-r bg-gray-500 bg-opacity-20 pl-2 text-tertiary placeholder-tertiary focus:outline-none"
+        class="
+          w-full
+          rounded-none rounded-r
+          bg-gray-500 bg-opacity-20
+          pl-2
+          placeholder-tertiary
+          focus:outline-none
+        "
       />
     </div>
     <transition-group
       id="artist-list"
       name="list-complete"
       tag="div"
-      class="grid grid-cols-2 items-center justify-center gap-5 py-5 sm:grid-cols-3 md:grid-cols-4 md:gap-10 md:py-10 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8"
+      class="
+        grid grid-cols-2
+        items-center
+        justify-center
+        gap-5
+        py-5
+        sm:grid-cols-3
+        md:grid-cols-4 md:gap-10 md:py-10
+        lg:grid-cols-5
+        xl:grid-cols-7
+        2xl:grid-cols-8
+      "
     >
       <lazy-artist-card
         v-for="artist in filteredArtistList"
@@ -32,13 +50,18 @@
     </transition-group>
     <div v-if="loading" class="flex w-full justify-center">
       <div
-        class="loader h-10 w-10 rounded-full border-4 border-t-4 border-gray-200 ease-linear"
+        class="
+          loader
+          h-10
+          w-10
+          rounded-full
+          border-4 border-t-4 border-gray-200
+          ease-linear
+        "
       ></div>
     </div>
     <div v-if="(filteredArtistList.length < 1) & !loading" class="px-5">
-      <p
-        class="flex w-full justify-center rounded bg-[#6B728033] p-2 text-tertiary"
-      >
+      <p class="flex w-full justify-center rounded bg-[#6B728033] p-2">
         No artists found.
       </p>
     </div>

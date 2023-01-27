@@ -49,7 +49,10 @@
             >
               Edit
             </NuxtLink>
-            <button class="bg-quinary px-2 rounded hover:bg-tertiary/30">
+            <button
+              class="bg-quinary px-2 rounded hover:bg-tertiary/30"
+              @click="removeArtist"
+            >
               Delete
             </button>
           </div>

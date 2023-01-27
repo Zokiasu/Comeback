@@ -13,8 +13,8 @@
                 justify-center
                 rounded-md
                 p-2
-                text-gray-400
-                hover:bg-zinc-700 hover:text-tertiary
+                text-tertiary
+                hover:bg-quinary
                 focus:outline-none
                 focus:ring-2
                 focus:ring-inset
@@ -22,39 +22,10 @@
               "
               aria-controls="mobile-menu"
               aria-expanded="false"
+              aria-label="Open main menu"
               @click="navMenu = !navMenu"
             >
-              <span class="sr-only">Open main menu</span>
-              <svg
-                class="block h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-              <svg
-                class="hidden h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <icons-burger-menu class="w-8 h-8" />
             </button>
           </div>
           <!-- PC Navigation -->
@@ -92,9 +63,7 @@
                   :to="`/`"
                   class="rounded-md px-3 py-2 text-sm font-medium"
                   :class="
-                    $route.name !== 'index'
-                      ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
-                      : 'bg-zinc-600 text-tertiary'
+                    $route.name !== 'index' ? 'hover:bg-quinary' : 'bg-quinary'
                   "
                 >
                   Home
@@ -104,8 +73,8 @@
                   class="rounded-md px-3 py-2 text-sm font-medium"
                   :class="
                     $route.name !== 'calendar'
-                      ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
-                      : 'bg-zinc-600 text-tertiary'
+                      ? 'hover:bg-quinary'
+                      : 'bg-quinary'
                   "
                 >
                   Calendar
@@ -114,9 +83,7 @@
                   :to="`/artist`"
                   class="rounded-md px-3 py-2 text-sm font-medium"
                   :class="
-                    $route.name !== 'artist'
-                      ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
-                      : 'bg-zinc-600 text-tertiary'
+                    $route.name !== 'artist' ? 'hover:bg-quinary' : 'bg-quinary'
                   "
                 >
                   Artists
@@ -146,32 +113,15 @@
                   rounded-md
                   px-3
                   py-2
-                  text-tertiary
                   focus:outline-none
                 "
-                @click="newsModal = true"
+                @click="newsModal = !newsModal"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="my-auto mx-1 h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-                <span>New Comeback</span>
+                <p>New Comeback</p>
               </button>
             </div>
-            <div v-else class="text-tertiary">
-              <nuxt-link to="/authentification" class="font-semibold"
-                >Login</nuxt-link
-              >
+            <div v-else>
+              <nuxt-link to="/authentification">Login</nuxt-link>
             </div>
             <!-- Profile dropdown -->
             <div v-if="userLogged" class="relative ml-3">
@@ -189,13 +139,13 @@
                   focus:ring-offset-2
                   focus:ring-offset-gray-800
                 "
-                @click="openUserMenu()"
+                aria-label="Open user menu"
+                @click="userMenu = !userMenu"
               >
-                <span class="sr-only">Open user menu</span>
                 <img
-                  class="h-8 w-8 rounded-full"
+                  class="h-8 w-8 rounded-full object-cover"
                   :src="userAvatar"
-                  alt="User avatar"
+                  alt="User avatar picture"
                 />
               </button>
               <div
@@ -208,59 +158,36 @@
                   w-48
                   origin-top-right
                   rounded-md
-                  bg-black-one
+                  bg-quinary
                   py-1
-                  text-tertiary
                   shadow-lg
                   focus:outline-none
                 "
                 @click="closeUserMenu"
               >
-                <!--<NuxtLink
-									:to="`/profile/${GET_USER().uid}/general`"
-									class="block px-4 py-2 text-sm hover:bg-gray-700"
-								>
-									Your Profile
-								</NuxtLink>-->
                 <NuxtLink
                   :to="`/add/artist`"
-                  class="block px-4 py-2 text-sm hover:bg-gray-700"
+                  class="block px-4 py-2 text-sm hover:bg-quaternary"
                 >
                   Add New Artist
                 </NuxtLink>
                 <NuxtLink
                   v-if="userLogged && userRole !== 'NONE'"
                   :to="`/dashboard/newArtist`"
-                  class="block px-4 py-2 text-sm hover:bg-gray-700"
+                  class="lg:block px-4 py-2 text-sm hidden hover:bg-quaternary"
                 >
                   Dashboard
                 </NuxtLink>
                 <button
                   type="button"
-                  class="
-                    block
-                    h-full
-                    w-full
-                    px-4
-                    py-2
-                    text-left text-sm
-                    hover:bg-gray-700
-                  "
+                  class="block px-4 py-2 text-sm hover:bg-quaternary"
                   @click="newsModal = true"
                 >
                   New Comeback
                 </button>
                 <button
                   type="button"
-                  class="
-                    block
-                    h-full
-                    w-full
-                    px-4
-                    py-2
-                    text-left text-sm
-                    hover:bg-gray-700
-                  "
+                  class="block px-4 py-2 text-sm hover:bg-quaternary"
                   @click="logout()"
                 >
                   Sign out
@@ -276,7 +203,7 @@
         v-if="navMenu"
         id="mobile-menu"
         class="
-          animate__animated animate__fadeInDown animate__faster
+          animate__animated animate__fadeInLeft
           absolute
           w-full
           origin-top-right
@@ -290,8 +217,8 @@
             class="block rounded-md px-3 py-2 text-base font-medium"
             :class="
               $route.name !== 'index'
-                ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
-                : 'bg-zinc-600 text-tertiary'
+                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
+                : 'bg-quinary'
             "
           >
             Home
@@ -301,8 +228,8 @@
             class="block rounded-md px-3 py-2 text-base font-medium"
             :class="
               $route.name !== 'calendar'
-                ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
-                : 'bg-zinc-600 text-tertiary'
+                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
+                : 'bg-quinary'
             "
           >
             Calendar
@@ -312,8 +239,8 @@
             class="block rounded-md px-3 py-2 text-base font-medium"
             :class="
               $route.name !== 'artist'
-                ? 'text-gray-300 hover:bg-zinc-700 hover:text-tertiary'
-                : 'bg-zinc-600 text-tertiary'
+                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
+                : 'bg-quinary'
             "
           >
             Artists
@@ -355,7 +282,7 @@ export default {
 
       userLogged: false,
       userRole: 'NONE',
-      userAvatar: require('@/assets/image/artist.png'),
+      userAvatar: null,
       artistList: [],
     }
   },
@@ -393,6 +320,7 @@ export default {
     this.userLogged = this.isLoggedIn()
     if (this.userLogged) {
       this.userRole = this.GET_USER_DATA().role
+      this.userAvatar = this.GET_USER_DATA().picture
     }
   },
 

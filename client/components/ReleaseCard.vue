@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[10rem] space-y-1 text-tertiary">
+  <div class="max-w-[10rem] space-y-1">
     <NuxtLink :to="`/release/${id}`">
       <div class="group relative">
         <div class="rounded-md bg-gray-500">
@@ -46,7 +46,6 @@
             bg-gray-500 bg-opacity-80
             px-2
             py-0.5
-            text-tertiary
             group-hover:visible
           "
         >
@@ -70,7 +69,6 @@
             bg-gray-500/70
             px-2
             py-0.5
-            text-tertiary
             group-hover:visible
           "
         >

@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto flex flex-col p-5 text-tertiary">
+  <div class="container mx-auto flex flex-col p-5">
     <div class="space-y-5">
       <div>
         <div class="flex gap-5">
@@ -163,17 +163,11 @@ export default {
       ],
     }
   },
+
   head() {
     return {
-      title: 'Comeback - Calendar',
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            "Find all the artists' releases by day and according to your preferences.",
-        },
-      ],
+      title:
+        "Comeback - Calendar - Find all the artist's releases by day and according to your preferences.",
     }
   },
 

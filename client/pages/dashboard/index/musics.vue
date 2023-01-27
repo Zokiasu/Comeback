@@ -48,19 +48,11 @@
         v-for="(music, index) in musics"
         :key="index"
         style="background-color: #6b728033"
-        class="
-          relative
-          flex flex-col
-          overflow-hidden
-          rounded-sm
-          p-3
-          text-tertiary
-        "
+        class="relative flex flex-col overflow-hidden rounded-sm p-3"
       >
-        <span
-          class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2 text-tertiary"
-          >{{ index }}</span
-        >
+        <span class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2">{{
+          index
+        }}</span>
         <div class="right-2 top-3 mb-2 flex space-x-2 xl:absolute xl:mb-0">
           <!--<NuxtLink :to="`/edit/release/${release.id}`" target="_blank"><img src="https://img.icons8.com/material-sharp/20/ffffff/edit--v1.png"/></NuxtLink>-->
           <button class="focus:outline-none" @click="removeVideo(music)">
@@ -193,126 +185,3 @@
     </section>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'ReleaseList',
-
-  data() {
-    return {
-      search: '',
-      musics: [],
-      maxObjectDisplay: 20,
-      enough: false,
-      sorting: 'name',
-    }
-  },
-
-  computed: {
-    userId() {
-      const utmp = this.$store.state.dataUser
-      return utmp.id
-    },
-
-    adminCheck() {
-      return this.adminChecker()
-    },
-  },
-
-  methods: {
-    infiniteScroll($state) {
-      let artTmp = []
-      setTimeout(() => {
-        artTmp = artTmp.concat(this.musics)
-        this.$axios
-          .get(
-            `https://comeback-api.herokuapp.com/musics?sortby=${this.sorting}&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
-          )
-          .then((response) => {
-            if (response.data.length > 0) {
-              artTmp = artTmp.concat(response.data)
-              this.musics = [...new Set(artTmp)]
-              this.maxObjectDisplay = this.maxObjectDisplay + 20
-              $state.loaded()
-            } else {
-              this.enough = true
-              $state.complete()
-            }
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log(error)
-          })
-      }, 500)
-    },
-
-    async updateDateList() {
-      let artTmp = []
-      this.maxObjectDisplay = 0
-      const { data: response } = await this.$axios.get(
-        `https://comeback-api.herokuapp.com/musics?sortby=${this.sorting}&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
-      )
-      if (response.length > 0) {
-        artTmp = artTmp.concat(response)
-        this.musics = [...new Set(artTmp)] // Remove all double entry
-        if (response.length < 20) {
-          this.enough = true
-        } else {
-          this.maxObjectDisplay = this.maxObjectDisplay + 20
-        }
-      } else {
-        this.enough = true
-      }
-    },
-
-    getYoutubeId(url) {
-      let id, fullId
-      if (url?.includes('list=')) {
-        id = url.split('list=')[1]
-        fullId = 'https://www.youtube.com/embed/videoseries?list=' + id
-      } else if (url?.includes('v=')) {
-        id = url.split('v=')[1]
-        fullId = 'https://www.youtube.com/embed/' + id
-      } else if (url?.includes('.be/')) {
-        id = url.split('.be/')[1]
-        fullId = 'https://www.youtube.com/embed/' + id
-      }
-      return fullId
-    },
-
-    removeVideo(object) {
-      object.clip = null
-      this.$axios.put(
-        `https://comeback-api.herokuapp.com/musics/${object.id}`,
-        object
-      )
-    },
-
-    removeMusic(id, object, index) {
-      this.$axios
-        .delete(`https://comeback-api.herokuapp.com/musics/${id}`, object)
-        .then((response) => {
-          this.musics.splice(index, 1)
-        })
-    },
-
-    async adminChecker() {
-      const that = this
-      await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user !== null) {
-          const userData = await that.$axios.$get(
-            `https://comeback-api.herokuapp.com/users/${user.uid}`
-          )
-          if (userData.role !== 'NONE') {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false
-        }
-      })
-    },
-  },
-}
-</script>

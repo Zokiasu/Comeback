@@ -194,9 +194,9 @@ const settings = {
         disabledOption: '',
         highlightedOption: 'bg-red-100',
         selectedOption:
-          'font-semibold bg-gray-100 bg-primary font-semibold text-tertiary',
+          'font-semibold bg-gray-100 bg-primary font-semibold',
         selectedHighlightedOption:
-          'font-semibold bg-gray-100 bg-red-600 font-semibold text-tertiary',
+          'font-semibold bg-gray-100 bg-red-600 font-semibold',
         optionContent: 'flex justify-between items-center px-3 py-2',
         optionLabel: '',
         selectedIcon: '',
@@ -443,7 +443,7 @@ const settings = {
           'flex flex-shrink-0 h-12 items-center justify-center rounded-full w-12 mx-auto',
         icon: 'w-6 h-6',
         okButton:
-          'block px-4 py-2 text-tertiary transition duration-100 ease-in-out border border-transparent rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full max-w-xs',
+          'block px-4 py-2 transition duration-100 ease-in-out border border-transparent rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed w-full max-w-xs',
         buttons: 'p-3 flex space-x-4 justify-center bg-gray-100 rounded-b',
       },
       classes: {
@@ -546,7 +546,7 @@ const settings = {
         disabledElement: 'w-8 h-8 border border-gray-200 table-cell',
         ellipsisElement: 'w-8 h-8 border border-gray-200 hidden md:table-cell',
         activeButton:
-          'bg-primary w-full h-full text-tertiary hover:bg-red-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
+          'bg-primary w-full h-full hover:bg-red-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
         disabledButton:
           'opacity-25 w-full h-full cursor-not-allowed transition duration-100 ease-in-out',
         button:
@@ -561,7 +561,7 @@ const settings = {
           disabledElement: 'w-8 h-8 rounded-full',
           ellipsisElement: 'w-8 h-8 rounded-full hidden md:inline',
           activeButton:
-            'border border-primary bg-primary w-full h-full rounded-full text-tertiary hover:bg-red-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
+            'border border-primary bg-primary w-full h-full rounded-full hover:bg-red-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
           disabledButton:
             'border border-gray-200  opacity-25 w-full h-full rounded-full cursor-not-allowed transition duration-100 ease-in-out',
           button:
@@ -576,7 +576,7 @@ const settings = {
     props: {
       fixedClasses: {
         button:
-          'flex items-center text-tertiary block px-4 py-2 transition duration-100 ease-in-out border border-transparent rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
+          'flex items-center block px-4 py-2 transition duration-100 ease-in-out border border-transparent rounded shadow-sm focus:border-primary focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50 disabled:opacity-50 disabled:cursor-not-allowed',
         wrapper: 'inline-flex flex-col',
         dropdownWrapper: 'relative z-10',
         dropdown: 'origin-top-left absolute left-0 w-56 rounded shadow mt-1',

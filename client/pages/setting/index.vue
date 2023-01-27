@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 text-tertiary lg:px-40 lg:py-10">
+  <div class="p-5 lg:px-40 lg:py-10">
     <section>
       <ul class="flex">
         <NuxtLink

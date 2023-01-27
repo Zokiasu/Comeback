@@ -61,7 +61,6 @@
           rounded-none rounded-r
           bg-gray-500 bg-opacity-20
           pl-2
-          text-tertiary
           placeholder-tertiary
           focus:outline-none
         "
@@ -104,19 +103,11 @@
         v-for="(release, index) in releases"
         :key="index"
         style="background-color: #6b728033"
-        class="
-          relative
-          flex flex-col
-          overflow-hidden
-          rounded-sm
-          p-3
-          text-tertiary
-        "
+        class="relative flex flex-col overflow-hidden rounded-sm p-3"
       >
-        <span
-          class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2 text-tertiary"
-          >{{ index }}</span
-        >
+        <span class="absolute bottom-0 right-0 z-50 bg-gray-900 px-2">{{
+          index
+        }}</span>
         <div class="right-2 top-3 mb-2 flex space-x-2 2xl:absolute 2xl:mb-0">
           <NuxtLink :to="`/edit/release/${release.id}`" target="_blank"
             ><img
@@ -234,104 +225,6 @@ export default {
       maxObjectDisplay: 20,
       enough: false,
     }
-  },
-
-  computed: {
-    userId() {
-      const utmp = this.$store.state.dataUser
-      return utmp.id
-    },
-
-    adminCheck() {
-      return this.adminChecker()
-    },
-  },
-
-  methods: {
-    infiniteScroll($state) {
-      let artTmp = []
-      setTimeout(() => {
-        artTmp = artTmp.concat(this.releases)
-        this.$axios
-          .get(
-            `https://comeback-api.herokuapp.com/releases/full?sortby=date&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
-          )
-          .then((response) => {
-            if (response.data) {
-              artTmp = artTmp.concat(response.data)
-              this.releases = [...new Set(artTmp)]
-              this.maxObjectDisplay = this.maxObjectDisplay + 20
-              $state.loaded()
-            } else if (!response.data && !artTmp && this.search) {
-              this.enough = true
-              $state.complete()
-              this.releases = []
-            } else {
-              this.enough = true
-              $state.complete()
-            }
-          })
-          .catch((error) => {
-            // eslint-disable-next-line no-console
-            console.log(error)
-          })
-      }, 500)
-    },
-
-    async updateDateList() {
-      let artTmp = []
-      this.maxObjectDisplay = 0
-      const { data: response } = await this.$axios.get(
-        `https://comeback-api.herokuapp.com/releases/full?sortby=date&name=%${this.search}%&op=ilike&limit=20&offset=${this.maxObjectDisplay}`
-      )
-      if (response) {
-        artTmp = artTmp.concat(response)
-        this.releases = [...new Set(artTmp)] // Remove all double entry
-        this.maxObjectDisplay = this.maxObjectDisplay + 20
-        if (response.length < 20) {
-          this.enough = true
-        }
-      } else {
-        this.enough = true
-      }
-    },
-
-    async test() {
-      const { data: tests } = await this.$axios.get(
-        `https://comeback-api.herokuapp.com/releases`
-      )
-      tests.forEach(async (element) => {
-        await this.$axios.delete(
-          `https://comeback-api.herokuapp.com/releases/${element.id}`
-        )
-      })
-    },
-
-    removeRelease(id, object, index) {
-      this.$axios
-        .delete(`https://comeback-api.herokuapp.com/releases/${id}`, object)
-        .then((response) => {
-          this.releases.splice(index, 1)
-        })
-    },
-
-    async adminChecker() {
-      const that = this
-      await this.$fire.auth.onAuthStateChanged(async function (user) {
-        if (user !== null) {
-          const userData = await that.$axios.$get(
-            `https://comeback-api.herokuapp.com/users/${user.uid}`
-          )
-          if (userData.role !== 'NONE') {
-            return true
-          } else {
-            return false
-          }
-        } else {
-          return false
-        }
-      })
-    },
   },
 }
 </script>

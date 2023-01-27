@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-tertiary">
     <header
       class="
         animate__animated animate__fadeInDown
@@ -12,7 +12,7 @@
       <MenuNavigation ref="menu" class="z-50" />
     </header>
     <main>
-      <Nuxt class="text-tertiary" />
+      <Nuxt />
     </main>
   </div>
 </template>

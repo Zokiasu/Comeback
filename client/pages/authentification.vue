@@ -115,7 +115,6 @@
                 px-4
                 text-sm
                 font-medium
-                text-tertiary
                 focus:outline-none
                 focus:ring-2
                 focus:ring-red-500
@@ -128,7 +127,7 @@
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
-                  class="h-5 w-5 text-tertiary group-hover:text-red-400"
+                  class="h-5 w-5 group-hover:text-red-400"
                 >
                   <path
                     fill-rule="evenodd"

@@ -6,7 +6,6 @@
       rounded
       px-3
       py-2
-      text-tertiary
       transition
       duration-500
       ease-in-out

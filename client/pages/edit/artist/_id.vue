@@ -1,20 +1,13 @@
 <template>
   <div class="flex flex-col p-5 sm:mx-auto container">
     <div class="mx-auto w-full rounded-lg bg-black-one p-5 lg:max-w-full">
-      <h2 class="mb-3 text-3xl font-semibold text-tertiary">Edit Artist</h2>
+      <h2 class="mb-3 text-3xl font-semibold">Edit Artist</h2>
       <div class="flex flex-wrap gap-5">
         <!-- Picture -->
         <div class="w-full">
           <label
             for="name"
-            class="
-              mb-2
-              block
-              font-semibold
-              uppercase
-              tracking-wide
-              text-tertiary
-            "
+            class="mb-2 block font-semibold uppercase tracking-wide"
           >
             Picture*
           </label>
@@ -27,16 +20,7 @@
             <button
               :disabled="isUploadingImage"
               type="button"
-              class="
-                h-full
-                w-full
-                rounded
-                bg-red-one
-                py-2
-                px-4
-                text-tertiary
-                md:w-auto
-              "
+              class="h-full w-full rounded bg-red-one py-2 px-4 md:w-auto"
               @click="launchImageFile"
             >
               Upload
@@ -56,14 +40,7 @@
           <div class="w-full">
             <label
               for="name"
-              class="
-                mb-2
-                block
-                font-semibold
-                uppercase
-                tracking-wide
-                text-tertiary
-              "
+              class="mb-2 block font-semibold uppercase tracking-wide"
             >
               Name*
             </label>
@@ -91,14 +68,7 @@
           <div class="w-full">
             <label
               for="ytb-music-id"
-              class="
-                mb-2
-                block
-                font-semibold
-                uppercase
-                tracking-wide
-                text-tertiary
-              "
+              class="mb-2 block font-semibold uppercase tracking-wide"
             >
               Youtube Music Id*
             </label>
@@ -127,14 +97,7 @@
         <div class="w-full">
           <label
             for="type"
-            class="
-              mb-2
-              block
-              font-semibold
-              uppercase
-              tracking-wide
-              text-tertiary
-            "
+            class="mb-2 block font-semibold uppercase tracking-wide"
           >
             Type
           </label>
@@ -167,14 +130,7 @@
           <div v-if="type !== 'SOLO'" class="w-full">
             <label
               for="members"
-              class="
-                mb-2
-                block
-                font-semibold
-                uppercase
-                tracking-wide
-                text-tertiary
-              "
+              class="mb-2 block font-semibold uppercase tracking-wide"
               >Members or Subunits</label
             >
             <multiselect
@@ -194,14 +150,7 @@
           <div class="w-full">
             <label
               for="groups"
-              class="
-                mb-2
-                block
-                font-semibold
-                uppercase
-                tracking-wide
-                text-tertiary
-              "
+              class="mb-2 block font-semibold uppercase tracking-wide"
             >
               Groups
             </label>
@@ -222,14 +171,7 @@
         <div class="w-full">
           <label
             for="styles"
-            class="
-              mb-2
-              block
-              font-semibold
-              uppercase
-              tracking-wide
-              text-tertiary
-            "
+            class="mb-2 block font-semibold uppercase tracking-wide"
           >
             Styles
           </label>
@@ -250,14 +192,7 @@
         <div class="w-full">
           <label
             for="description"
-            class="
-              mb-2
-              block
-              font-semibold
-              uppercase
-              tracking-wide
-              text-tertiary
-            "
+            class="mb-2 block font-semibold uppercase tracking-wide"
           >
             Description
           </label>
@@ -287,14 +222,7 @@
           <div class="w-full">
             <label
               for="description"
-              class="
-                mb-2
-                block
-                font-semibold
-                uppercase
-                tracking-wide
-                text-tertiary
-              "
+              class="mb-2 block font-semibold uppercase tracking-wide"
             >
               Social Media Link
             </label>
@@ -329,14 +257,7 @@
           <div class="w-full">
             <label
               for="description"
-              class="
-                mb-2
-                block
-                font-semibold
-                uppercase
-                tracking-wide
-                text-tertiary
-              "
+              class="mb-2 block font-semibold uppercase tracking-wide"
             >
               Streaming Platforms Link
             </label>
@@ -372,14 +293,7 @@
         <div class="w-full">
           <label
             for="source"
-            class="
-              mb-2
-              block
-              font-semibold
-              uppercase
-              tracking-wide
-              text-tertiary
-            "
+            class="mb-2 block font-semibold uppercase tracking-wide"
           >
             Source*
           </label>
@@ -404,7 +318,7 @@
           />
         </div>
         <button
-          class="w-full rounded bg-red-one py-3 font-semibold text-tertiary"
+          class="w-full rounded bg-red-one py-3 font-semibold"
           @click="updateArtist()"
         >
           Update Artist
