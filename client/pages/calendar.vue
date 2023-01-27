@@ -99,7 +99,7 @@
         />
       </transition-group>
       <div v-if="(filteredList.length < 1) & !loading">
-        <p class="w-full rounded bg-gray-500 p-5 text-center text-xl">
+        <p class="w-full rounded bg-quinary p-5 text-center text-xl">
           Oops... {{ filteredList.length }} releases found
         </p>
       </div>

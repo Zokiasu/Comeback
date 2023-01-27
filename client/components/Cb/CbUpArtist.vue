@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-3 rounded bg-black-four p-5">
-    <div v-if="originalArtist" class="space-y-3 rounded bg-gray-500/30 p-5">
+    <div v-if="originalArtist" class="space-y-3 rounded bg-quinary/30 p-5">
       <div class="flex gap-5">
         <img
           v-if="originalArtist.image"
@@ -12,7 +12,7 @@
             {{ originalArtist.name }}
           </p>
           <div v-if="originalArtist.type">
-            <p class="rounded bg-gray-500 px-2 py-1 text-xs">
+            <p class="rounded bg-quinary px-2 py-1 text-xs">
               {{ originalArtist.type }}
             </p>
           </div>
@@ -22,7 +22,7 @@
               <li
                 v-for="(platform, index) in originalArtist.platforms"
                 :key="`originalArtist_platform_${index}`"
-                class="rounded bg-gray-500 px-3 py-1"
+                class="rounded bg-quinary px-3 py-1"
               >
                 <p>{{ platform }}</p>
               </li>
@@ -34,7 +34,7 @@
               <li
                 v-for="(social, index) in originalArtist.socials"
                 :key="`originalArtist_social_${index}`"
-                class="rounded bg-gray-500 px-3 py-1"
+                class="rounded bg-quinary px-3 py-1"
               >
                 <p>{{ social }}</p>
               </li>
@@ -46,7 +46,7 @@
               <li
                 v-for="(style, index) in originalArtist.styles"
                 :key="`originalArtist_style_${index}`"
-                class="rounded bg-gray-500 px-3 py-1"
+                class="rounded bg-quinary px-3 py-1"
               >
                 <p>{{ style }}</p>
               </li>
@@ -65,7 +65,7 @@
       <h3 class="text-lg font-semibold">{{ name }}</h3>
     </div>
     <div v-if="type">
-      <p class="rounded bg-gray-500 px-2 py-1 text-xs">{{ type }}</p>
+      <p class="rounded bg-quinary px-2 py-1 text-xs">{{ type }}</p>
     </div>
     <div v-if="styles">
       <h3>Styles</h3>
@@ -73,7 +73,7 @@
         <li
           v-for="(style, index) in styles"
           :key="`style_${index}`"
-          class="rounded bg-gray-500 px-3 py-1"
+          class="rounded bg-quinary px-3 py-1"
         >
           <p>{{ style.name }}</p>
         </li>
@@ -89,7 +89,7 @@
         <li
           v-for="(platform, index) in platforms"
           :key="`platform_${index}`"
-          class="rounded bg-gray-500 px-3 py-1"
+          class="rounded bg-quinary px-3 py-1"
         >
           <p>{{ platform }}</p>
         </li>
@@ -101,7 +101,7 @@
         <li
           v-for="(social, index) in socials"
           :key="`social_${index}`"
-          class="rounded bg-gray-500 px-3 py-1"
+          class="rounded bg-quinary px-3 py-1"
         >
           <p>{{ social }}</p>
         </li>
@@ -113,7 +113,7 @@
         <li
           v-for="(group, index) in groups"
           :key="`group_${index}`"
-          class="rounded bg-gray-500 px-3 py-1"
+          class="rounded bg-quinary px-3 py-1"
         >
           <p>{{ group.name }}</p>
         </li>
@@ -125,7 +125,7 @@
         <li
           v-for="(member, index) in members"
           :key="`member_${index}`"
-          class="rounded bg-gray-500 px-3 py-1"
+          class="rounded bg-quinary px-3 py-1"
         >
           <p>{{ member.name }}</p>
         </li>

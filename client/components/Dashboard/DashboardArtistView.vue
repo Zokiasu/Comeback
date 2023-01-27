@@ -110,7 +110,7 @@
 
 <script>
 export default {
-  name: 'ArtistView',
+  name: 'DashboardArtistView',
 
   props: {
     index: {

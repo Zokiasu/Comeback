@@ -9,7 +9,7 @@
         bg-background
       "
     >
-      <MenuNavigation ref="menu" class="z-50" />
+      <LazyMenuNavigation ref="menu" class="z-50" />
     </header>
     <main>
       <Nuxt />

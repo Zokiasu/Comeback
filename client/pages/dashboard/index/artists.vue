@@ -88,7 +88,7 @@
       <LazyDashboardArtistView
         v-for="(artist, index) in filteredList"
         :id="artist.id"
-        :key="index"
+        :key="index + '_artist'"
         :index="index"
         :image="artist.image"
         :name="artist.name"
@@ -122,7 +122,6 @@ export default {
       enough: false,
       onlyGroup: false,
       onlySolo: false,
-      limitedAt: 20,
     }
   },
 
@@ -139,12 +138,14 @@ export default {
 
   async mounted() {
     await this.fetch()
+    console.log(this.artists)
   },
 
   methods: {
     async fetch() {
       this.artists = await this.$fire.firestore
         .collection('artists')
+        .orderBy('name')
         .get()
         .then((snapshot) => {
           const artists = []
@@ -154,8 +155,9 @@ export default {
           return artists
         })
     },
+
     async removeArtist(object, index) {
-      // remove from firebase
+      console.log('removeArtist')
       await this.$fire.firestore
         .collection('artists')
         .doc(object.id)

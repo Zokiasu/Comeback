@@ -1,15 +1,26 @@
 <template>
-  <div class="flex gap-2 rounded bg-gray-200">
+  <div class="flex gap-2 rounded bg-tertiary">
     <input
       id="name"
       v-model="input"
       type="text"
       :placeholder="placeholder"
-      class="block w-full appearance-none rounded bg-gray-200 px-2 py-3 leading-tight text-gray-700 focus:outline-none"
+      class="
+        block
+        w-full
+        appearance-none
+        rounded
+        bg-tertiary
+        px-2
+        py-3
+        leading-tight
+        text-quaternary
+        focus:outline-none
+      "
       @change="updateInput"
     />
     <button class="focus:outline-none" @click="deleteInput()">
-      <icons-close class="h-6 w-6 text-gray-500" />
+      <icons-close class="h-6 w-6 text-quinary" />
     </button>
   </div>
 </template>

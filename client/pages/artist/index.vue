@@ -1,7 +1,7 @@
 <template>
   <div class="mx-auto p-5 md:p-10">
     <div id="searchbar" class="flex w-full justify-start">
-      <div id="search-icon" class="rounded-l bg-gray-500 bg-opacity-20 p-2">
+      <div id="search-icon" class="rounded-l bg-quinary bg-opacity-20 p-2">
         <icons-search v-if="!searchActive" class="h-5 w-5" />
         <icons-cancel v-else class="h-5 w-5" />
       </div>
@@ -13,7 +13,7 @@
         class="
           w-full
           rounded-none rounded-r
-          bg-gray-500 bg-opacity-20
+          bg-quinary bg-opacity-20
           pl-2
           placeholder-tertiary
           focus:outline-none
@@ -55,7 +55,7 @@
           h-10
           w-10
           rounded-full
-          border-4 border-t-4 border-gray-200
+          border-4 border-t-4 border-tertiary
           ease-linear
         "
       ></div>

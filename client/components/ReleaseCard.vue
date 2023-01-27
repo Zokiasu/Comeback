@@ -2,7 +2,7 @@
   <div class="max-w-[10rem] space-y-1">
     <NuxtLink :to="`/release/${id}`">
       <div class="group relative">
-        <div class="rounded-md bg-gray-500">
+        <div class="rounded-md bg-quinary">
           <div
             :ref="'hide_' + name"
             class="
@@ -43,7 +43,7 @@
             top-2
             right-1.5
             rounded
-            bg-gray-500 bg-opacity-80
+            bg-quinary bg-opacity-80
             px-2
             py-0.5
             group-hover:visible
@@ -66,7 +66,7 @@
             bottom-1
             left-1
             rounded
-            bg-gray-500/70
+            bg-quinary/70
             px-2
             py-0.5
             group-hover:visible

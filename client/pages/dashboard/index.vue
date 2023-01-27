@@ -68,6 +68,17 @@
           <p class="mx-auto text-center">News</p>
         </NuxtLink>
         <NuxtLink
+          :to="`/dashboard/styles`"
+          class="flex w-full rounded px-10 py-2"
+          :class="
+            $route.name !== 'dashboard-index-styles'
+              ? 'hover:bg-quinary hover:bg-opacity-70'
+              : 'bg-quinary'
+          "
+        >
+          <p class="mx-auto text-center">Styles</p>
+        </NuxtLink>
+        <NuxtLink
           :to="`/dashboard/users`"
           class="flex w-full rounded px-10 py-2"
           :class="

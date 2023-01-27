@@ -262,7 +262,7 @@ const settings = {
         badge:
           'inline-flex items-center px-3 rounded-full text-xs font-medium leading-4 bg-gray-100 text-gray-800',
         avatar:
-          'inline-flex items-center justify-center h-10 w-10 rounded-full bg-gray-500 overflow-hidden leading-none text-center',
+          'inline-flex items-center justify-center h-10 w-10 rounded-full bg-quinary overflow-hidden leading-none text-center',
       },
     },
   },
@@ -401,7 +401,7 @@ const settings = {
         body: 'p-3',
         header: 'border-gray-100',
         footer: 'bg-gray-100',
-        close: 'bg-gray-100 text-gray-600 hover:bg-gray-200',
+        close: 'bg-gray-100 text-gray-600 hover:bg-tertiary',
         closeIcon: 'fill-current h-4 w-4',
         overlayEnterClass: 'opacity-0',
         overlayEnterActiveClass: 'transition ease-out duration-100',
@@ -447,7 +447,7 @@ const settings = {
         buttons: 'p-3 flex space-x-4 justify-center bg-gray-100 rounded-b',
       },
       classes: {
-        close: 'bg-gray-100 text-gray-600 hover:bg-gray-200',
+        close: 'bg-gray-100 text-gray-600 hover:bg-tertiary',
         closeIcon: 'fill-current h-4 w-4',
         overlay: 'bg-black',
         wrapper: 'z-50 max-w-lg px-3 py-12',
@@ -455,7 +455,7 @@ const settings = {
         body: 'p-3 space-y-3',
         buttons: 'bg-gray-100',
         iconWrapper: 'bg-gray-100',
-        icon: 'text-gray-500',
+        icon: 'text-quinary',
         content: 'w-full flex justify-center flex-col',
         titleWrapper: '',
         title: 'text-lg font-semibold text-center',
@@ -480,7 +480,7 @@ const settings = {
         errorMessage: 'text-primary block text-sm',
         busyWrapper:
           'absolute bg-opacity-50 bg-tertiary flex h-full items-center justify-center left-0 top-0 w-full',
-        busyIcon: 'animate-spin h-6 w-6 fill-current text-gray-500',
+        busyIcon: 'animate-spin h-6 w-6 fill-current text-quinary',
         overlayEnterClass: 'opacity-0',
         overlayEnterActiveClass: 'transition ease-out duration-100',
         overlayEnterToClass: 'opacity-100',
@@ -514,7 +514,7 @@ const settings = {
     props: {
       classes: {
         table:
-          'min-w-full divide-y divide-gray-100 shadow-sm border-gray-200 border',
+          'min-w-full divide-y divide-gray-100 shadow-sm border-tertiary border',
         thead: '',
         theadTr: '',
         theadTh: 'px-3 py-2 font-semibold text-left bg-gray-100 border-b',
@@ -540,11 +540,11 @@ const settings = {
         wrapper:
           'table border-collapse text-center bg-tertiary mx-auto shadow-sm',
         element:
-          'w-8 h-8 border border-gray-200 table-cell hover:border-red-100',
+          'w-8 h-8 border border-tertiary table-cell hover:border-red-100',
         activeElement:
-          'w-8 h-8 border border-gray-200 border-primary table-cell hover:border-red-600',
-        disabledElement: 'w-8 h-8 border border-gray-200 table-cell',
-        ellipsisElement: 'w-8 h-8 border border-gray-200 hidden md:table-cell',
+          'w-8 h-8 border border-tertiary border-primary table-cell hover:border-red-600',
+        disabledElement: 'w-8 h-8 border border-tertiary table-cell',
+        ellipsisElement: 'w-8 h-8 border border-tertiary hidden md:table-cell',
         activeButton:
           'bg-primary w-full h-full hover:bg-red-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
         disabledButton:
@@ -563,9 +563,9 @@ const settings = {
           activeButton:
             'border border-primary bg-primary w-full h-full rounded-full hover:bg-red-600 transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
           disabledButton:
-            'border border-gray-200  opacity-25 w-full h-full rounded-full cursor-not-allowed transition duration-100 ease-in-out',
+            'border border-tertiary  opacity-25 w-full h-full rounded-full cursor-not-allowed transition duration-100 ease-in-out',
           button:
-            'border border-gray-200 hover:bg-red-100 hover:border-red-100 rounded-full w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
+            'border border-tertiary hover:bg-red-100 hover:border-red-100 rounded-full w-full h-full transition duration-100 ease-in-out focus:ring-2 focus:ring-primary focus:outline-none focus:ring-opacity-50',
           ellipsis: '',
         },
       },

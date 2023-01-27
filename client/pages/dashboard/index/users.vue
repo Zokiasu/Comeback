@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-5 p-5 px-10">
+  <div class="space-y-5 p-5 px-10 grid grid-cols-1 lg:grid-cols-2">
     <dashboard-user-view
       v-for="(user, index) in users"
       :id="user.id"

@@ -20,7 +20,7 @@
             <button
               :disabled="isUploadingImage"
               type="button"
-              class="h-full w-full rounded bg-red-one py-2 px-4 md:w-auto"
+              class="h-full w-full rounded bg-primary py-2 px-4 md:w-auto"
               @click="launchImageFile"
             >
               Upload
@@ -54,13 +54,13 @@
                 w-full
                 appearance-none
                 rounded
-                border border-gray-200
-                bg-gray-200
+                border border-tertiary
+                bg-tertiary
                 py-3
                 px-4
                 leading-tight
-                text-gray-700
-                focus:border-gray-500 focus:bg-tertiary focus:outline-none
+                text-quaternary
+                focus:border-quinary focus:bg-tertiary focus:outline-none
               "
             />
           </div>
@@ -82,13 +82,13 @@
                 w-full
                 appearance-none
                 rounded
-                border border-gray-200
-                bg-gray-200
+                border border-tertiary
+                bg-tertiary
                 py-3
                 px-4
                 leading-tight
-                text-gray-700
-                focus:border-gray-500 focus:bg-tertiary focus:outline-none
+                text-quaternary
+                focus:border-quinary focus:bg-tertiary focus:outline-none
               "
             />
           </div>
@@ -109,13 +109,13 @@
               block
               w-full
               rounded
-              border border-gray-200
-              bg-gray-200
+              border border-tertiary
+              bg-tertiary
               py-3
               px-4
               leading-tight
-              text-gray-700
-              focus:border-gray-500 focus:bg-tertiary focus:outline-none
+              text-quaternary
+              focus:border-quinary focus:bg-tertiary focus:outline-none
             "
           >
             <option value="SOLO">Solo</option>
@@ -203,13 +203,13 @@
               w-full
               appearance-none
               rounded
-              border border-gray-200
-              bg-gray-200
+              border border-tertiary
+              bg-tertiary
               py-3
               px-4
               leading-tight
-              text-gray-700
-              focus:border-gray-500 focus:bg-tertiary focus:outline-none
+              text-quaternary
+              focus:border-quinary focus:bg-tertiary focus:outline-none
             "
           />
         </div>
@@ -304,19 +304,19 @@
               w-full
               appearance-none
               rounded
-              border border-gray-200
-              bg-gray-200
+              border border-tertiary
+              bg-tertiary
               py-3
               px-4
               leading-tight
-              text-gray-700
-              focus:border-gray-500 focus:bg-tertiary focus:outline-none
+              text-quaternary
+              focus:border-quinary focus:bg-tertiary focus:outline-none
             "
           />
         </div>
         <div class="flex w-full justify-end">
           <button
-            class="rounded bg-red-one px-4 py-2 font-semibold"
+            class="rounded bg-primary px-4 py-2 font-semibold"
             @click="createArtist()"
           >
             Send Artist

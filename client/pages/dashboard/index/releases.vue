@@ -8,13 +8,7 @@
     >
       <div
         id="search-icon"
-        class="
-          rounded-none rounded-l
-          bg-gray-500 bg-opacity-20
-          py-1.5
-          pr-1
-          pl-2
-        "
+        class="rounded-none rounded-l bg-quinary bg-opacity-20 py-1.5 pr-1 pl-2"
       >
         <svg
           class=""
@@ -59,7 +53,7 @@
         class="
           w-full
           rounded-none rounded-r
-          bg-gray-500 bg-opacity-20
+          bg-quinary bg-opacity-20
           pl-2
           placeholder-tertiary
           focus:outline-none
@@ -172,7 +166,7 @@
           <span
             v-for="(style, indexStyle) in release.styles"
             :key="indexStyle"
-            class="rounded bg-gray-500 p-1 px-2 text-xs"
+            class="rounded bg-quinary p-1 px-2 text-xs"
           >
             {{ style.name }}
           </span>

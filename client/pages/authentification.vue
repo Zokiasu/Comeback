@@ -28,7 +28,7 @@
                   px-3
                   py-2
                   text-gray-900
-                  placeholder-gray-500
+                  placeholder-quinary
                   focus:z-10
                   focus:border-red-500
                   focus:outline-none
@@ -56,7 +56,7 @@
                   px-3
                   py-2
                   text-gray-900
-                  placeholder-gray-500
+                  placeholder-quinary
                   focus:z-10
                   focus:border-red-500
                   focus:outline-none
@@ -87,7 +87,7 @@
                   px-3
                   py-2
                   text-gray-900
-                  placeholder-gray-500
+                  placeholder-quinary
                   focus:z-10
                   focus:border-red-500
                   focus:outline-none

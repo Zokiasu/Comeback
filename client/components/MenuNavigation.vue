@@ -131,7 +131,7 @@
                 class="
                   flex
                   rounded-full
-                  bg-gray-500 bg-opacity-10
+                  bg-quinary bg-opacity-10
                   text-sm
                   focus:outline-none
                   focus:ring-2
