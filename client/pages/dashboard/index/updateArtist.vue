@@ -82,7 +82,7 @@ export default {
           }
 
           if (groups?.length) {
-            this.firestoreAddGroupToMember(
+            this.firestoreAddGroupToArtist(
               doc.data().id,
               doc.data().name,
               doc.data().image,
@@ -106,7 +106,7 @@ export default {
         })
     },
 
-    async firestoreAddMemberToGroup(
+    firestoreAddMemberToGroupX(
       artistId,
       artistName,
       artistImage,
@@ -114,7 +114,6 @@ export default {
       members
     ) {
       // ajouter les membres aux groupes
-      await this.deleteMember(artistId)
       members.forEach(async (member) => {
         await this.$fire.firestore
           .collection('artists')
@@ -129,7 +128,6 @@ export default {
               image: artistImage,
               type: artistType,
             }
-            await this.deleteGroup(member.id)
             await this.$fire.firestore
               .collection('artists')
               .doc(member.id)
@@ -140,14 +138,85 @@ export default {
       })
     },
 
-    async firestoreAddGroupToMember(
+    async firestoreAddMemberToGroup(
+      artistId,
+      artistName,
+      artistImage,
+      artistType,
+      members
+    ) {
+      // Récupération des membres actuels de l'artiste
+      const currentMembers = await this.$fire.firestore
+        .collection('artists')
+        .doc(artistId)
+        .collection('members')
+        .get()
+
+      // Tableau contenant les membres actuels
+      const currentMembersArray = currentMembers.docs.map((doc) => doc.data())
+
+      // Parcours des membres actuels
+      currentMembersArray.forEach(async (currentMember) => {
+        // Vérification si le membre actuel est présent dans les nouveaux membres
+        if (!members.some((member) => member.id === currentMember.id)) {
+          // Suppression du membre de la base de données
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artistId)
+            .collection('members')
+            .doc(currentMember.id)
+            .delete()
+        } else if (members.length === 0) {
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artistId)
+            .collection('members')
+            .doc(currentMember.id)
+            .delete()
+        }
+      })
+
+      // Parcours des nouveaux membres
+      members.forEach(async (member) => {
+        // Vérification si le membre nouveau n'est pas présent dans les membres actuels
+        if (
+          !currentMembersArray.some(
+            (currentMember) => currentMember.id === member.id
+          )
+        ) {
+          // Ajout du membre à la base de données
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artistId)
+            .collection('members')
+            .doc(member.id)
+            .set(member)
+            .then(async () => {
+              // ajout du groupe au membre
+              const members = {
+                id: artistId,
+                name: artistName,
+                image: artistImage,
+                type: artistType,
+              }
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(member.id)
+                .collection('groups')
+                .doc(artistId)
+                .set(members)
+            })
+        }
+      })
+    },
+
+    firestoreAddGroupToMemberZ(
       artistId,
       artistName,
       artistImage,
       artistType,
       groups
     ) {
-      await this.deleteGroup(artistId)
       groups.forEach(async (group) => {
         await this.$fire.firestore
           .collection('artists')
@@ -162,7 +231,6 @@ export default {
               image: artistImage,
               type: artistType,
             }
-            this.deleteMember(group.id)
             await this.$fire.firestore
               .collection('artists')
               .doc(group.id)
@@ -170,6 +238,78 @@ export default {
               .doc(artistId)
               .set(members)
           })
+      })
+    },
+
+    async firestoreAddGroupToArtist(
+      artistId,
+      artistName,
+      artistImage,
+      artistType,
+      groups
+    ) {
+      // Récupération des groupes actuels de l'artiste
+      const currentGroups = await this.$fire.firestore
+        .collection('artists')
+        .doc(artistId)
+        .collection('groups')
+        .get()
+
+      // Tableau contenant les groupes actuels
+      const currentGroupsArray = currentGroups.docs.map((doc) => doc.data())
+
+      // Parcours des groupes actuels
+      currentGroupsArray.forEach(async (currentGroup) => {
+        // Vérification si le groupe actuel est présent dans les nouveaux groupes
+        if (!groups.some((group) => group.id === currentGroup.id)) {
+          // Suppression du groupe de la base de données
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artistId)
+            .collection('groups')
+            .doc(currentGroup.id)
+            .delete()
+        } else if (groups.length === 0) {
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artistId)
+            .collection('groups')
+            .doc(currentGroup.id)
+            .delete()
+        }
+      })
+
+      // Parcours des nouveaux groupes
+      groups.forEach(async (group) => {
+        // Vérification si le groupe nouveau n'est pas présent dans les groupes actuels
+        if (
+          !currentGroupsArray.some(
+            (currentGroup) => currentGroup.id === group.id
+          )
+        ) {
+          // Ajout du groupe à la base de données
+          await this.$fire.firestore
+            .collection('artists')
+            .doc(artistId)
+            .collection('groups')
+            .doc(group.id)
+            .set(group)
+            .then(async () => {
+              // ajout du membre au groupe
+              const members = {
+                id: artistId,
+                name: artistName,
+                image: artistImage,
+                type: artistType,
+              }
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(group.id)
+                .collection('members')
+                .doc(artistId)
+                .set(members)
+            })
+        }
       })
     },
 
