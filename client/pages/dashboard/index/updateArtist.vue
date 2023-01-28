@@ -4,7 +4,6 @@
       v-for="(artist, index) in artistList"
       :id="artist.id"
       :key="`artist_updated_${index}`"
-      :id-pending="artist.idPending"
       :id-youtube-music="artist.idYoutubeMusic"
       :name="artist.name"
       :type="artist.type"
@@ -28,50 +27,59 @@ export default {
   layout: 'dashboard',
 
   async asyncData({ $fire }) {
-    const firstStepArtist = $fire.functions.httpsCallable(
-      'getPendingUpdateArtist'
-    )
-    const firstStepGroupArtist = $fire.functions.httpsCallable(
-      'getGroupsPendingUpdateArtist'
-    )
-    const firstStepMembersArtist = $fire.functions.httpsCallable(
-      'getMembersPendingUpdateArtist'
-    )
-
-    const secondStepArtist = await firstStepArtist().then(async (res) => {
-      await res.data.artists.map((element) => {
-        return firstStepMembersArtist({ idPending: element.idPending }).then(
-          (res) => {
-            element.members = res.data.members
-            firstStepGroupArtist({ idPending: element.idPending }).then(
-              (res2) => {
-                element.groups = res2.data.groups
-              }
-            )
-          }
-        )
+    const artistList = await $fire.firestore
+      .collection('updateArtistPending')
+      .get()
+      .then((querySnapshot) => {
+        return querySnapshot.docs.map((doc) => doc.data())
       })
 
-      return res.data.artists
+    artistList.forEach(async (artist) => {
+      if (artist.type === 'group') {
+        artist.members = await $fire.firestore
+          .collection('updateArtistPending')
+          .doc(artist.id)
+          .collection('members')
+          .get()
+          .then((querySnapshot) => {
+            return querySnapshot.docs.map((doc) => doc.data())
+          })
+      }
+
+      artist.groups = await $fire.firestore
+        .collection('updateArtistPending')
+        .doc(artist.id)
+        .collection('groups')
+        .get()
+        .then((querySnapshot) => {
+          return querySnapshot.docs.map((doc) => doc.data())
+        })
+      console.log('artist', artist)
     })
-    return { artistList: secondStepArtist }
+
+    return {
+      artistList,
+    }
   },
 
   methods: {
     async verify(artist, index) {
-      const idPending = artist.idPending
+      console.log('verify')
+
       const groups = artist.groups
       const members = artist.members
 
-      delete artist.idPending
-      delete artist.source
-
+      console.log('members', members)
+      console.log('groups', groups)
+      // recupère les données originel de l'artiste
       await this.$fire.firestore
         .collection('artists')
         .doc(artist.id)
         .get()
         .then(async (doc) => {
-          if (members?.length) {
+          // on vérifie si il y a une modification sur les membres
+          if (members) {
+            console.log('members to update')
             this.firestoreAddMemberToGroup(
               doc.data().id,
               doc.data().name,
@@ -80,8 +88,9 @@ export default {
               members
             )
           }
-
-          if (groups?.length) {
+          // on vérifie si il y a une modification sur les groupes
+          if (groups) {
+            console.log('groups to update')
             this.firestoreAddGroupToArtist(
               doc.data().id,
               doc.data().name,
@@ -90,6 +99,7 @@ export default {
               groups
             )
           }
+          // on met à jour les données de l'artiste
           await this.$fire.firestore
             .collection('artists')
             .doc(artist.id)
@@ -97,45 +107,13 @@ export default {
             .then(async () => {
               await this.$fire.firestore
                 .collection('updateArtistPending')
-                .doc(idPending)
+                .doc(artist.id)
                 .delete()
                 .then(() => {
                   this.artistList.splice(index, 1)
                 })
             })
         })
-    },
-
-    firestoreAddMemberToGroupX(
-      artistId,
-      artistName,
-      artistImage,
-      artistType,
-      members
-    ) {
-      // ajouter les membres aux groupes
-      members.forEach(async (member) => {
-        await this.$fire.firestore
-          .collection('artists')
-          .doc(artistId)
-          .collection('members')
-          .doc(member.id)
-          .set(member)
-          .then(async () => {
-            const groupMembers = {
-              id: artistId,
-              name: artistName,
-              image: artistImage,
-              type: artistType,
-            }
-            await this.$fire.firestore
-              .collection('artists')
-              .doc(member.id)
-              .collection('groups')
-              .doc(artistId)
-              .set(groupMembers)
-          })
-      })
     },
 
     async firestoreAddMemberToGroup(
@@ -145,6 +123,7 @@ export default {
       artistType,
       members
     ) {
+      console.log('firestoreAddMemberToGroup')
       // Récupération des membres actuels de l'artiste
       const currentMembers = await this.$fire.firestore
         .collection('artists')
@@ -159,6 +138,7 @@ export default {
       currentMembersArray.forEach(async (currentMember) => {
         // Vérification si le membre actuel est présent dans les nouveaux membres
         if (!members.some((member) => member.id === currentMember.id)) {
+          console.log('member to delete', currentMember.name)
           // Suppression du membre de la base de données
           await this.$fire.firestore
             .collection('artists')
@@ -166,13 +146,32 @@ export default {
             .collection('members')
             .doc(currentMember.id)
             .delete()
+            .then(async () => {
+              // Suppression du groupe du membre
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(currentMember.id)
+                .collection('groups')
+                .doc(artistId)
+                .delete()
+            })
         } else if (members.length === 0) {
+          // Si la liste ne contient aucun membre supprimer tous les membres existants
           await this.$fire.firestore
             .collection('artists')
             .doc(artistId)
             .collection('members')
             .doc(currentMember.id)
             .delete()
+            .then(async () => {
+              // Suppression du groupe du membre
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(currentMember.id)
+                .collection('groups')
+                .doc(artistId)
+                .delete()
+            })
         }
       })
 
@@ -210,37 +209,6 @@ export default {
       })
     },
 
-    firestoreAddGroupToMemberZ(
-      artistId,
-      artistName,
-      artistImage,
-      artistType,
-      groups
-    ) {
-      groups.forEach(async (group) => {
-        await this.$fire.firestore
-          .collection('artists')
-          .doc(artistId)
-          .collection('groups')
-          .doc(group.id)
-          .set(group)
-          .then(async () => {
-            const members = {
-              id: artistId,
-              name: artistName,
-              image: artistImage,
-              type: artistType,
-            }
-            await this.$fire.firestore
-              .collection('artists')
-              .doc(group.id)
-              .collection('members')
-              .doc(artistId)
-              .set(members)
-          })
-      })
-    },
-
     async firestoreAddGroupToArtist(
       artistId,
       artistName,
@@ -248,6 +216,7 @@ export default {
       artistType,
       groups
     ) {
+      console.log('firestoreAddGroupToArtist')
       // Récupération des groupes actuels de l'artiste
       const currentGroups = await this.$fire.firestore
         .collection('artists')
@@ -257,10 +226,11 @@ export default {
 
       // Tableau contenant les groupes actuels
       const currentGroupsArray = currentGroups.docs.map((doc) => doc.data())
-
+      console.log('currentGroupsArray', currentGroupsArray)
       // Parcours des groupes actuels
       currentGroupsArray.forEach(async (currentGroup) => {
         // Vérification si le groupe actuel est présent dans les nouveaux groupes
+        console.log('groups length', groups.length)
         if (!groups.some((group) => group.id === currentGroup.id)) {
           // Suppression du groupe de la base de données
           await this.$fire.firestore
@@ -269,13 +239,32 @@ export default {
             .collection('groups')
             .doc(currentGroup.id)
             .delete()
-        } else if (groups.length === 0) {
+            .then(async () => {
+              // Suppression du groupe du membre
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(currentGroup.id)
+                .collection('members')
+                .doc(artistId)
+                .delete()
+            })
+        } else if (groups.length < 1) {
+          console.log('group to delete', currentGroup.name)
           await this.$fire.firestore
             .collection('artists')
             .doc(artistId)
             .collection('groups')
             .doc(currentGroup.id)
             .delete()
+            .then(async () => {
+              // Suppression du groupe du membre
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(currentGroup.id)
+                .collection('members')
+                .doc(artistId)
+                .delete()
+            })
         }
       })
 

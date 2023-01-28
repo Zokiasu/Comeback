@@ -319,22 +319,54 @@ export default {
       .then((doc) => {
         return doc.data()
       })
+
+    const members = await $fire.firestore
+      .collection('artists')
+      .doc(params.id)
+      .collection('members')
+      .get()
+      .then((snapshot) => {
+        const members = []
+        snapshot.forEach((doc) => {
+          const member = doc.data()
+          member.id = doc.id
+          members.push(member)
+        })
+        return members
+      })
+
+    const groups = await $fire.firestore
+      .collection('artists')
+      .doc(params.id)
+      .collection('groups')
+      .get()
+      .then((snapshot) => {
+        const groups = []
+        snapshot.forEach((doc) => {
+          const group = doc.data()
+          group.id = doc.id
+          groups.push(group)
+        })
+        return groups
+      })
+
+    return {
+      name: artist.name,
+      image: artist.image,
+      type: artist.type,
+      description: artist.description,
+      idYoutubeMusic: artist.idYoutubeMusic,
+      socials: artist.socials,
+      platforms: artist.platforms,
+      styles: artist.styles,
+
+      members,
+      groups,
+    }
   },
 
   data() {
     return {
-      name: null,
-      image:
-        'https://firebasestorage.googleapis.com/v0/b/comeback-65643.appspot.com/o/images%2Freleases.png?alt=media&token=e4b0ae0c-3a5d-4ecd-a745-c4439811dcce',
-      type: 'SOLO',
-      description: null,
-      idYoutubeMusic: null,
-      socials: [],
-      platforms: [],
-      members: [],
-      groups: [],
-      styles: [],
-
       dataToUpdate: {},
 
       // general
@@ -407,11 +439,22 @@ export default {
   },
 
   mounted() {
-    this.fetchArtist()
-    this.fetchMembersFromArtist()
-    this.fetchGroupsFromArtist()
+    // this.fetchArtist()
+    // this.fetchMembersFromArtist()
+    // this.fetchGroupsFromArtist()
     this.fetchArtistList()
     this.fetchStyleList()
+
+    // console.log('name', this.name)
+    // console.log('image', this.image)
+    // console.log('type', this.type)
+    // console.log('description', this.description)
+    // console.log('idYoutubeMusic', this.idYoutubeMusic)
+    // console.log('socials', this.socials)
+    // console.log('platforms', this.platforms)
+    // console.log('styles', this.styles)
+    // console.log('members', this.members)
+    // console.log('groups', this.groups)
   },
 
   methods: {
@@ -566,41 +609,50 @@ export default {
           }
         )
       } else {
+        this.dataToUpdate.id = this.$route.params.id
         const artistData = this.dataToUpdate
 
         console.log('artistData', artistData)
-        if (this.groupListModified) console.log('members', this.members)
-        if (this.memberListModified) console.log('groups', this.groups)
+        if (this.memberListModified) console.log('members', this.members)
+        if (this.groupListModified) console.log('groups', this.groups)
 
         await this.$fire.firestore
           .collection('updateArtistPending')
-          .add(artistData)
+          .doc(this.$route.params.id)
+          .set(artistData)
           .then((docRef) => {
-            const generatedId = docRef.id
-            console.log('Generated Id: ', generatedId)
+            // const generatedId = docRef.id
+            // console.log('Generated Id: ', generatedId)
             this.$toasted.success('Artist updated', {
               duration: 5000,
               position: 'top-center',
             })
-            if (this.groupListModified) {
+            if (this.memberListModified) {
               this.members.forEach(async (member) => {
                 console.log('member', member)
                 await this.$fire.firestore
                   .collection('updateArtistPending')
-                  .doc(generatedId)
+                  .doc(this.$route.params.id)
                   .collection('members')
                   .doc(member.id)
                   .set(member)
+                  .then(() => {
+                    console.log('member added')
+                  })
               })
             }
-            if (this.memberListModified) {
+            if (this.groupListModified) {
               this.groups.forEach(async (group) => {
+                console.log('group', group)
                 await this.$fire.firestore
                   .collection('updateArtistPending')
-                  .doc(generatedId)
+                  .doc(this.$route.params.id)
                   .collection('groups')
                   .doc(group.id)
                   .set(group)
+                  .then(() => {
+                    console.log('group added')
+                  })
               })
             }
           })
@@ -612,82 +664,6 @@ export default {
             })
           })
       }
-      // if (
-      //   this.name === '' ||
-      //   this.idYoutubeMusic === ''
-      // ) {
-      //   this.$toasted.error(
-      //     'Please fill all fields before with * before send an artist',
-      //     { duration: 5000, position: 'top-center' }
-      //   )
-      //   return
-      // }
-
-      // if (this.newStyleAdded) {
-      //   const updateStyle =
-      //     this.$fire.functions.httpsCallable('updateListStyle')
-      //   updateStyle({ styles: this.styleList })
-      //     .then(() => {
-      //       this.$toasted.success('Styles updated', {
-      //         duration: 5000,
-      //         position: 'top-center',
-      //       })
-      //     })
-      //     .catch(() => {
-      //       this.$toasted.error('Error updating styles', {
-      //         duration: 5000,
-      //         position: 'top-center',
-      //       })
-      //     })
-      // }
-
-      // this.dataToUpdate.idPending =
-      //   this.$route.params.id + '-' + this.GET_USER().uid
-      // this.dataToUpdate.id = this.$route.params.id
-
-      // const updateArtist = this.$fire.functions.httpsCallable(
-      //   'createPendingUpdateArtist'
-      // )
-      // updateArtist(this.dataToUpdate)
-      //   .then(async (result) => {
-      //     const addGroupToPending = this.$fire.functions.httpsCallable(
-      //       'addPendingGroupsArtist'
-      //     )
-      //     await this.groups.map(async (group) => {
-      //       await addGroupToPending({
-      //         idPending: this.$route.params.id + '-' + this.GET_USER().uid,
-      //         group: {
-      //           id: group.id,
-      //           image: group.image,
-      //           name: group.name,
-      //           type: group.type,
-      //         },
-      //       })
-      //     })
-      //     const addMemberToPending = this.$fire.functions.httpsCallable(
-      //       'addPendingMembersArtist'
-      //     )
-      //     await this.members.map(async (member) => {
-      //       await addMemberToPending({
-      //         idPending: this.$route.params.id + '-' + this.GET_USER().uid,
-      //         member: {
-      //           id: member.id,
-      //           image: member.image,
-      //           name: member.name,
-      //           type: member.type,
-      //         },
-      //       })
-      //     })
-      //     this.$toasted.success(
-      //       'Thank you, Your update have been sent for verification',
-      //       { duration: 5000, position: 'top-center' }
-      //     )
-      //     this.$router.push('/')
-      //   })
-      //   .catch((error) => {
-      //     // eslint-disable-next-line no-console
-      //     console.log(error)
-      //   })
     },
   },
 }

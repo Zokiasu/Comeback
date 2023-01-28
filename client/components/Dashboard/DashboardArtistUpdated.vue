@@ -132,13 +132,6 @@
             />
             <p>{{ soloMember.name }}</p>
           </nuxt-link>
-          <!-- <artist-card
-            v-for="soloMember in members"
-            :id="soloMember.id"
-            :key="soloMember.id"
-            :image="soloMember.image"
-            :name="soloMember.name"
-          /> -->
         </div>
       </div>
       <div v-if="groups.length > 0" class="space-y-1">
@@ -173,10 +166,6 @@ export default {
 
   props: {
     id: {
-      type: String,
-      required: true,
-    },
-    idPending: {
       type: String,
       required: true,
     },

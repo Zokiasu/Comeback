@@ -159,12 +159,34 @@ export default {
 
     async removeArtist(object, index) {
       console.log('removeArtist')
+      // supprime toute les releases lier à l'artiste
       await this.$fire.firestore
-        .collection('artists')
-        .doc(object.id)
-        .delete()
-        .then(() => {
-          this.fetch()
+        .collection('releases')
+        .where('artistsId', '==', object.id)
+        .get()
+        .then(async (snapshot) => {
+          snapshot.forEach((doc) => {
+            doc.ref.delete()
+          })
+          // supprime de toute les news lier à l'artiste
+          await this.$fire.firestore
+            .collection('news')
+            .get()
+            .then(async (snapshot) => {
+              snapshot.forEach((doc) => {
+                if (doc.data().artist.id === object.id) {
+                  doc.ref.delete()
+                }
+              })
+              // suppression de l'artiste
+              await this.$fire.firestore
+                .collection('artists')
+                .doc(object.id)
+                .delete()
+                .then(() => {
+                  this.fetch()
+                })
+            })
         })
     },
   },
