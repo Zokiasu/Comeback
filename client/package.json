@@ -32,11 +32,9 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.33",
     "nuxt": "^2.2.0",
-    "scrollreveal": "^4.0.9",
     "tailwindcss-filters": "^3.0.0",
     "v-calendar": "^2.2.1",
     "v-click-outside": "^3.1.2",
-    "vue-infinite-loading": "^2.4.5",
     "vue-multiselect": "^2.1.6",
     "vue-tailwind": "^2.3.0"
   },

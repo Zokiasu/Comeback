@@ -224,10 +224,13 @@ export default {
             email: res.user.email,
           })
             .then((result) => {
-              this.$toast.success('Thank you, Your account has been created', {
-                duration: 5000,
-                position: 'top-right',
-              })
+              this.$toasted.success(
+                'Thank you, Your account has been created',
+                {
+                  duration: 5000,
+                  position: 'top-center',
+                }
+              )
               this.$router.push('/')
             })
             .catch((error) => {

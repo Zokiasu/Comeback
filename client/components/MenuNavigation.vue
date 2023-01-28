@@ -156,7 +156,7 @@
                   right-0
                   mt-2
                   w-48
-                  origin-top-right
+                  origin-top-center
                   rounded-md
                   bg-quinary
                   py-1
@@ -231,7 +231,7 @@
           animate__animated animate__fadeInLeft
           absolute
           w-full
-          origin-top-right
+          origin-top-center
           bg-black-one
           sm:hidden
         "
@@ -351,7 +351,7 @@ export default {
 
   // eslint-disable-next-line require-await
   async mounted() {
-    this.$toast.info(
+    this.$toasted.info(
       'This website is currently under development, so you may encounter some bugs while using it.',
       { duration: 3000, position: 'top-left' }
     )
@@ -366,9 +366,9 @@ export default {
         .then(() => {
           this.$router.push('/')
           this.userRole = 'NONE'
-          this.$toast.error('You are log out!', {
+          this.$toasted.error('You are log out!', {
             duration: 3000,
-            position: 'top-right',
+            position: 'top-center',
           })
         })
         .catch((error) => {

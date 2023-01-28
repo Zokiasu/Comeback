@@ -79,7 +79,6 @@ export default {
     '~/plugins/vueMultiselect.js',
     '~/plugins/vClickOutside.js',
     { src: '~/plugins/v-calendar.js', ssr: false },
-    { src: '~/plugins/infiniteloading', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -140,7 +139,7 @@ export default {
   axios: [],
 
   toast: {
-    position: 'top-right',
+    position: 'top-center',
     register: [
       // Register custom toasts
       {

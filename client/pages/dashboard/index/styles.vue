@@ -94,9 +94,9 @@ export default {
         .set(this.generalData)
         .then(() => {
           console.log('Style added')
-          this.$toast.success('Style added', {
+          this.$toasted.success('Style added', {
             duration: 5000,
-            position: 'top',
+            position: 'top-center',
           })
         })
 

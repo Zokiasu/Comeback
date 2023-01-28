@@ -103,14 +103,14 @@ export default {
     sendNews() {
       this.user = this.GET_USER_DATA()
       if (!this.newsMessage) {
-        this.$toast.error('Please write a news or close the window', {
+        this.$toasted.error('Please write a news or close the window', {
           duration: 3000,
-          position: 'top-right',
+          position: 'top-center',
         })
       } else if (!this.artistSelected) {
-        this.$toast.error('Please select a artist or suggest one', {
+        this.$toasted.error('Please select a artist or suggest one', {
           duration: 3000,
-          position: 'top-right',
+          position: 'top-center',
         })
       } else {
         this.createNews({
@@ -129,9 +129,9 @@ export default {
             image: this.artistSelected.image,
           },
         }).then((res) => {
-          this.$toast.success('News sent', {
+          this.$toasted.success('News sent', {
             duration: 3000,
-            position: 'top-right',
+            position: 'top-center',
           })
           this.$emit('close')
         })

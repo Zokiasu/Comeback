@@ -396,9 +396,9 @@ export default {
 
     createArtist() {
       if (this.name === '' || this.source === '') {
-        this.$toast.error(
+        this.$toasted.error(
           'Please fill all fields before with * before send an artist',
-          { duration: 5000, position: 'top-right' }
+          { duration: 5000, position: 'top-center' }
         )
         return
       }
@@ -408,15 +408,15 @@ export default {
           this.$fire.functions.httpsCallable('updateListStyle')
         updateStyle({ styles: this.styleList })
           .then(() => {
-            this.$toast.success('Styles updated', {
+            this.$toasted.success('Styles updated', {
               duration: 5000,
-              position: 'top-right',
+              position: 'top-center',
             })
           })
           .catch(() => {
-            this.$toast.error('Error updating styles', {
+            this.$toasted.error('Error updating styles', {
               duration: 5000,
-              position: 'top-right',
+              position: 'top-center',
             })
           })
       }
@@ -443,16 +443,16 @@ export default {
             this.$fire.functions.httpsCallable('updateArtistById')
           updateArtist({ id: result.data.id })
             .then(() => {
-              this.$toast.success(
+              this.$toasted.success(
                 'Thank you, Your artist have been sent for verification',
-                { duration: 5000, position: 'top-right' }
+                { duration: 5000, position: 'top-center' }
               )
               this.$router.push('/')
             })
             .catch(() => {
-              this.$toast.error('Error updating artist', {
+              this.$toasted.error('Error updating artist', {
                 duration: 5000,
-                position: 'top-right',
+                position: 'top-center',
               })
             })
         })
