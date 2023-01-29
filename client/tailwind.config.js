@@ -36,7 +36,6 @@ module.exports = {
   },
 
   plugins: [
-    require('tailwindcss-filters'),
     require('prettier-plugin-tailwindcss'),
   ],
 }

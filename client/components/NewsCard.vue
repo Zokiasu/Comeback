@@ -42,19 +42,19 @@
     </div>
     <div class="flex items-center bg-quaternary px-3">
       <p
-        v-if="!isDatePassed(date) && !checkDate(date)"
+        v-if="!isDatePassed(date) && !isSameDate(date)"
         class="my-auto whitespace-nowrap text-xl font-bold"
       >
-        D-{{ countDays(date) }}
+        D-{{ daysUntil(date) }}
       </p>
       <p
-        v-if="checkDate(date)"
+        v-if="isSameDate(date)"
         class="my-auto whitespace-nowrap font-medium text-primary"
       >
         Today
       </p>
       <p
-        v-if="!checkDate(date) && isDatePassed(date)"
+        v-if="!isSameDate(date) && isDatePassed(date)"
         class="my-auto whitespace-nowrap font-medium text-primary"
       >
         Outed
@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import moment from 'moment-timezone'
 export default {
   props: {
     verified: {
@@ -90,23 +89,57 @@ export default {
   },
 
   methods: {
+    daysUntil(futureDate) {
+      // Récupère la date d'aujourd'hui
+      const today = new Date()
+
+      // Récupère la date future
+      const future = new Date(futureDate)
+
+      // Calcule la différence en ms entre les deux dates
+      const differenceInTime = future.getTime() - today.getTime()
+
+      // Convertit la différence en ms en nombre de jours
+      const differenceInDays = differenceInTime / (1000 * 3600 * 24)
+
+      // Retourne le nombre de jours restants
+      return Math.ceil(differenceInDays)
+    },
+
+    isDatePassed(date) {
+      // Récupère la date d'aujourd'hui en timestamp
+      const today = new Date().getTime()
+
+      // Convertit la date entrée en paramètre en timestamp
+      const inputDate = Date.parse(date)
+
+      // Compare les deux timestamps
+      if (isNaN(inputDate)) {
+        throw new TypeError('Invalid date format')
+      }
+      return inputDate < today
+    },
+
+    isSameDate(date) {
+      // Récupère la date d'aujourd'hui en timestamp
+      const today = new Date()
+      // Convertit la date entrée en paramètre en timestamp
+      const inputDate = new Date(Date.parse(date))
+
+      if (isNaN(inputDate)) {
+        throw new TypeError('Invalid date format')
+      }
+      // Compare les deux timestamps
+      return (
+        inputDate.getFullYear() === today.getFullYear() &&
+        inputDate.getMonth() === today.getMonth() &&
+        inputDate.getDate() === today.getDate()
+      )
+    },
+
     imageLoaded() {
       const hide = this.$refs['hide_' + this.artist.name]
       hide?.classList.add('opacity-0')
-    },
-
-    checkDate(date) {
-      return moment(new Date(date)).isSame(moment(), 'day')
-    },
-
-    // compter le nombre de jour entre aujourd'hui et la date de sortie
-    countDays(date) {
-      return moment(new Date(date)).diff(moment(), 'days')
-    },
-
-    // vérifier si la date est passé return boolean
-    isDatePassed(date) {
-      return moment(new Date(date)).isBefore(moment())
     },
   },
 }

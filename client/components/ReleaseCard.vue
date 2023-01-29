@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import moment from 'moment-timezone'
 export default {
   name: 'ReleaseCard',
 
@@ -126,16 +125,7 @@ export default {
     },
   },
 
-  computed: {
-    validationDate() {
-      return this.checkDate()
-    },
-  },
-
   methods: {
-    checkDate() {
-      return moment(new Date(this.date)).isAfter(new Date())
-    },
     imageLoaded() {
       const hide = this.$refs['hide_' + this.name]
       hide?.classList.add('opacity-0')
