@@ -166,6 +166,7 @@
                 @click="closeUserMenu"
               >
                 <NuxtLink
+                  v-if="userLogged && userRole !== 'NONE'"
                   :to="`/add/artist`"
                   class="block px-4 py-2 text-sm hover:bg-quaternary"
                 >

@@ -28,7 +28,7 @@
       :to="`/artist/${id}`"
       class="flex w-full flex-col items-center justify-center"
     >
-      <h2 class="hover-underline-animation text-center font-semibold">
+      <h2 class="hover-underline-animation text-center font-semibold truncate">
         {{ name }}
       </h2>
     </NuxtLink>
