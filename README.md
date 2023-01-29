@@ -3,7 +3,7 @@
 Ce projet de suivi et de liste des sorties récentes d'artistes vous permet de ne pas manquer une seule sortie d'album de vos artistes préférés. Il utilise les informations partagées par les communautés de fans pour vous prévenir à l'avance des sorties annoncées sur les multiples réseaux des artistes. Avec l'ajout facile de nouveaux artistes et d'informations appropriées. Ne ratez plus aucune sortie grâce à notre projet de suivi des artistes sur Nuxt.js.
 
 ## Système d'actualisation des sorties
-[CB Artist Generator](https://github.com/Zokiasu/comeback-artist-generator)
+[CB Artist Generator](https://github.com/Zokiasu/cb-artist-generator)
 
 ## Objectif Futur
 - Actualisation Automatique des sorties
