@@ -122,11 +122,13 @@ export default {
       enough: false,
       onlyGroup: false,
       onlySolo: false,
+      sortByCreatedAt: false,
     }
   },
 
   computed: {
     filteredList() {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       return this.artists.filter((element) => {
         if (this.onlyGroup && element.type.toLowerCase() !== 'group')
           return false
