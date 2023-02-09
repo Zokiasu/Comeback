@@ -174,15 +174,14 @@
           </label>
           <multiselect
             v-model="styles"
+            label="name"
+            track-by="name"
             :options="styleList"
-            tag-placeholder="Add this as new style"
             placeholder="Search or add a style"
             :multiple="true"
-            :taggable="true"
             :close-on-select="false"
             :clear-on-select="false"
             :preserve-search="false"
-            @tag="addStyle"
           />
         </div>
         <!-- Description -->
@@ -393,6 +392,32 @@ export default {
 
   methods: {
     ...mapGetters(['GET_USER']),
+
+    async newArtist() {
+      if (!this.name || !this.idYoutubeMusic) {
+        this.$toasted.error(
+          'Please fill all fields before with * before send an artist',
+          {
+            duration: 5000,
+            position: 'top-center',
+          }
+        )
+      } else {
+        await this.$fire.firestore
+          .collection('updateArtistPending')
+          .add('artistData')
+          .then((docRef) => {
+
+          })
+          .catch((error) => {
+            console.log('error', error)
+            this.$toasted.error('Error updating artist', {
+              duration: 5000,
+              position: 'top-center',
+            })
+          })
+      }
+    },
 
     createArtist() {
       if (this.name === '' || this.source === '') {

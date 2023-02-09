@@ -25,7 +25,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <!-- <div>
         <ul class="flex flex-wrap gap-5">
           <li>
             <button
@@ -79,7 +79,7 @@
             </button>
           </li>
         </ul>
-      </div>
+      </div> -->
       <transition-group
         name="list-complete"
         tag="div"

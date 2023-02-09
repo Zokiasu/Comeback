@@ -59,7 +59,7 @@
             }}
           </p>
         </div>
-        <div
+        <!-- <div
           class="
             invisible
             absolute
@@ -73,7 +73,7 @@
           "
         >
           <p class="text-center text-xs">{{ type }}</p>
-        </div>
+        </div> -->
       </div>
     </NuxtLink>
     <div>
