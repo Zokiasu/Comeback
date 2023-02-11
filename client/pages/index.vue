@@ -44,12 +44,16 @@ export default {
   },
 
   methods: {
-    async fetchNews(startDate) {
+    async fetchNews() {
+      const date = new Date()
+      date.setDate(date.getDate() - 7)
+      const startDate = this.$fireModule.firestore.Timestamp.fromDate(date)
+
       await this.$fire.firestore
         .collection('news')
-        // .where("date", ">=", startDate)
+        .where('date', '>=', startDate)
         .orderBy('date', 'desc')
-        .limit(10)
+        // .limit(15)
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {
@@ -96,7 +100,7 @@ export default {
       const startDate = this.$fireModule.firestore.Timestamp.fromDate(
         new Date()
       )
-      await this.fetchNews(startDate)
+      await this.fetchNews()
       await this.fetchRelease(startDate)
       await this.fetchArtist(startDate)
     },
