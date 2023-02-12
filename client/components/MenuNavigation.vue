@@ -29,7 +29,7 @@
             </button>
           </div>
           <!-- PC Navigation -->
-          <nav
+          <div
             class="
               flex flex-1
               items-center
@@ -61,36 +61,49 @@
               <div class="flex space-x-4" @click="userMenu = false">
                 <NuxtLink
                   :to="`/`"
-                  class="rounded-md px-3 py-2 text-sm font-medium"
-                  :class="
-                    $route.name !== 'index' ? 'hover:bg-quinary' : 'bg-quinary'
+                  class="
+                    rounded-md
+                    px-3
+                    py-2
+                    text-sm
+                    font-medium
+                    hover:bg-quinary
                   "
+                  :class="{ 'bg-quinary': $route.name === 'index' }"
                 >
                   Home
                 </NuxtLink>
                 <NuxtLink
                   :to="`/calendar`"
-                  class="rounded-md px-3 py-2 text-sm font-medium"
-                  :class="
-                    $route.name !== 'calendar'
-                      ? 'hover:bg-quinary'
-                      : 'bg-quinary'
+                  class="
+                    rounded-md
+                    px-3
+                    py-2
+                    text-sm
+                    font-medium
+                    hover:bg-quinary
                   "
+                  :class="{ 'bg-quinary': $route.name === 'calendar' }"
                 >
                   Calendar
                 </NuxtLink>
                 <NuxtLink
                   :to="`/artist`"
-                  class="rounded-md px-3 py-2 text-sm font-medium"
-                  :class="
-                    $route.name !== 'artist' ? 'hover:bg-quinary' : 'bg-quinary'
+                  class="
+                    rounded-md
+                    px-3
+                    py-2
+                    text-sm
+                    font-medium
+                    hover:bg-quinary
                   "
+                  :class="{ 'bg-quinary': $route.name === 'artist' }"
                 >
                   Artists
                 </NuxtLink>
               </div>
             </div>
-          </nav>
+          </div>
 
           <!-- PC User Menu -->
           <div
@@ -104,10 +117,14 @@
               sm:static sm:inset-auto sm:ml-6 sm:pr-0
             "
           >
-            <div v-if="userLogged" class="hidden lg:flex">
+            <div
+              v-if="userLogged && artistList.length > 0"
+              class="hidden lg:flex"
+            >
               <button
                 class="
                   bg-primary
+                  animate__animated animate__fadeIn
                   Card
                   flex
                   rounded-md
@@ -119,9 +136,6 @@
               >
                 <p>New Comeback</p>
               </button>
-            </div>
-            <div v-else>
-              <nuxt-link to="/authentification">Login</nuxt-link>
             </div>
             <!-- Profile dropdown -->
             <div v-if="userLogged" class="relative ml-3">
@@ -220,6 +234,9 @@
                 </button>
               </div>
             </div>
+            <div v-else>
+              <nuxt-link to="/authentification">Login</nuxt-link>
+            </div>
           </div>
         </div>
       </div>
@@ -233,7 +250,7 @@
           absolute
           w-full
           origin-top-center
-          bg-black-one
+          bg-secondary
           sm:hidden
         "
       >
@@ -313,28 +330,6 @@ export default {
     }
   },
 
-  async fetch() {
-    this.artistList = await this.$fire.firestore
-      .collection('artists')
-      .where('verified', '==', true)
-      .get()
-      .then((snapshot) => {
-        const artists = []
-        snapshot.forEach((doc) => {
-          artists.push(doc.data())
-        })
-        return artists
-      })
-      .catch(() => {
-        return { success: false, artists: [] }
-      })
-    this.artistList.sort((a, b) => {
-      if (a.name < b.name) return -1
-      if (a.name > b.name) return 1
-      return 0
-    })
-  },
-
   // watch isLoggedIn function in store
   watch: {
     '$store.getters.isLoggedIn': function (newVal) {
@@ -350,16 +345,38 @@ export default {
     }
   },
 
-  // eslint-disable-next-line require-await
-  async mounted() {
-    this.$toasted.info(
-      'This website is currently under development, so you may encounter some bugs while using it.',
-      { duration: 3000, position: 'top-left' }
-    )
+  mounted() {
+    // after 5s, fetch data
+    setTimeout(() => {
+      this.fetchData()
+    }, 3000)
   },
 
   methods: {
     ...mapGetters(['GET_USER', 'GET_USER_DATA', 'isLoggedIn']),
+
+    async fetchData() {
+      console.log('fetching data')
+      this.artistList = await this.$fire.firestore
+        .collection('artists')
+        .where('verified', '==', true)
+        .get()
+        .then((snapshot) => {
+          const artists = []
+          snapshot.forEach((doc) => {
+            artists.push(doc.data())
+          })
+          return artists
+        })
+        .catch(() => {
+          return { success: false, artists: [] }
+        })
+      this.artistList.sort((a, b) => {
+        if (a.name < b.name) return -1
+        if (a.name > b.name) return 1
+        return 0
+      })
+    },
 
     logout() {
       this.$fire.auth

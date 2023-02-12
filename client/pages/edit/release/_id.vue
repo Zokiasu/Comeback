@@ -205,7 +205,7 @@
                 in {{ actualTimezone }}</span
               >
             </h2>
-            <div class="rounded bg-black-one p-5">
+            <div class="rounded bg-secondary p-5">
               <v-date-picker
                 v-model="dates"
                 mode="dateTime"

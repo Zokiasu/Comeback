@@ -11,7 +11,7 @@
       transition-all
       duration-300
       ease-in-out
-      hover:bg-background hover:drop-shadow-2xl
+      hover:bg-secondary hover:drop-shadow-2xl
     "
   >
     <component :is="icon" class="h-5 w-5"></component>
