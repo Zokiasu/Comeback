@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-quaternary space-y-2 drop-shadow-xl relative p-3 rounded">
+  <div class="bg-quaternary space-y-2 drop-shadow-xl relative p-3 pt-1 rounded">
     <p
       class="bg-secondary absolute bottom-0 right-0 py-0.5 px-2 rounded-tl z-50"
     >
@@ -36,26 +36,26 @@
         />
       </div>
       <div class="w-full space-y-2.5">
-        <div class="flex justify-between w-full">
-          <div class="flex items-end space-x-2">
+        <div>
+          <div class="flex justify-between items-start space-x-2">
             <p class="font-semibold">{{ name }}</p>
-            <p>{{ type }}</p>
+            <div class="flex space-x-1.5">
+              <NuxtLink
+                :to="`/edit/artist/${id}`"
+                target="_blank"
+                class="bg-quinary px-2 rounded hover:bg-tertiary/30"
+              >
+                Edit
+              </NuxtLink>
+              <button
+                class="bg-quinary px-2 rounded hover:bg-tertiary/30"
+                @click="removeArtist"
+              >
+                Delete
+              </button>
+            </div>
           </div>
-          <div class="flex space-x-2">
-            <NuxtLink
-              :to="`/edit/artist/${id}`"
-              target="_blank"
-              class="bg-quinary px-2 rounded hover:bg-tertiary/30"
-            >
-              Edit
-            </NuxtLink>
-            <button
-              class="bg-quinary px-2 rounded hover:bg-tertiary/30"
-              @click="removeArtist"
-            >
-              Delete
-            </button>
-          </div>
+          <p class="text-sm">{{ type }}</p>
         </div>
         <div class="flex items-center space-x-1.5">
           <a
