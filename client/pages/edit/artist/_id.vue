@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col p-5 sm:mx-auto container">
-    <div class="mx-auto w-full rounded-lg bg-black-one p-5 lg:max-w-full">
+    <div class="mx-auto w-full rounded-lg bg-secondary p-5 lg:max-w-full">
       <h2 class="mb-3 text-3xl font-semibold">Edit Artist</h2>
       <div class="flex flex-wrap gap-5">
         <!-- Picture -->
@@ -249,7 +249,7 @@
               "
               @click="addSocialLink()"
             >
-              <icons-plus class="h-5 w-5 text-main-gray" />
+              <icons-plus class="h-5 w-5 text-quaternary" />
             </button>
           </div>
           <!-- Streaming Platforms Link -->
@@ -284,7 +284,7 @@
               "
               @click="addPlatformLink()"
             >
-              <icons-plus class="h-5 w-5 text-main-gray" />
+              <icons-plus class="h-5 w-5 text-quaternary" />
             </button>
           </div>
         </div>

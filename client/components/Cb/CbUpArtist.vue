@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-3 rounded bg-black-four p-5">
+  <div class="space-y-3 rounded bg-quaternary p-5">
     <div v-if="originalArtist" class="space-y-3 rounded bg-quinary/30 p-5">
       <div class="flex gap-5">
         <img

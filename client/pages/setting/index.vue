@@ -5,23 +5,19 @@
         <NuxtLink
           :to="`/setting/profile`"
           class="rounded-t-xl py-1 px-5"
-          :class="
-            $route.name === 'setting-index-profile' ? 'bg-gray-three' : ''
-          "
+          :class="$route.name === 'setting-index-profile' ? 'bg-quinary' : ''"
           >Profile</NuxtLink
         >
         <NuxtLink
           :to="`/setting/security`"
           class="rounded-t-xl py-1 px-5"
-          :class="
-            $route.name === 'setting-index-security' ? 'bg-gray-three' : ''
-          "
+          :class="$route.name === 'setting-index-security' ? 'bg-quinary' : ''"
           >Security</NuxtLink
         >
-        <!--<NuxtLink :to="`/setting/subscription`" class="py-1 px-5 rounded-t-xl" :class="$route.name === 'setting-index-subscription' ? 'bg-gray-three':''">Subscription</NuxtLink>-->
+        <!--<NuxtLink :to="`/setting/subscription`" class="py-1 px-5 rounded-t-xl" :class="$route.name === 'setting-index-subscription' ? 'bg-quinary':''">Subscription</NuxtLink>-->
       </ul>
     </section>
-    <section class="space-y-5 bg-gray-three p-10">
+    <section class="space-y-5 bg-quinary p-10">
       <NuxtChild />
     </section>
   </div>

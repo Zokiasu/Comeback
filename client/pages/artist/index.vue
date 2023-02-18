@@ -1,10 +1,6 @@
 <template>
   <div class="mx-auto p-5 md:p-10">
     <div id="searchbar" class="flex w-full justify-start">
-      <div id="search-icon" class="rounded-l bg-quinary bg-opacity-20 p-2">
-        <icons-search v-if="!searchActive" class="h-5 w-5" />
-        <icons-cancel v-else class="h-5 w-5" />
-      </div>
       <input
         id="search-input"
         v-model="search"
@@ -12,11 +8,20 @@
         placeholder="Search"
         class="
           w-full
-          rounded-none rounded-r
-          bg-quinary bg-opacity-20
-          pl-2
+          rounded-full
+          bg-quinary
+          drop-shadow-xl
+          py-2
+          px-5
           placeholder-tertiary
+          transition-all
+          duration-700
+          ease-in-out
+          border-none
           focus:outline-none
+          focus:bg-tertiary
+          focus:text-quinary
+          focus:placeholder-quinary
         "
       />
     </div>

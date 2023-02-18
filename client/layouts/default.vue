@@ -6,7 +6,7 @@
         sticky
         top-0
         z-50
-        bg-background
+        bg-secondary
       "
     >
       <LazyMenuNavigation ref="menu" class="z-50" />

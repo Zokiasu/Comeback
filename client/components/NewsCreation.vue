@@ -23,12 +23,6 @@
       name="News"
       placeholder="Your News*"
     />
-    <t-textarea
-      v-model="newsSource"
-      type="text"
-      name="Source"
-      placeholder="Source*"
-    />
     <button
       class="
         bg-primary
@@ -71,7 +65,6 @@ export default {
       newsArtistName: null,
       newsDate: null,
       newsMessage: null,
-      newsSource: null,
       loading: false,
       user: null,
       createNews: null,
@@ -117,7 +110,6 @@ export default {
           message: this.newsMessage,
           date: this.newsDate,
           verified: false,
-          source: this.newsSource,
           user: {
             id: this.user.id,
             name: this.user.name,
