@@ -36,11 +36,11 @@
         />
       </div>
       <div>
-        <h2 class="lg:text-lg font-bold">{{ artist.name }}'s news</h2>
+        <h2 class=" font-semibold">{{ artist.name }}'s news</h2>
         <p class="text-xs">{{ message }}</p>
       </div>
     </div>
-    <div class="flex items-center bg-quaternary px-3">
+    <div class="flex justify-center text-center items-center bg-quaternary px-3 min-w-[5rem]">
       <p
         v-if="!isDatePassed(date) && !isSameDate(date)"
         class="my-auto whitespace-nowrap text-xl font-bold"
