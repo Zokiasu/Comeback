@@ -212,11 +212,26 @@
                     py-2
                     text-sm
                     hover:bg-quaternary
+                    lg:hidden
                   "
                   @click="newsModal = true"
                 >
                   New Comeback
                 </button>
+                <NuxtLink
+                  v-if="userLogged"
+                  :to="`/edit/profile/userPicture`"
+                  class="
+                    w-full
+                    text-left
+                    px-4
+                    py-2
+                    text-sm
+                    hover:bg-quaternary
+                  "
+                >
+                  Change Profile Picture
+                </NuxtLink>
                 <button
                   type="button"
                   class="
