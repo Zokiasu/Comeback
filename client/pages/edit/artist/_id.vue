@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col p-5 sm:mx-auto container">
+  <div class="container flex flex-col p-5 sm:mx-auto">
     <div class="mx-auto w-full rounded-lg bg-secondary p-5 lg:max-w-full">
       <h2 class="mb-3 text-3xl font-semibold">Edit Artist</h2>
       <div class="flex flex-wrap gap-5">
@@ -49,19 +49,7 @@
               v-model="name"
               type="text"
               placeholder="Name"
-              class="
-                block
-                w-full
-                appearance-none
-                rounded
-                border border-tertiary
-                bg-tertiary
-                py-3
-                px-4
-                leading-tight
-                text-quaternary
-                focus:border-quinary focus:bg-tertiary focus:outline-none
-              "
+              class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
             />
           </div>
           <!-- Youtube Music Id -->
@@ -77,19 +65,7 @@
               v-model="idYoutubeMusic"
               type="text"
               placeholder="Youtube Music ID"
-              class="
-                block
-                w-full
-                appearance-none
-                rounded
-                border border-tertiary
-                bg-tertiary
-                py-3
-                px-4
-                leading-tight
-                text-quaternary
-                focus:border-quinary focus:bg-tertiary focus:outline-none
-              "
+              class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
             />
           </div>
         </div>
@@ -105,18 +81,7 @@
           <select
             id="type"
             v-model="type"
-            class="
-              block
-              w-full
-              rounded
-              border border-tertiary
-              bg-tertiary
-              py-3
-              px-4
-              leading-tight
-              text-quaternary
-              focus:border-quinary focus:bg-tertiary focus:outline-none
-            "
+            class="block w-full rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
           >
             <option value="SOLO">Solo</option>
             <option value="GROUP">Group</option>
@@ -200,19 +165,7 @@
             v-model="description"
             type="text"
             placeholder="Description"
-            class="
-              block
-              w-full
-              appearance-none
-              rounded
-              border border-tertiary
-              bg-tertiary
-              py-3
-              px-4
-              leading-tight
-              text-quaternary
-              focus:border-quinary focus:bg-tertiary focus:outline-none
-            "
+            class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
           />
         </div>
         <!-- Social Media & Streaming Platforms Links -->
@@ -236,17 +189,7 @@
               @deleteinput="deleteList(socials, index)"
             />
             <button
-              class="
-                flex
-                w-full
-                justify-center
-                space-x-2
-                rounded
-                bg-tertiary bg-opacity-30
-                p-2
-                text-left
-                focus:outline-none
-              "
+              class="flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
               @click="addSocialLink()"
             >
               <icons-plus class="h-5 w-5 text-quaternary" />
@@ -271,17 +214,7 @@
               @deleteinput="deleteList(platforms, index)"
             />
             <button
-              class="
-                flex
-                w-full
-                justify-center
-                space-x-2
-                rounded
-                bg-tertiary bg-opacity-30
-                p-2
-                text-left
-                focus:outline-none
-              "
+              class="flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
               @click="addPlatformLink()"
             >
               <icons-plus class="h-5 w-5 text-quaternary" />
@@ -289,14 +222,7 @@
           </div>
         </div>
         <button
-          class="
-            w-full
-            rounded
-            bg-primary
-            hover:bg-primary/50
-            py-5
-            font-semibold
-          "
+          class="w-full rounded bg-primary py-5 font-semibold hover:bg-primary/50"
           @click="updateArtist()"
         >
           Update Artist

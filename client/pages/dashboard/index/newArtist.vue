@@ -9,17 +9,29 @@ export default {
   name: 'NewArtist',
   layout: 'dashboard',
 
-  async asyncData({ $fire }) {
-    const firstStepArtist = $fire.functions.httpsCallable(
-      'getPendingCreateArtist'
-    )
-    const secondStepArtist = await firstStepArtist()
-    const artistList = secondStepArtist.data.artists
+  data() {
+    return {
+      artistList: [],
+    }
+  },
 
-    return { artistList }
+  async mounted() {
+    await this.fetch()
   },
 
   methods: {
+    async fetch() {
+      this.artistList = await this.$fire.firestore
+        .collection('updateArtistPending')
+        .get()
+        .then((snapshot) => {
+          const artistList = []
+          snapshot.forEach((doc) => {
+            artistList.push(doc.data())
+          })
+          return artistList
+        })
+    },
     verify(idArtist, index) {
       const updateArtist =
         this.$fire.functions.httpsCallable('updateArtistById')

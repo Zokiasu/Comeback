@@ -52,7 +52,7 @@ export default {
       await this.$fire.firestore
         .collection('news')
         .where('date', '>=', startDate)
-        .orderBy('date', 'desc')
+        .orderBy('date', 'asc')
         // .limit(15)
         .get()
         .then((snapshot) => {

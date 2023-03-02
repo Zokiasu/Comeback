@@ -5,49 +5,19 @@
         <div class="rounded-md bg-quinary">
           <div
             :ref="'hide_' + name"
-            class="
-              bg-primary
-              absolute
-              z-10
-              aspect-square
-              max-h-[10rem]
-              min-h-[10rem]
-              w-full
-              rounded-md
-              transition-all
-              duration-1000
-              ease-in-out
-            "
+            class="absolute z-10 aspect-square max-h-[10rem] min-h-[10rem] w-full rounded-md bg-primary transition-all duration-1000 ease-in-out"
           ></div>
           <img
             :src="image"
             :alt="name"
             loading="lazy"
-            class="
-              aspect-square
-              max-h-[10rem]
-              min-h-[10rem]
-              w-full
-              rounded-md
-              object-cover
-              drop-shadow-2xl
-            "
+            class="aspect-square max-h-[10rem] min-h-[10rem] w-full rounded-md object-cover drop-shadow-2xl"
             @load="imageLoaded"
           />
         </div>
         <div
           v-if="displayDate"
-          class="
-            invisible
-            absolute
-            top-2
-            right-1.5
-            rounded
-            bg-quinary bg-opacity-80
-            px-2
-            py-0.5
-            group-hover:visible
-          "
+          class="invisible absolute top-2 right-1.5 rounded bg-quinary bg-opacity-80 px-2 py-0.5 group-hover:visible"
         >
           <p class="text-center text-xs">
             {{

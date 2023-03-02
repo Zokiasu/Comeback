@@ -49,19 +49,7 @@
               v-model="name"
               type="text"
               placeholder="Name"
-              class="
-                block
-                w-full
-                appearance-none
-                rounded
-                border border-tertiary
-                bg-tertiary
-                py-3
-                px-4
-                leading-tight
-                text-quaternary
-                focus:border-quinary focus:bg-tertiary focus:outline-none
-              "
+              class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
             />
           </div>
           <!-- Youtube Music Id -->
@@ -77,19 +65,7 @@
               v-model="idYoutubeMusic"
               type="text"
               placeholder="Youtube Music ID"
-              class="
-                block
-                w-full
-                appearance-none
-                rounded
-                border border-tertiary
-                bg-tertiary
-                py-3
-                px-4
-                leading-tight
-                text-quaternary
-                focus:border-quinary focus:bg-tertiary focus:outline-none
-              "
+              class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
             />
           </div>
         </div>
@@ -105,18 +81,7 @@
           <select
             id="type"
             v-model="type"
-            class="
-              block
-              w-full
-              rounded
-              border border-tertiary
-              bg-tertiary
-              py-3
-              px-4
-              leading-tight
-              text-quaternary
-              focus:border-quinary focus:bg-tertiary focus:outline-none
-            "
+            class="block w-full rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
           >
             <option value="SOLO">Solo</option>
             <option value="GROUP">Group</option>
@@ -197,19 +162,7 @@
             v-model="description"
             type="text"
             placeholder="Description"
-            class="
-              block
-              w-full
-              appearance-none
-              rounded
-              border border-tertiary
-              bg-tertiary
-              py-3
-              px-4
-              leading-tight
-              text-quaternary
-              focus:border-quinary focus:bg-tertiary focus:outline-none
-            "
+            class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
           />
         </div>
         <!-- Social Media & Streaming Platforms Links -->
@@ -233,17 +186,7 @@
               @deleteinput="deleteList(socials, index)"
             />
             <button
-              class="
-                flex
-                w-full
-                justify-center
-                space-x-2
-                rounded
-                bg-tertiary bg-opacity-30
-                p-2
-                text-left
-                focus:outline-none
-              "
+              class="flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
               @click="addSocialLink()"
             >
               <icons-plus class="h-5 w-5 text-quaternary" />
@@ -268,17 +211,7 @@
               @deleteinput="deleteList(platforms, index)"
             />
             <button
-              class="
-                flex
-                w-full
-                justify-center
-                space-x-2
-                rounded
-                bg-tertiary bg-opacity-30
-                p-2
-                text-left
-                focus:outline-none
-              "
+              class="flex w-full justify-center space-x-2 rounded bg-tertiary bg-opacity-30 p-2 text-left focus:outline-none"
               @click="addPlatformLink()"
             >
               <icons-plus class="h-5 w-5 text-quaternary" />
@@ -298,19 +231,7 @@
             v-model="source"
             type="text"
             placeholder="Source"
-            class="
-              block
-              w-full
-              appearance-none
-              rounded
-              border border-tertiary
-              bg-tertiary
-              py-3
-              px-4
-              leading-tight
-              text-quaternary
-              focus:border-quinary focus:bg-tertiary focus:outline-none
-            "
+            class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
           />
         </div>
         <div class="flex w-full justify-end">

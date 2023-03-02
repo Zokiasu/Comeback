@@ -47,7 +47,7 @@ export const actions = {
       const stepOne = this.$fire.functions.httpsCallable('readUser')
       const stepTwo = await stepOne({ id: authUser.uid })
       const stepThree = stepTwo.data
-      
+
       state.commit('SET_USER_DATA', stepThree.data)
     }
   },

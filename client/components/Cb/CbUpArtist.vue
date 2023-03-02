@@ -133,33 +133,13 @@
     </div>
     <div class="flex w-full justify-end gap-2">
       <button
-        class="
-          hover:bg-primary
-          rounded
-          bg-red-500
-          px-5
-          py-2
-          font-semibold
-          transition-all
-          duration-300
-          ease-in-out
-        "
+        class="rounded bg-red-500 px-5 py-2 font-semibold transition-all duration-300 ease-in-out hover:bg-primary"
         @click="reject()"
       >
         Reject
       </button>
       <button
-        class="
-          rounded
-          bg-green-500
-          px-5
-          py-2
-          font-semibold
-          transition-all
-          duration-300
-          ease-in-out
-          hover:bg-green-700
-        "
+        class="rounded bg-green-500 px-5 py-2 font-semibold transition-all duration-300 ease-in-out hover:bg-green-700"
         @click="accept()"
       >
         Accept

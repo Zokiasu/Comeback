@@ -1,31 +1,13 @@
 <template>
   <NuxtLink
     :to="`/artist/${artist.id}`"
-    class="
-      flex
-      w-full
-      overflow-hidden
-      rounded-lg
-      transition-all
-      duration-500
-      ease-in-out
-      hover:scale-110 hover:drop-shadow-lg
-    "
+    class="flex w-full overflow-hidden rounded-lg transition-all duration-500 ease-in-out hover:scale-110 hover:drop-shadow-lg"
   >
     <div class="flex h-full w-full items-center space-x-5 bg-quinary p-3">
       <div>
         <div
           :ref="'hide_' + artist.name"
-          class="
-            absolute
-            z-50
-            min-h-[3.5rem] min-w-[3.5rem]
-            rounded-full
-            bg-primary
-            transition-all
-            duration-1000
-            ease-in-out
-          "
+          class="absolute z-50 min-h-[3.5rem] min-w-[3.5rem] rounded-full bg-primary transition-all duration-1000 ease-in-out"
         ></div>
         <img
           class="shadowCard h-14 w-14 rounded-full object-cover"
@@ -36,11 +18,13 @@
         />
       </div>
       <div>
-        <h2 class=" font-semibold">{{ artist.name }}'s news</h2>
+        <h2 class="font-semibold">{{ artist.name }}'s news</h2>
         <p class="text-xs">{{ message }}</p>
       </div>
     </div>
-    <div class="flex justify-center text-center items-center bg-quaternary px-3 min-w-[5rem]">
+    <div
+      class="flex min-w-[5rem] items-center justify-center bg-quaternary px-3 text-center"
+    >
       <p
         v-if="!isDatePassed(date) && !isSameDate(date)"
         class="my-auto whitespace-nowrap text-xl font-bold"
@@ -66,10 +50,6 @@
 <script>
 export default {
   props: {
-    verified: {
-      type: Boolean,
-      default: false,
-    },
     message: {
       type: String,
       required: true,
@@ -81,11 +61,7 @@ export default {
     artist: {
       type: Object,
       required: true,
-    },
-    user: {
-      type: Object,
-      required: true,
-    },
+    }
   },
 
   methods: {

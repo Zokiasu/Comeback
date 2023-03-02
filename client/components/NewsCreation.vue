@@ -24,19 +24,7 @@
       placeholder="Your News*"
     />
     <button
-      class="
-        bg-primary
-        flex
-        transform
-        justify-center
-        rounded-sm
-        px-3
-        py-2
-        transition
-        duration-500
-        ease-in-out
-        hover:-translate-y-1 hover:scale-110 hover:bg-red-900 hover:font-bold
-      "
+      class="flex transform justify-center rounded-sm bg-primary px-3 py-2 transition duration-500 ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-red-900 hover:font-bold"
       @click="sendNews()"
     >
       {{ loading ? 'Loading...' : 'Send the news' }}

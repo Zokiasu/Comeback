@@ -1,61 +1,35 @@
 <template>
-  <div class="rounded-lg bg-quaternary drop-shadow-xl p-5 space-y-5">
+  <div class="space-y-5 rounded-lg bg-quaternary p-5 drop-shadow-xl">
     <div class="flex space-x-2">
       <img
         src="https://picsum.photos/200/300"
         alt="test"
-        class="min-w-[20rem] aspect-video rounded-lg object-cover"
+        class="aspect-video min-w-[20rem] rounded-lg object-cover"
       />
-      <div class="flex flex-col space-y-2 w-full justify-between">
-        <div class="bg-quinary w-full p-2 text-sm rounded space-y-1">
+      <div class="flex w-full flex-col justify-between space-y-2">
+        <div class="w-full space-y-1 rounded bg-quinary p-2 text-sm">
           <label class="font-semibold">Name</label>
           <input
             type="text"
             placeholder="Name"
-            class="
-              w-full
-              text-base
-              rounded-sm
-              p-2
-              border-none
-              text-secondary
-              bg-tertiary
-              focus:bg-tertiary/50 focus:outline-none
-            "
+            class="w-full rounded-sm border-none bg-tertiary p-2 text-base text-secondary focus:bg-tertiary/50 focus:outline-none"
           />
         </div>
-        <div class="bg-quinary w-full p-2 text-sm rounded space-y-1">
+        <div class="w-full space-y-1 rounded bg-quinary p-2 text-sm">
           <label class="font-semibold">idYoutubeMusic</label>
           <input
             type="text"
             placeholder="idYoutubeMusic"
-            class="
-              w-full
-              text-base
-              rounded-sm
-              p-2
-              border-none
-              text-secondary
-              bg-tertiary
-              focus:bg-tertiary/50 focus:outline-none
-            "
+            class="w-full rounded-sm border-none bg-tertiary p-2 text-base text-secondary focus:bg-tertiary/50 focus:outline-none"
           />
         </div>
-        <div class="bg-quinary w-full p-2 text-sm rounded space-y-1">
+        <div class="w-full space-y-1 rounded bg-quinary p-2 text-sm">
           <label class="font-semibold">Type</label>
 
           <select
             id="artist_type"
             name="type"
-            class="
-              w-full
-              p-2
-              text-secondary text-base
-              rounded-sm
-              border-none
-              bg-tertiary
-              focus:bg-tertiary/50 focus:outline-none
-            "
+            class="w-full rounded-sm border-none bg-tertiary p-2 text-base text-secondary focus:bg-tertiary/50 focus:outline-none"
           >
             <option value="SOLO">Solo</option>
             <option value="GROUP">Group</option>
@@ -63,30 +37,21 @@
         </div>
       </div>
     </div>
-    <div class="bg-quinary w-full p-2 text-sm rounded space-y-1">
+    <div class="w-full space-y-1 rounded bg-quinary p-2 text-sm">
       <label class="font-semibold">Styles</label>
     </div>
-    <div class="bg-quinary w-full p-2 text-sm rounded space-y-1">
+    <div class="w-full space-y-1 rounded bg-quinary p-2 text-sm">
       <label class="font-semibold">Description</label>
       <textarea
         id="description"
         name="description"
         placeholder="Description"
-        class="
-          w-full
-          text-base
-          rounded-sm
-          p-2
-          border-none
-          text-secondary
-          bg-tertiary
-          focus:bg-tertiary/50 focus:outline-none
-        "
+        class="w-full rounded-sm border-none bg-tertiary p-2 text-base text-secondary focus:bg-tertiary/50 focus:outline-none"
       />
     </div>
-    <div class="flex space-x-5 justify-end">
-      <button class="bg-green-500 rounded px-5 py-2">Accepted</button>
-      <button class="bg-red-500 rounded px-5 py-2">Rejected</button>
+    <div class="flex justify-end space-x-5">
+      <button class="rounded bg-green-500 px-5 py-2">Accepted</button>
+      <button class="rounded bg-red-500 px-5 py-2">Rejected</button>
     </div>
   </div>
 </template>

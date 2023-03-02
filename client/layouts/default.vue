@@ -1,13 +1,7 @@
 <template>
   <div class="text-tertiary">
     <header
-      class="
-        animate__animated animate__fadeInDown
-        sticky
-        top-0
-        z-50
-        bg-secondary
-      "
+      class="animate__animated animate__fadeInDown sticky top-0 z-50 bg-secondary"
     >
       <LazyMenuNavigation ref="menu" class="z-50" />
     </header>

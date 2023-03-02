@@ -8,13 +8,7 @@
     >
       <div
         id="search-icon"
-        class="
-          rounded-none rounded-l
-          bg-quaternary bg-opacity-20
-          py-1.5
-          pr-1
-          pl-2
-        "
+        class="rounded-none rounded-l bg-quaternary bg-opacity-20 py-1.5 pr-1 pl-2"
       >
         <icons-search class="h-5 w-5" />
       </div>
@@ -23,14 +17,7 @@
         v-model="search"
         type="text"
         placeholder="Search"
-        class="
-          w-full
-          rounded-none rounded-r
-          bg-quaternary bg-opacity-20
-          pl-2
-          placeholder-tertiary
-          focus:outline-none
-        "
+        class="w-full rounded-none rounded-r bg-quaternary bg-opacity-20 pl-2 placeholder-tertiary focus:outline-none"
       />
     </section>
 
@@ -102,7 +89,7 @@
     </section>
 
     <section v-if="artists.length < 1">
-      <p class="flex bg-quaternary w-full justify-center rounded py-5 text-xl">
+      <p class="flex w-full justify-center rounded bg-quaternary py-5 text-xl">
         No Artist found.
       </p>
     </section>
@@ -118,7 +105,6 @@ export default {
       search: '',
       typeFilter: '',
       artists: [],
-      maxObjectDisplay: 0,
       enough: false,
       onlyGroup: false,
       onlySolo: false,
