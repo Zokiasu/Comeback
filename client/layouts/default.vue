@@ -1,29 +1,76 @@
 <template>
   <div class="text-tertiary">
     <header
-      class="animate__animated animate__fadeInDown sticky top-0 z-50 bg-secondary"
+      ref="header"
+      class="animate__animated animate__fadeInDown sticky top-0 w-full z-50 transition-all duration-150 ease-in-out"
     >
-      <LazyMenuNavigation ref="menu" class="z-50" />
+      <MenuNavigation />
     </header>
-    <main>
+    <main ref="main" class="min-h-screen">
       <Nuxt />
     </main>
+    <footer>
+      <LazyFooter />
+    </footer>
   </div>
 </template>
+
+<script>
+export default {
+  watch: {
+    $route() {
+      if (this.$route.path === '/') {
+        setTimeout(() => {
+          this.$refs.header.classList.remove('sticky')
+          this.$refs.header.classList.add('absolute')
+        }, 500)
+      } else {
+        setTimeout(() => {
+          this.$refs.header.classList.remove('absolute')
+          this.$refs.header.classList.add('sticky')
+        }, 500)
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+    if (this.$route.path === '/') {
+      this.$refs.header.classList.remove('sticky')
+      this.$refs.header.classList.add('absolute')
+    } else {
+      this.$refs.header.classList.remove('absolute')
+      this.$refs.header.classList.add('sticky')
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      if (window.scrollY > 50) {
+        this.$refs.header.classList.add('bg-secondary')
+      } else {
+        this.$refs.header.classList.remove('bg-secondary')
+      }
+    },
+  },
+}
+</script>
 
 <style>
 html {
   background: #1f1d1d;
 }
 
+/* Styles de la barre de défilement */
 ::-webkit-scrollbar {
-  width: 5px; /* width of the entire scrollbar */
+  width: 5px;
   height: 5px;
   margin: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* color of the tracking area */
+  background: transparent;
   height: 5px;
   margin: 5px;
 }
@@ -33,8 +80,16 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #e1e1e1; /* color of the scroll thumb */
-  border-radius: 50px; /* roundness of the scroll thumb */
+  background-color: #e1e1e1;
+  border-radius: 50px;
+  opacity: 0; /* Le thumb est transparent par défaut */
+  transition: opacity 0.3s ease-in-out; /* Ajoute une transition en douceur lors du changement d'opacité */
+}
+
+/* Fait apparaître le thumb lorsqu'on scroll */
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  opacity: 1; /* Change l'opacité du thumb à 1 lorsqu'il est survolé ou activé */
 }
 
 /* Page Transitions - 0.4s Slide/Fade */

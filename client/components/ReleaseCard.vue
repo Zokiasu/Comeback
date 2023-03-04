@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[10rem] space-y-1">
+  <div class="min-w-[10rem] max-w-[10rem] space-y-1">
     <NuxtLink :to="`/release/${id}`">
       <div class="group relative">
         <div class="rounded-md bg-quinary">

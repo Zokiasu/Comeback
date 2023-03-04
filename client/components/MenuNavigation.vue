@@ -146,43 +146,42 @@
       <div
         v-if="navMenu"
         id="mobile-menu"
-        class="animate__animated animate__fadeInLeft origin-top-center absolute w-full bg-secondary sm:hidden"
+        ref="mobileMenu"
+        class="animate__animated animate__fadeInUp origin-top-center absolute inset-0 w-full min-h-screen bg-secondary sm:hidden"
       >
-        <div class="space-y-1 px-2 pt-2 pb-3" @click="navMenu = false">
+        <div class="space-y-3 p-5" @click="closeNavMenu()">
           <NuxtLink
             :to="`/`"
-            class="block rounded-md px-3 py-2 text-base font-medium"
-            :class="
-              $route.name !== 'index'
-                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
-                : 'bg-quinary'
-            "
+            class="block rounded-full px-3 py-2 text-base font-medium"
+            :class="$route.name !== 'index' ? 'hover:bg-quinary' : 'bg-quinary'"
           >
             Home
           </NuxtLink>
           <NuxtLink
             :to="`/calendar`"
-            class="block rounded-md px-3 py-2 text-base font-medium"
+            class="block rounded-full px-3 py-2 text-base font-medium"
             :class="
-              $route.name !== 'calendar'
-                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
-                : 'bg-quinary'
+              $route.name !== 'calendar' ? 'hover:bg-quinary' : 'bg-quinary'
             "
           >
             Calendar
           </NuxtLink>
           <NuxtLink
             :to="`/artist`"
-            class="block rounded-md px-3 py-2 text-base font-medium"
+            class="block rounded-full px-3 py-2 text-base font-medium"
             :class="
-              $route.name !== 'artist'
-                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
-                : 'bg-quinary'
+              $route.name !== 'artist' ? 'hover:bg-quinary' : 'bg-quinary'
             "
           >
             Artists
           </NuxtLink>
         </div>
+        <button
+          class="bg-red-500 py-5 absolute bottom-0 inset-x-0"
+          @click="closeNavMenu()"
+        >
+          <icons-arrow-down class="w-6 h-6 mx-auto" />
+        </button>
       </div>
     </div>
     <Modal
@@ -207,9 +206,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import IconsArrowDown from './Icons/IconsArrowDown.vue'
 
 export default {
   name: 'MenuNavigation',
+  components: { IconsArrowDown },
 
   data() {
     return {
@@ -299,6 +300,30 @@ export default {
 
     closeNewsModal() {
       this.newsModal = false
+    },
+
+    openNavMenu() {
+      // remove animate__animated animate__fadeOutDown
+      this.$refs.mobileMenu.classList.remove('animate__animated')
+      this.$refs.mobileMenu.classList.remove('animate__fadeOutDown')
+      // add animate__animated animate__fadeInUp
+      this.$refs.mobileMenu.classList.add('animate__animated')
+      this.$refs.mobileMenu.classList.add('animate__fadeInUp')
+      setTimeout(() => {
+        this.navMenu = true
+      }, 1000)
+    },
+
+    closeNavMenu() {
+      // remove animate__animated animate__fadeInUp
+      this.$refs.mobileMenu.classList.remove('animate__animated')
+      this.$refs.mobileMenu.classList.remove('animate__fadeInUp')
+      // add animate__animated animate__fadeOutDown
+      this.$refs.mobileMenu.classList.add('animate__animated')
+      this.$refs.mobileMenu.classList.add('animate__fadeOutDown')
+      setTimeout(() => {
+        this.navMenu = false
+      }, 1000)
     },
   },
 }

@@ -1,10 +1,12 @@
 <template>
   <NuxtLink
     :to="`/artist/${artist.id}`"
-    class="flex w-full overflow-hidden rounded-lg transition-all duration-500 ease-in-out hover:scale-110 hover:drop-shadow-lg"
+    class="flex flex-col md:flex-row w-full overflow-hidden rounded-lg transition-all duration-500 ease-in-out hover:scale-110 hover:drop-shadow-lg"
   >
-    <div class="flex h-full w-full items-center space-x-5 bg-quinary p-3">
-      <div>
+    <div
+      class="flex h-full w-full items-center space-x-5 bg-quinary py-3 md:p-3"
+    >
+      <div class="hidden md:block">
         <div
           :ref="'hide_' + artist.name"
           class="absolute z-50 min-h-[3.5rem] min-w-[3.5rem] rounded-full bg-primary transition-all duration-1000 ease-in-out"
@@ -18,12 +20,14 @@
         />
       </div>
       <div>
-        <h2 class="font-semibold">{{ artist.name }}'s news</h2>
+        <h2 class="text-xs lg:text-sm font-semibold">
+          {{ artist.name }}'s news
+        </h2>
         <p class="text-xs">{{ message }}</p>
       </div>
     </div>
     <div
-      class="flex min-w-[5rem] items-center justify-center bg-quaternary px-3 text-center"
+      class="flex min-w-[5rem] items-center justify-center bg-quaternary px-3 -mt-0.5 py-1 md:mt-0 md:py-0 text-center"
     >
       <p
         v-if="!isDatePassed(date) && !isSameDate(date)"
@@ -61,7 +65,7 @@ export default {
     artist: {
       type: Object,
       required: true,
-    }
+    },
   },
 
   methods: {

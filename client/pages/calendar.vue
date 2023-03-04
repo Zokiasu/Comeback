@@ -1,25 +1,39 @@
 <template>
   <div class="container mx-auto flex flex-col p-5">
-    <div class="space-y-5">
-      <div>
-        <div class="flex gap-5">
-          <p class="text-3xl">{{ currentYear }}</p>
-          <div class="my-auto grid grid-cols-2">
-            <button class="px-1" @click="changeYear(currentYear + 1)">
+    <div class="space-y-10">
+      <div class="space-y-5">
+        <div class="w-fit flex items-center gap-5">
+          <p class="text-xl lg:text-3xl">{{ currentYear }}</p>
+          <div class="grid gap-2 grid-cols-2">
+            <button
+              class="p-1 border border-tertiary rounded-lg transition-all ease-in-out duration-500 hover:bg-tertiary hover:text-secondary"
+              @click="changeYear(currentYear + 1)"
+            >
               <icons-arrow-up class="h-5 w-5" />
             </button>
-            <button class="px-1" @click="changeYear(currentYear - 1)">
+            <button
+              class="p-1 border border-tertiary rounded-lg transition-all ease-in-out duration-500 hover:bg-tertiary hover:text-secondary"
+              @click="changeYear(currentYear - 1)"
+            >
               <icons-arrow-down class="h-5 w-5" />
             </button>
           </div>
         </div>
-        <div class="flex gap-5">
-          <h1 class="text-7xl font-semibold">{{ month[currentMonth] }}</h1>
-          <div class="my-auto mt-4 grid grid-cols-1 space-y-2">
-            <button class="p-1" @click="changeMonth(currentMonth + 1)">
+        <div class="w-fit flex items-end gap-5">
+          <h1 class="text-5xl lg:text-7xl font-semibold">
+            {{ month[currentMonth] }}
+          </h1>
+          <div class="my-auto grid grid-cols-2 gap-2 lg:grid-cols-1">
+            <button
+              class="p-1 border border-tertiary rounded-lg transition-all ease-in-out duration-500 hover:bg-tertiary hover:text-secondary"
+              @click="changeMonth(currentMonth + 1)"
+            >
               <icons-arrow-up class="h-5 w-5" />
             </button>
-            <button class="p-1" @click="changeMonth(currentMonth - 1)">
+            <button
+              class="p-1 border border-tertiary rounded-lg transition-all ease-in-out duration-500 hover:bg-tertiary hover:text-secondary"
+              @click="changeMonth(currentMonth - 1)"
+            >
               <icons-arrow-down class="h-5 w-5" />
             </button>
           </div>
