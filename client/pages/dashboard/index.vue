@@ -1,15 +1,7 @@
 <template>
   <div class="flex flex-row">
     <div
-      class="
-        sticky
-        top-0
-        flex
-        min-h-screen
-        flex-col
-        justify-between
-        bg-quinary bg-opacity-10
-      "
+      class="sticky top-0 flex min-h-screen flex-col justify-between bg-quinary bg-opacity-10"
     >
       <ul class="space-y-5 p-5">
         <NuxtLink
@@ -92,7 +84,7 @@
       </ul>
       <NuxtLink
         to="/"
-        class="flex w-full hover:bg-quinary items-center justify-center p-5"
+        class="flex w-full items-center justify-center p-5 hover:bg-quinary"
       >
         <p class="font-semibold">Back to website</p>
       </NuxtLink>

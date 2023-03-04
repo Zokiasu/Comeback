@@ -1,14 +1,14 @@
 <template>
-  <div class="bg-quaternary space-y-5 p-5">
-    <p class="font-bold text-lg">Actual Data</p>
+  <div class="space-y-5 bg-quaternary p-5">
+    <p class="text-lg font-bold">Actual Data</p>
     <div v-if="actualArtistData" class="space-y-2">
       <div
-        class="flex flex-col space-y-2 xl:space-y-0 xl:flex-row xl:space-x-2"
+        class="flex flex-col space-y-2 xl:flex-row xl:space-y-0 xl:space-x-2"
       >
         <img
           :src="actualArtistData.image"
           :alt="actualArtistData.name"
-          class="rounded-md aspect-video h-60 object-cover drop-shadow-xl"
+          class="aspect-video h-60 rounded-md object-cover drop-shadow-xl"
         />
         <div class="space-y-1">
           <p>Name : {{ actualArtistData.name }}</p>
@@ -20,7 +20,7 @@
               <li
                 v-for="(style, indexStyle) in actualArtistData.styles"
                 :key="indexStyle + '_style'"
-                class="bg-quinary px-3 py-1 rounded"
+                class="rounded bg-quinary px-3 py-1"
               >
                 {{ style.name }}
               </li>
@@ -34,7 +34,7 @@
           <li
             v-for="(platform, indexPlatform) in actualArtistData.platforms"
             :key="indexPlatform + '_platform'"
-            class="bg-quinary px-3 py-1 rounded"
+            class="rounded bg-quinary px-3 py-1"
           >
             {{ platform }}
           </li>
@@ -46,7 +46,7 @@
           <li
             v-for="(social, indexSocial) in actualArtistData.socials"
             :key="indexSocial + '_social'"
-            class="bg-quinary px-3 py-1 rounded"
+            class="rounded bg-quinary px-3 py-1"
           >
             {{ social }}
           </li>
@@ -60,16 +60,16 @@
 
     <div class="w-full bg-tertiary py-0.5"></div>
     <!-- New Data -->
-    <p class="font-bold text-lg">Data Updated</p>
+    <p class="text-lg font-bold">Data Updated</p>
     <div class="space-y-2">
       <div
-        class="flex flex-col space-y-2 xl:space-y-0 xl:flex-row xl:space-x-2"
+        class="flex flex-col space-y-2 xl:flex-row xl:space-y-0 xl:space-x-2"
       >
         <img
           v-if="image && name"
           :src="image"
           :alt="name"
-          class="rounded-md aspect-video h-60 object-cover drop-shadow-xl"
+          class="aspect-video h-60 rounded-md object-cover drop-shadow-xl"
         />
         <div class="space-y-1">
           <p v-if="name">Name : {{ name }}</p>
@@ -81,7 +81,7 @@
               <li
                 v-for="(style, indexStyle) in styles"
                 :key="indexStyle + '_style'"
-                class="bg-quinary px-3 py-1 rounded"
+                class="rounded bg-quinary px-3 py-1"
               >
                 {{ style.name }}
               </li>
@@ -95,7 +95,7 @@
           <li
             v-for="(platform, indexPlatform) in platforms"
             :key="indexPlatform + '_platform'"
-            class="bg-quinary px-3 py-1 rounded"
+            class="rounded bg-quinary px-3 py-1"
           >
             {{ platform }}
           </li>
@@ -107,7 +107,7 @@
           <li
             v-for="(social, indexSocial) in socials"
             :key="indexSocial + '_social'"
-            class="bg-quinary px-3 py-1 rounded"
+            class="rounded bg-quinary px-3 py-1"
           >
             {{ social }}
           </li>
@@ -128,7 +128,7 @@
             <img
               :src="soloMember.image"
               :alt="soloMember.name"
-              class="rounded-md aspect-video h-40 object-cover drop-shadow-xl"
+              class="aspect-video h-40 rounded-md object-cover drop-shadow-xl"
             />
             <p>{{ soloMember.name }}</p>
           </nuxt-link>
@@ -150,10 +150,10 @@
 
     <!-- Button -->
     <div class="flex justify-end space-x-2">
-      <button class="bg-red-700 rounded px-3 py-1" @click="reject()">
+      <button class="rounded bg-red-700 px-3 py-1" @click="reject()">
         Reject
       </button>
-      <button class="bg-green-700 rounded px-3 py-1" @click="accept()">
+      <button class="rounded bg-green-700 px-3 py-1" @click="accept()">
         Validate
       </button>
     </div>

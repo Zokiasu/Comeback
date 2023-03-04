@@ -193,8 +193,7 @@ const settings = {
         option: '',
         disabledOption: '',
         highlightedOption: 'bg-red-100',
-        selectedOption:
-          'font-semibold bg-gray-100 bg-primary font-semibold',
+        selectedOption: 'font-semibold bg-gray-100 bg-primary font-semibold',
         selectedHighlightedOption:
           'font-semibold bg-gray-100 bg-red-600 font-semibold',
         optionContent: 'flex justify-between items-center px-3 py-2',

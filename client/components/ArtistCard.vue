@@ -3,23 +3,14 @@
     <NuxtLink :to="`/artist/${id}`">
       <div
         :ref="'hide_' + name"
-        class="
-          absolute
-          z-10
-          rounded-full
-          bg-primary
-          object-cover
-          transition-all
-          duration-1000
-          ease-in-out
-        "
+        class="absolute z-10 rounded-full bg-primary object-cover transition-all duration-1000 ease-in-out"
         :class="dimension"
       ></div>
       <img
         :src="image"
         :alt="name"
         loading="lazy"
-        class="aspect-square rounded-full object-cover mx-auto"
+        class="mx-auto aspect-square rounded-full object-cover"
         :class="dimension"
         @load="imageLoaded"
       />
@@ -28,7 +19,7 @@
       :to="`/artist/${id}`"
       class="flex w-full flex-col items-center justify-center"
     >
-      <h2 class="hover-underline-animation text-center font-semibold truncate">
+      <h2 class="hover-underline-animation truncate text-center font-semibold">
         {{ name }}
       </h2>
     </NuxtLink>

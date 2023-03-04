@@ -5,18 +5,7 @@
       v-model="input"
       type="text"
       :placeholder="placeholder"
-      class="
-        block
-        w-full
-        appearance-none
-        rounded
-        bg-tertiary
-        px-2
-        py-3
-        leading-tight
-        text-quaternary
-        focus:outline-none
-      "
+      class="block w-full appearance-none rounded bg-tertiary px-2 py-3 leading-tight text-quaternary focus:outline-none"
       @change="updateInput"
     />
     <button class="focus:outline-none" @click="deleteInput()">

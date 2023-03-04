@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-quaternary space-y-2 drop-shadow-xl relative p-3 pt-1 rounded">
+  <div class="relative space-y-2 rounded bg-quaternary p-3 pt-1 drop-shadow-xl">
     <p
-      class="bg-secondary absolute bottom-0 right-0 py-0.5 px-2 rounded-tl z-50"
+      class="absolute bottom-0 right-0 z-50 rounded-tl bg-secondary py-0.5 px-2"
     >
       {{ index }}
     </p>
@@ -9,46 +9,30 @@
       <div>
         <div
           :ref="'hide_' + name"
-          class="
-            absolute
-            z-10
-            min-w-[6rem] min-h-[6rem]
-            max-w-[6rem] max-h-[6rem]
-            rounded
-            object-cover
-            transition-all
-            duration-1000
-            ease-in-out
-          "
+          class="absolute z-10 max-h-[6rem] min-h-[6rem] min-w-[6rem] max-w-[6rem] rounded object-cover transition-all duration-1000 ease-in-out"
         ></div>
         <img
           :src="image"
           :alt="name"
           loading="lazy"
-          class="
-            min-w-[6rem] min-h-[6rem]
-            max-w-[6rem] max-h-[6rem]
-            shadow shadow-quinary
-            rounded
-            object-cover
-          "
+          class="max-h-[6rem] min-h-[6rem] min-w-[6rem] max-w-[6rem] rounded object-cover shadow shadow-quinary"
           @load="imageLoaded"
         />
       </div>
       <div class="w-full space-y-2.5">
         <div>
-          <div class="flex justify-between items-start space-x-2">
+          <div class="flex items-start justify-between space-x-2">
             <p class="font-semibold">{{ name }}</p>
             <div class="flex space-x-1.5">
               <NuxtLink
                 :to="`/edit/artist/${id}`"
                 target="_blank"
-                class="bg-quinary px-2 rounded hover:bg-tertiary/30"
+                class="rounded bg-quinary px-2 hover:bg-tertiary/30"
               >
                 Edit
               </NuxtLink>
               <button
-                class="bg-quinary px-2 rounded hover:bg-tertiary/30"
+                class="rounded bg-quinary px-2 hover:bg-tertiary/30"
                 @click="removeArtist"
               >
                 Delete
@@ -65,7 +49,7 @@
             target="_blank"
           >
             <img
-              class="w-4 h-4"
+              class="h-4 w-4"
               :src="`https://www.google.com/s2/favicons?domain=${social}`"
             />
           </a>
@@ -79,7 +63,7 @@
             target="_blank"
           >
             <img
-              class="w-4 h-4"
+              class="h-4 w-4"
               :src="`https://www.google.com/s2/favicons?domain=${platform}`"
             />
           </a>
@@ -94,16 +78,16 @@
         <span
           v-for="(style, indexStyle) in styles"
           :key="indexStyle"
-          class="bg-tertiary/50 rounded px-2 py-0.5 text-xs"
+          class="rounded bg-tertiary/50 px-2 py-0.5 text-xs"
         >
           {{ style.name }}
         </span>
       </div>
-      <p v-else class="text-primary font-medium">No Styles</p>
+      <p v-else class="font-medium text-primary">No Styles</p>
       <p v-if="description" class="overflow-wrap block truncate break-words">
         {{ description }}
       </p>
-      <p v-else class="text-primary font-medium">No Description</p>
+      <p v-else class="font-medium text-primary">No Description</p>
     </div>
   </div>
 </template>

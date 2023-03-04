@@ -1,50 +1,28 @@
 <template>
   <div>
-    <nav class="relative bg-opacity-10">
+    <div class="relative bg-opacity-10">
       <div class="px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
           <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <!-- Mobile menu button-->
             <button
               type="button"
-              class="
-                inline-flex
-                items-center
-                justify-center
-                rounded-md
-                p-2
-                text-tertiary
-                hover:bg-quinary
-                focus:outline-none
-                focus:ring-2
-                focus:ring-inset
-                focus:ring-tertiary
-              "
+              class="inline-flex items-center justify-center rounded-md p-2 text-tertiary hover:bg-quinary focus:outline-none focus:ring-2 focus:ring-inset focus:ring-tertiary"
               aria-controls="mobile-menu"
               aria-expanded="false"
               aria-label="Open main menu"
               @click="navMenu = !navMenu"
             >
-              <icons-burger-menu class="w-8 h-8" />
+              <icons-burger-menu class="h-8 w-8" />
             </button>
           </div>
           <!-- PC Navigation -->
           <div
-            class="
-              flex flex-1
-              items-center
-              justify-center
-              sm:items-stretch sm:justify-start
-            "
+            class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
           >
             <NuxtLink
               :to="`/`"
-              class="
-                relative
-                flex flex-shrink-0
-                items-end
-                lg:items-center lg:space-x-1
-              "
+              class="relative flex flex-shrink-0 items-end lg:items-center lg:space-x-1"
             >
               <img
                 class="block h-8 w-auto lg:hidden"
@@ -61,42 +39,21 @@
               <div class="flex space-x-4" @click="userMenu = false">
                 <NuxtLink
                   :to="`/`"
-                  class="
-                    rounded-md
-                    px-3
-                    py-2
-                    text-sm
-                    font-medium
-                    hover:bg-quinary
-                  "
+                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-quinary"
                   :class="{ 'bg-quinary': $route.name === 'index' }"
                 >
                   Home
                 </NuxtLink>
                 <NuxtLink
                   :to="`/calendar`"
-                  class="
-                    rounded-md
-                    px-3
-                    py-2
-                    text-sm
-                    font-medium
-                    hover:bg-quinary
-                  "
+                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-quinary"
                   :class="{ 'bg-quinary': $route.name === 'calendar' }"
                 >
                   Calendar
                 </NuxtLink>
                 <NuxtLink
                   :to="`/artist`"
-                  class="
-                    rounded-md
-                    px-3
-                    py-2
-                    text-sm
-                    font-medium
-                    hover:bg-quinary
-                  "
+                  class="rounded-md px-3 py-2 text-sm font-medium hover:bg-quinary"
                   :class="{ 'bg-quinary': $route.name === 'artist' }"
                 >
                   Artists
@@ -107,31 +64,14 @@
 
           <!-- PC User Menu -->
           <div
-            class="
-              absolute
-              inset-y-0
-              right-0
-              flex
-              items-center
-              pr-2
-              sm:static sm:inset-auto sm:ml-6 sm:pr-0
-            "
+            class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
           >
             <div
               v-if="userLogged && artistList.length > 0"
               class="hidden lg:flex"
             >
               <button
-                class="
-                  bg-primary
-                  animate__animated animate__fadeIn
-                  Card
-                  flex
-                  rounded-md
-                  px-3
-                  py-2
-                  focus:outline-none
-                "
+                class="animate__animated animate__fadeIn Card flex rounded-md bg-primary px-3 py-2 focus:outline-none"
                 @click="newsModal = !newsModal"
               >
                 <p>New Comeback</p>
@@ -142,17 +82,7 @@
               <button
                 id="user-menu-button"
                 type="button"
-                class="
-                  flex
-                  rounded-full
-                  bg-quinary bg-opacity-10
-                  text-sm
-                  focus:outline-none
-                  focus:ring-2
-                  focus:ring-tertiary
-                  focus:ring-offset-2
-                  focus:ring-offset-gray-800
-                "
+                class="flex rounded-full bg-quinary bg-opacity-10 text-sm focus:outline-none focus:ring-2 focus:ring-tertiary focus:ring-offset-2 focus:ring-offset-gray-800"
                 aria-label="Open user menu"
                 @click="userMenu = !userMenu"
               >
@@ -165,18 +95,7 @@
               <div
                 v-if="userMenu"
                 v-click-outside="closeUserMenu"
-                class="
-                  absolute
-                  right-0
-                  mt-2
-                  w-48
-                  origin-top-center
-                  rounded-md
-                  bg-quinary
-                  py-1
-                  shadow-lg
-                  focus:outline-none
-                "
+                class="origin-top-center absolute right-0 mt-2 w-48 rounded-md bg-quinary shadow-lg focus:outline-none"
                 @click="closeUserMenu"
               >
                 <NuxtLink
@@ -189,31 +108,13 @@
                 <NuxtLink
                   v-if="userLogged && userRole !== 'NONE'"
                   :to="`/dashboard/newArtist`"
-                  class="
-                    lg:block
-                    w-full
-                    text-left
-                    px-4
-                    py-2
-                    text-sm
-                    hidden
-                    hover:bg-quaternary
-                  "
+                  class="hidden w-full px-4 py-2 text-left text-sm hover:bg-quaternary lg:block"
                 >
                   Dashboard
                 </NuxtLink>
                 <button
                   type="button"
-                  class="
-                    block
-                    w-full
-                    text-left
-                    px-4
-                    py-2
-                    text-sm
-                    hover:bg-quaternary
-                    lg:hidden
-                  "
+                  class="block w-full px-4 py-2 text-left text-sm hover:bg-quaternary lg:hidden"
                   @click="newsModal = true"
                 >
                   New Comeback
@@ -221,28 +122,13 @@
                 <NuxtLink
                   v-if="userLogged"
                   :to="`/edit/profile/userPicture`"
-                  class="
-                    w-full
-                    text-left
-                    px-4
-                    py-2
-                    text-sm
-                    hover:bg-quaternary
-                  "
+                  class="block w-full px-4 py-2 text-left text-sm hover:bg-red-500"
                 >
                   Change Profile Picture
                 </NuxtLink>
                 <button
                   type="button"
-                  class="
-                    block
-                    w-full
-                    text-left
-                    px-4
-                    py-2
-                    text-sm
-                    hover:bg-quaternary
-                  "
+                  class="block w-full px-4 py-2 text-left text-sm hover:bg-quaternary"
                   @click="logout()"
                 >
                   Sign out
@@ -260,52 +146,44 @@
       <div
         v-if="navMenu"
         id="mobile-menu"
-        class="
-          animate__animated animate__fadeInLeft
-          absolute
-          w-full
-          origin-top-center
-          bg-secondary
-          sm:hidden
-        "
+        ref="mobileMenu"
+        class="animate__animated animate__fadeInUp origin-top-center absolute inset-0 w-full min-h-screen bg-secondary sm:hidden"
       >
-        <div class="space-y-1 px-2 pt-2 pb-3" @click="navMenu = false">
+        <div class="space-y-3 p-5" @click="closeNavMenu()">
           <NuxtLink
             :to="`/`"
-            class="block rounded-md px-3 py-2 text-base font-medium"
-            :class="
-              $route.name !== 'index'
-                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
-                : 'bg-quinary'
-            "
+            class="block rounded-full px-3 py-2 text-base font-medium"
+            :class="$route.name !== 'index' ? 'hover:bg-quinary' : 'bg-quinary'"
           >
             Home
           </NuxtLink>
           <NuxtLink
             :to="`/calendar`"
-            class="block rounded-md px-3 py-2 text-base font-medium"
+            class="block rounded-full px-3 py-2 text-base font-medium"
             :class="
-              $route.name !== 'calendar'
-                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
-                : 'bg-quinary'
+              $route.name !== 'calendar' ? 'hover:bg-quinary' : 'bg-quinary'
             "
           >
             Calendar
           </NuxtLink>
           <NuxtLink
             :to="`/artist`"
-            class="block rounded-md px-3 py-2 text-base font-medium"
+            class="block rounded-full px-3 py-2 text-base font-medium"
             :class="
-              $route.name !== 'artist'
-                ? 'text-secondary hover:bg-quinary hover:text-tertiary'
-                : 'bg-quinary'
+              $route.name !== 'artist' ? 'hover:bg-quinary' : 'bg-quinary'
             "
           >
             Artists
           </NuxtLink>
         </div>
+        <button
+          class="bg-red-500 py-5 absolute bottom-0 inset-x-0"
+          @click="closeNavMenu()"
+        >
+          <icons-arrow-down class="w-6 h-6 mx-auto" />
+        </button>
       </div>
-    </nav>
+    </div>
     <Modal
       v-model="newsModal"
       title="Add a News"
@@ -328,9 +206,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import IconsArrowDown from './Icons/IconsArrowDown.vue'
 
 export default {
   name: 'MenuNavigation',
+  components: { IconsArrowDown },
 
   data() {
     return {
@@ -420,6 +300,30 @@ export default {
 
     closeNewsModal() {
       this.newsModal = false
+    },
+
+    openNavMenu() {
+      // remove animate__animated animate__fadeOutDown
+      this.$refs.mobileMenu.classList.remove('animate__animated')
+      this.$refs.mobileMenu.classList.remove('animate__fadeOutDown')
+      // add animate__animated animate__fadeInUp
+      this.$refs.mobileMenu.classList.add('animate__animated')
+      this.$refs.mobileMenu.classList.add('animate__fadeInUp')
+      setTimeout(() => {
+        this.navMenu = true
+      }, 1000)
+    },
+
+    closeNavMenu() {
+      // remove animate__animated animate__fadeInUp
+      this.$refs.mobileMenu.classList.remove('animate__animated')
+      this.$refs.mobileMenu.classList.remove('animate__fadeInUp')
+      // add animate__animated animate__fadeOutDown
+      this.$refs.mobileMenu.classList.add('animate__animated')
+      this.$refs.mobileMenu.classList.add('animate__fadeOutDown')
+      setTimeout(() => {
+        this.navMenu = false
+      }, 1000)
     },
   },
 }

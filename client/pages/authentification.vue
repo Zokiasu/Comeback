@@ -18,23 +18,7 @@
                 autocomplete="email"
                 required
                 placeholder="Email address"
-                class="
-                  relative
-                  block
-                  w-full
-                  appearance-none
-                  rounded-none rounded-t-md
-                  border border-gray-300
-                  px-3
-                  py-2
-                  text-gray-900
-                  placeholder-quinary
-                  focus:z-10
-                  focus:border-red-500
-                  focus:outline-none
-                  focus:ring-red-500
-                  sm:text-sm
-                "
+                class="relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-quinary focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
               />
             </div>
             <div>
@@ -46,23 +30,7 @@
                 type="password"
                 required
                 placeholder="Password"
-                class="
-                  relative
-                  block
-                  w-full
-                  appearance-none
-                  rounded-none
-                  border border-gray-300
-                  px-3
-                  py-2
-                  text-gray-900
-                  placeholder-quinary
-                  focus:z-10
-                  focus:border-red-500
-                  focus:outline-none
-                  focus:ring-red-500
-                  sm:text-sm
-                "
+                class="relative block w-full appearance-none rounded-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-quinary focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
                 :class="{ 'rounded-b-md': !signUpOption }"
               />
             </div>
@@ -77,23 +45,7 @@
                 type="password"
                 required
                 placeholder="Password Verification"
-                class="
-                  relative
-                  block
-                  w-full
-                  appearance-none
-                  rounded-none rounded-b-md
-                  border border-gray-300
-                  px-3
-                  py-2
-                  text-gray-900
-                  placeholder-quinary
-                  focus:z-10
-                  focus:border-red-500
-                  focus:outline-none
-                  focus:ring-red-500
-                  sm:text-sm
-                "
+                class="relative block w-full appearance-none rounded-none rounded-b-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-quinary focus:z-10 focus:border-red-500 focus:outline-none focus:ring-red-500 sm:text-sm"
               />
             </div>
           </div>
@@ -101,25 +53,7 @@
           <div class="space-y-2">
             <button
               type="submit"
-              class="
-                hover:bg-primary
-                group
-                relative
-                flex
-                w-full
-                justify-center
-                rounded-md
-                border border-transparent
-                bg-red-500
-                py-2
-                px-4
-                text-sm
-                font-medium
-                focus:outline-none
-                focus:ring-2
-                focus:ring-red-500
-                focus:ring-offset-2
-              "
+              class="group relative flex w-full justify-center rounded-md border border-transparent bg-red-500 py-2 px-4 text-sm font-medium hover:bg-primary focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
             >
               <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                 <svg
@@ -142,10 +76,7 @@
               <div class="flex gap-2 text-sm text-red-500">
                 <button
                   type="button"
-                  class="
-                    hover:text-bg-primary hover-underline-animation
-                    font-medium
-                  "
+                  class="hover:text-bg-primary hover-underline-animation font-medium"
                   @click="signUpOption = !signUpOption"
                 >
                   {{
@@ -157,10 +88,7 @@
                 <p class="font-medium">|</p>
                 <a
                   href="#"
-                  class="
-                    hover:text-bg-primary hover-underline-animation
-                    font-medium
-                  "
+                  class="hover:text-bg-primary hover-underline-animation font-medium"
                 >
                   Forgot your password?
                 </a>

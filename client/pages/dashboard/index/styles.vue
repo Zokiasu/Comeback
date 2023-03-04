@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-5 py-5 px-10">
-    <div class="bg-quaternary p-5 rounded">
+    <div class="rounded bg-quaternary p-5">
       <div class="w-full space-y-3">
         <label
           for="ytb-music-id"
@@ -13,24 +13,12 @@
           v-model="newStyle"
           type="text"
           placeholder="New Style Name"
-          class="
-            block
-            w-full
-            appearance-none
-            rounded
-            border border-tertiary
-            bg-tertiary
-            py-3
-            px-4
-            leading-tight
-            text-quaternary
-            focus:border-quinary focus:bg-tertiary focus:outline-none
-          "
+          class="block w-full appearance-none rounded border border-tertiary bg-tertiary py-3 px-4 leading-tight text-quaternary focus:border-quinary focus:bg-tertiary focus:outline-none"
         />
-        <button class="bg-secondary px-3 py-2 rounded" @click="newStyle = ''">
+        <button class="rounded bg-secondary px-3 py-2" @click="newStyle = ''">
           <p>Reset</p>
         </button>
-        <button class="bg-secondary px-3 py-2 rounded" @click="addStyle">
+        <button class="rounded bg-secondary px-3 py-2" @click="addStyle">
           <p>Validate</p>
         </button>
       </div>
@@ -40,7 +28,7 @@
       <p
         v-for="(style, index) in generalData.styles"
         :key="`style_${index}`"
-        class="bg-quaternary rounded px-3 py-2"
+        class="rounded bg-quaternary px-3 py-2"
       >
         {{ style.name }}
       </p>

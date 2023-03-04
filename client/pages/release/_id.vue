@@ -33,12 +33,7 @@
           />
         </div>
         <div
-          class="
-            overflow-hidden overflow-y-scroll
-            pr-5
-            pb-2
-            lg:h-[34rem] lg:w-[30rem]
-          "
+          class="overflow-hidden overflow-y-scroll pr-5 pb-2 lg:h-[34rem] lg:w-[30rem]"
         >
           <ul class="space-y-5">
             <li
@@ -50,13 +45,7 @@
                 <img
                   :alt="music.name"
                   :src="release.image"
-                  class="
-                    h-14
-                    w-14
-                    rounded-md
-                    bg-gray-300
-                    shadow-2xl shadow-quinary
-                  "
+                  class="h-14 w-14 rounded-md bg-gray-300 shadow-2xl shadow-quinary"
                 />
                 <div>
                   <h3 class="font-semibold">{{ music.name }}</h3>

@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-quinary rounded p-5 relative">
+  <div class="relative rounded bg-quinary p-5">
     <div class="flex space-x-5">
-      <img :src="picture" :alt="name" class="w-40 h-40 object-cover rounded" />
+      <img :src="picture" :alt="name" class="h-40 w-40 rounded object-cover" />
       <div class="space-y-2.5">
         <div v-if="name">
           <p class="font-bold">Name</p>
@@ -27,14 +27,14 @@
         <p>{{ subscription }}</p>
       </div>
     </div>
-    <div class="absolute top-2 right-2 space-y-2 flex flex-col">
-      <button class="bg-quaternary/10 hover:bg-secondary px-2 py-1 rounded">
+    <div class="absolute top-2 right-2 flex flex-col space-y-2">
+      <button class="rounded bg-quaternary/10 px-2 py-1 hover:bg-secondary">
         Edit
       </button>
-      <button class="bg-quaternary/10 hover:bg-secondary px-2 py-1 rounded">
+      <button class="rounded bg-quaternary/10 px-2 py-1 hover:bg-secondary">
         Delete
       </button>
-      <button class="bg-quaternary/10 hover:bg-secondary px-2 py-1 rounded">
+      <button class="rounded bg-quaternary/10 px-2 py-1 hover:bg-secondary">
         Remove Personnal Data
       </button>
     </div>

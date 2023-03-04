@@ -8,7 +8,7 @@
         <img class="h-40 w-40" src="" alt="" />
       </div>
       <div class="lg:mt-auto">
-        <button class="bg-primary Card rounded-md px-5 py-2 focus:outline-none">
+        <button class="Card rounded-md bg-primary px-5 py-2 focus:outline-none">
           Upload
         </button>
       </div>

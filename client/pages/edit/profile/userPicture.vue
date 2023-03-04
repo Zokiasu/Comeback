@@ -6,43 +6,16 @@
         v-model="search"
         type="text"
         placeholder="Search"
-        class="
-          w-full
-          rounded-full
-          bg-quinary
-          drop-shadow-xl
-          py-2
-          px-5
-          placeholder-tertiary
-          transition-all
-          duration-700
-          ease-in-out
-          border-none
-          focus:outline-none
-          focus:bg-tertiary
-          focus:text-quinary
-          focus:placeholder-quinary
-        "
+        class="w-full rounded-full border-none bg-quinary py-2 px-5 placeholder-tertiary drop-shadow-xl transition-all duration-700 ease-in-out focus:bg-tertiary focus:text-quinary focus:placeholder-quinary focus:outline-none"
       />
     </div>
     <transition-group
       id="artist-list"
       name="list-complete"
       tag="div"
-      class="
-        grid grid-cols-3
-        items-center
-        justify-center
-        gap-5
-        py-5
-        sm:grid-cols-3
-        md:grid-cols-4 md:gap-10 md:py-10
-        lg:grid-cols-5
-        xl:grid-cols-7
-        2xl:grid-cols-8
-      "
+      class="grid grid-cols-3 items-center justify-center gap-5 py-5 sm:grid-cols-3 md:grid-cols-4 md:gap-10 md:py-10 lg:grid-cols-5 xl:grid-cols-7 2xl:grid-cols-8"
     >
-      <button 
+      <button
         v-for="artist in filteredArtistList"
         :id="artist.id"
         :key="artist.id"
@@ -53,7 +26,7 @@
             :src="artist.image"
             :alt="artist.name"
             loading="lazy"
-            class="aspect-square rounded-full object-cover mx-auto min-h-[5rem] min-w-[5rem]"
+            class="mx-auto aspect-square min-h-[5rem] min-w-[5rem] rounded-full object-cover"
           />
         </div>
         <p class="text-center">{{ artist.name }}</p>
@@ -61,14 +34,7 @@
     </transition-group>
     <div v-if="loading" class="flex w-full justify-center">
       <div
-        class="
-          loader
-          h-10
-          w-10
-          rounded-full
-          border-4 border-t-4 border-tertiary
-          ease-linear
-        "
+        class="loader h-10 w-10 rounded-full border-4 border-t-4 border-tertiary ease-linear"
       ></div>
     </div>
     <div v-if="(filteredArtistList.length < 1) & !loading" class="px-5">
@@ -147,13 +113,10 @@ export default {
           picture: image,
         })
         .then(() => {
-              this.$toasted.success(
-                'Your picture has updated successfully!',
-                {
-                  duration: 5000,
-                  position: 'top-center',
-                }
-              )
+          this.$toasted.success('Your picture has updated successfully!', {
+            duration: 5000,
+            position: 'top-center',
+          })
         })
     },
   },

@@ -50,14 +50,7 @@
         v-model="search"
         type="text"
         placeholder="Search"
-        class="
-          w-full
-          rounded-none rounded-r
-          bg-quinary bg-opacity-20
-          pl-2
-          placeholder-tertiary
-          focus:outline-none
-        "
+        class="w-full rounded-none rounded-r bg-quinary bg-opacity-20 pl-2 placeholder-tertiary focus:outline-none"
         @change="updateDateList()"
       />
     </section>
@@ -84,14 +77,7 @@
     <section
       v-if="releases.length > 0"
       id="releases-body"
-      class="
-        grid grid-cols-1
-        gap-3
-        pb-5
-        lg:grid-cols-2
-        xl:grid-cols-3
-        2xl:grid-cols-4
-      "
+      class="grid grid-cols-1 gap-3 pb-5 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
     >
       <div
         v-for="(release, index) in releases"
@@ -201,7 +187,7 @@
     </section>
 
     <section v-if="releases.length < 1">
-      <p class="flex bg-quaternary w-full justify-center rounded py-5 text-xl">
+      <p class="flex w-full justify-center rounded bg-quaternary py-5 text-xl">
         No Release found.
       </p>
     </section>
