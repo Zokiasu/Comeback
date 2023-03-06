@@ -240,8 +240,7 @@ export default {
   },
 
   mounted() {
-    // fetch data only if all the page is loaded
-    // this.fetchData()
+    this.fetchData()
   },
 
   methods: {
