@@ -58,11 +58,11 @@
 
     <section
       v-if="newArtist.length > 0"
-      class="animate__animated animate__fadeInUp container mx-auto pl-5 py-5 2xl:px-0 md:py-10 lg:py-14 space-y-5"
+      class="animate__animated animate__fadeInUp container mx-auto px-5 md:pl-5 py-5 2xl:px-0 md:py-10 lg:py-14 space-y-5"
     >
       <p class="text-2xl md:text-3xl font-bold">Last Artist Added</p>
       <div
-        class="animate__animated animate__fadeInUp flex flex-wrap gap-5 items-center justify-center lg:items-start lg:justify-between"
+        class="animate__animated animate__fadeInUp flex flex-wrap gap-5 items-center justify-evenly lg:items-start lg:justify-between"
       >
         <LazyArtistCard
           v-for="artist in newArtist"
@@ -97,14 +97,14 @@ export default {
   methods: {
     async fetchNews() {
       const date = new Date()
-      date.setDate(date.getDate() - 7)
+      date.setDate(date.getDate() - 3)
       const startDate = this.$fireModule.firestore.Timestamp.fromDate(date)
 
       await this.$fire.firestore
         .collection('news')
         .where('date', '>=', startDate)
         .orderBy('date', 'asc')
-        // .limit(15)
+        .limit(16)
         .get()
         .then((snapshot) => {
           snapshot.forEach((doc) => {

@@ -1,5 +1,8 @@
 <template>
-  <div :id="`artist-card-${id}`" class="aspect-square max-w-[10rem]">
+  <div
+    :id="`artist-card-${id}`"
+    class="aspect-square max-w-[10rem] space-y-2 md:space-y-0"
+  >
     <NuxtLink :to="`/artist/${id}`">
       <div
         :ref="'hide_' + name"
@@ -19,7 +22,9 @@
       :to="`/artist/${id}`"
       class="flex w-full flex-col items-center justify-center"
     >
-      <h2 class="hover-underline-animation truncate text-center font-semibold">
+      <h2
+        class="text-xs md:text-base hover-underline-animation truncate text-center font-semibold"
+      >
         {{ name }}
       </h2>
     </NuxtLink>
@@ -45,7 +50,8 @@ export default {
     },
     dimension: {
       type: String,
-      default: 'min-h-[10rem] min-w-[10rem]',
+      default:
+        'min-h-[5rem] min-w-[5rem] md:min-h-[10rem] md:min-w-[10rem] max-h-[5rem] max-w-[5rem] md:max-h-[10rem] md:max-w-[10rem]',
     },
   },
 

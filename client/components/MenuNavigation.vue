@@ -177,14 +177,14 @@
           </NuxtLink>
         </div>
         <button
-          class="bg-red-500 py-5 absolute bottom-0 inset-x-0"
+          class="py-5 absolute bottom-0 inset-x-0"
           @click="closeNavMenu()"
         >
           <icons-arrow-down class="w-6 h-6 mx-auto" />
         </button>
       </div>
     </div>
-    <Modal
+    <!-- <Modal
       v-model="newsModal"
       title="Add a News"
       wrapper-class="animate__animated modal-wrapper"
@@ -200,7 +200,7 @@
       :bg-out-class="`animate__fadeOutDown`"
     >
       <NewsCreation :artist-list="artistList" @close="closeNewsModal" />
-    </Modal>
+    </Modal> -->
   </div>
 </template>
 
@@ -225,7 +225,6 @@ export default {
     }
   },
 
-  // watch isLoggedIn function in store
   watch: {
     '$store.getters.isLoggedIn': function (newVal) {
       this.userLogged = newVal
@@ -241,10 +240,8 @@ export default {
   },
 
   mounted() {
-    // after 5s, fetch data
-    setTimeout(() => {
-      this.fetchData()
-    }, 3000)
+    // fetch data only if all the page is loaded
+    // this.fetchData()
   },
 
   methods: {
