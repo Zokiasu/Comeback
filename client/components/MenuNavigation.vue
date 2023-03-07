@@ -184,7 +184,7 @@
         </button>
       </div>
     </div>
-    <!-- <Modal
+    <Modal
       v-model="newsModal"
       title="Add a News"
       wrapper-class="animate__animated modal-wrapper"
@@ -200,7 +200,7 @@
       :bg-out-class="`animate__fadeOutDown`"
     >
       <NewsCreation :artist-list="artistList" @close="closeNewsModal" />
-    </Modal> -->
+    </Modal>
   </div>
 </template>
 
