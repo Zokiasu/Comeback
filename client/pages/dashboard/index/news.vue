@@ -5,15 +5,22 @@
         No Release found.
       </p>
     </section>
-    <section v-else class="grid grid-cols-1 gap-5 md:grid-cols-2 2xl:grid-cols-3">
-      <div v-for="(newsObject, index) in news" :key="newsObject.id" class="flex space-x-2">
+    <section
+      v-else
+      class="grid grid-cols-1 gap-5 md:grid-cols-2 2xl:grid-cols-3"
+    >
+      <div
+        v-for="(newsObject, index) in news.reverse()"
+        :key="newsObject.id"
+        class="flex space-x-2"
+      >
         <news-card
           :artist="newsObject.artist"
           :message="newsObject.message"
           :date="newsObject.date"
         />
         <div>
-          <button 
+          <button
             class="h-full w-full bg-primary text-tertiary rounded-lg px-5 hover:bg-primary/70"
             @click="deleteNews(newsObject.id, index)"
           >
@@ -56,7 +63,7 @@ export default {
           })
         })
     },
-    async deleteNews(newsId, index){
+    async deleteNews(newsId, index) {
       await this.$fire.firestore
         .collection('news')
         .doc(newsId)
@@ -68,7 +75,7 @@ export default {
         .catch((error) => {
           console.error('Error removing document: ', error)
         })
-    }
+    },
   },
 }
 </script>
