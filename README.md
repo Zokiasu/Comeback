@@ -1,23 +1,20 @@
 # Comeback
 
-Ce projet de suivi et de liste des sorties récentes d'artistes vous permet de ne pas manquer une seule sortie d'album de vos artistes préférés. Il utilise les informations partagées par les communautés de fans pour vous prévenir à l'avance des sorties annoncées sur les multiples réseaux des artistes. Avec l'ajout facile de nouveaux artistes et d'informations appropriées. Ne ratez plus aucune sortie grâce à notre projet de suivi des artistes sur Nuxt.js.
+## Build Setup
 
-## Système d'actualisation des sorties
-[CB Artist Generator](https://github.com/Zokiasu/cb-artist-generator)
+```bash
+# install dependencies
+$ npm install
 
-## Objectif Futur
-- Actualisation Automatique des sorties
-- Ajout automatique des artistes en fonction des recherches des utilisateurs
-- Ajout d'un système de notification interne au site
-- Ajout d'un système de notification via bot discord
-- Ajout d'un système de notification vie bot twitter
+# serve with hot reload at localhost:3000
+$ npm run dev
 
-## Stack
-(v2) Vue.JS, Nuxt.JS, TailwindCSS, Firebase  
-(v1) Vue.JS, Nuxt.JS, TailwindCSS, Firebase, NodeJS, Heroku  
+# build for production and launch server
+$ npm run build
+$ npm run start
 
-## Authors
-#### Front (v1 & v2)
-- [@zokiasu](https://github.com/zokiasu)
-#### Api & Back (v1)
-- [@jilink](https://github.com/jilink)
+# generate static project
+$ npm run generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

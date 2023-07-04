@@ -4,7 +4,7 @@
       ref="header"
       class="animate__animated animate__fadeInDown sticky top-0 w-full z-50 transition-all duration-150 ease-in-out"
     >
-      <MenuNavigation />
+      <LazyMenuNavigation />
     </header>
     <main ref="main" class="min-h-screen">
       <Nuxt />
