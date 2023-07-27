@@ -119,13 +119,13 @@
                 >
                   New Comeback
                 </button>
-                <NuxtLink
+                <!-- <NuxtLink
                   v-if="userLogged"
                   :to="`/edit/profile/userPicture`"
                   class="block w-full px-4 py-2 text-left text-sm hover:bg-red-500"
                 >
                   Change Profile Picture
-                </NuxtLink>
+                </NuxtLink> -->
                 <button
                   type="button"
                   class="block w-full px-4 py-2 text-left text-sm hover:bg-quaternary"

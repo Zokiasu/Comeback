@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-row">
-    <div
+  <div>
+    <!-- <div
       class="sticky top-0 flex min-h-screen flex-col justify-between bg-quinary bg-opacity-10"
     >
       <ul class="space-y-5 p-5">
@@ -88,10 +88,21 @@
       >
         <p class="font-semibold">Back to website</p>
       </NuxtLink>
-    </div>
-    <div class="min-h-screen w-full overflow-y-auto">
-      <NuxtChild />
-    </div>
+    </div> -->
+    <nav class="flex space-x-2 p-3">
+      <NuxtLink
+        to="#"
+        class="flex w-full rounded px-10 py-2"
+        :class="
+          $route.name !== 'dashboard-index-newArtist'
+            ? 'hover:bg-quinary hover:bg-opacity-70'
+            : 'bg-quinary'
+        "
+      >
+        <p class="mx-auto truncate text-center">Hello</p>
+      </NuxtLink>
+    </nav>
+    <NuxtChild />
   </div>
 </template>
 
